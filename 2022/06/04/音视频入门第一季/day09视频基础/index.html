@@ -18,7 +18,7 @@
   
     <meta name="description" content="一、视频基础知识1、RGB888和RGBA分别占多少字节？ RGB888 占 3个字节（24bit） RGBA 占 4个字节（32bit）  2、RGB 和 BGR 是什么？ RGB 与 BGR 都是颜色格式，只是存储是R与B的位置不同。 BMP 使用的是BGR格式。  3、PPI是什么？DPI是什么？ PPI：Pixels per inch，每英寸展示的像素数 DPI：Dots per inch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="day09-视频基础、YUV">
+<meta property="og:title" content="day09-视频基础、认识YUV、采集摄像头YUV数据">
 <meta property="og:url" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day09%E8%A7%86%E9%A2%91%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="一、视频基础知识1、RGB888和RGBA分别占多少字节？ RGB888 占 3个字节（24bit） RGBA 占 4个字节（32bit）  2、RGB 和 BGR 是什么？ RGB 与 BGR 都是颜色格式，只是存储是R与B的位置不同。 BMP 使用的是BGR格式。  3、PPI是什么？DPI是什么？ PPI：Pixels per inch，每英寸展示的像素数 DPI：Dots per inch">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day09%E8%A7%86%E9%A2%91%E5%9F%BA%E7%A1%80/day09视频基础/image-20220604105607839.png">
 <meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day09%E8%A7%86%E9%A2%91%E5%9F%BA%E7%A1%80/day09视频基础/image-20220604105638912.png">
 <meta property="article:published_time" content="2022-06-04T02:15:38.000Z">
-<meta property="article:modified_time" content="2022-06-04T06:42:40.989Z">
+<meta property="article:modified_time" content="2022-06-04T09:18:43.725Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="音视频">
 <meta property="article:tag" content="ffmpeg">
@@ -36,7 +36,7 @@
 <meta name="twitter:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day09%E8%A7%86%E9%A2%91%E5%9F%BA%E7%A1%80/day09视频基础/image-20220604103944297.png">
   
   
-  <title>day09-视频基础、YUV - Hexo</title>
+  <title>day09-视频基础、认识YUV、采集摄像头YUV数据 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,7 +182,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="day09-视频基础、YUV">
+            <span class="h2" id="subtitle" title="day09-视频基础、认识YUV、采集摄像头YUV数据">
               
             </span>
 
@@ -241,7 +241,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">day09-视频基础、YUV</h1>
+            <h1 style="display: none">day09-视频基础、认识YUV、采集摄像头YUV数据</h1>
             
             <div class="markdown-body">
               <h2 id="一、视频基础知识"><a href="#一、视频基础知识" class="headerlink" title="一、视频基础知识"></a>一、视频基础知识</h2><h3 id="1、RGB888和RGBA分别占多少字节？"><a href="#1、RGB888和RGBA分别占多少字节？" class="headerlink" title="1、RGB888和RGBA分别占多少字节？"></a>1、RGB888和RGBA分别占多少字节？</h3><ul>
@@ -281,7 +281,7 @@
 <li>图像小于显示区域，拉伸&#x2F;留白。</li>
 <li>图像大于显示区域，缩小&#x2F;裁剪。</li>
 </ul>
-<h2 id="一、YUV"><a href="#一、YUV" class="headerlink" title="一、YUV"></a>一、YUV</h2><h3 id="1、YUV中的Y是什么？UV是什么？"><a href="#1、YUV中的Y是什么？UV是什么？" class="headerlink" title="1、YUV中的Y是什么？UV是什么？"></a>1、YUV中的Y是什么？UV是什么？</h3><ul>
+<h2 id="二、认识YUV"><a href="#二、认识YUV" class="headerlink" title="二、认识YUV"></a>二、认识YUV</h2><h3 id="1、YUV中的Y是什么？UV是什么？"><a href="#1、YUV中的Y是什么？UV是什么？" class="headerlink" title="1、YUV中的Y是什么？UV是什么？"></a>1、YUV中的Y是什么？UV是什么？</h3><ul>
 <li>Y：表示明亮度。</li>
 <li>UV：是描述影像色彩饱和度。</li>
 <li>主要的采样格式有YUV420、YUV422、YUV444</li>
@@ -388,6 +388,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day10H264%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day10-认识H264、H264压缩技术、码流分层NALU</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
