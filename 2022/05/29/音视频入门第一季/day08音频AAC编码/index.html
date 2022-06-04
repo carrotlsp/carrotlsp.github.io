@@ -23,17 +23,17 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="一、音频编码理论基础1、音频有损压缩主要从哪些方面进行压缩？ 时域遮蔽、频域遮蔽    2、音频无损压缩有哪些有名的算法？ 哈夫曼算法 香农算法  3、常见的音频编码器？（例举三个） AAC：在直播系统中应用比较广泛 OPUS：是较新的音频编码器，WebRTC默认使用OPUS G.711：一般在固话中使用  4、AAC有哪三种常见规格，简单描述下？ AAC LC：(Low Complexity)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/day08音频AAC编码/image-20220529103700600.png">
-<meta property="og:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/day08音频AAC编码/image-20220529105427279.png">
-<meta property="og:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/day08音频AAC编码/image-20220529105523745.png">
-<meta property="og:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/day08音频AAC编码/image-20220529110152214.png">
+<meta property="og:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529103700600.png">
+<meta property="og:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529105427279.png">
+<meta property="og:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529105523745.png">
+<meta property="og:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529110152214.png">
 <meta property="article:published_time" content="2022-05-29T03:30:38.000Z">
-<meta property="article:modified_time" content="2022-06-04T02:10:38.252Z">
+<meta property="article:modified_time" content="2022-06-04T10:32:44.490Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="音视频">
 <meta property="article:tag" content="ffmpeg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/day08音频AAC编码/image-20220529103700600.png">
+<meta name="twitter:image" content="http://example.com/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529103700600.png">
   
   
   <title>day08-音频AAC编码理论(二) - Hexo</title>
@@ -247,7 +247,7 @@
               <h2 id="一、音频编码理论基础"><a href="#一、音频编码理论基础" class="headerlink" title="一、音频编码理论基础"></a>一、音频编码理论基础</h2><h3 id="1、音频有损压缩主要从哪些方面进行压缩？"><a href="#1、音频有损压缩主要从哪些方面进行压缩？" class="headerlink" title="1、音频有损压缩主要从哪些方面进行压缩？"></a>1、音频<code>有损压缩</code>主要从哪些方面进行压缩？</h3><ul>
 <li>时域遮蔽、频域遮蔽</li>
 </ul>
-<img src="day08音频AAC编码/image-20220529103700600.png" srcset="/img/loading.gif" lazyload alt="image-20220529103700600" style="zoom: 33%;" />
+<img src="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529103700600.png" srcset="/img/loading.gif" lazyload class="">
 
 <h3 id="2、音频无损压缩有哪些有名的算法？"><a href="#2、音频无损压缩有哪些有名的算法？" class="headerlink" title="2、音频无损压缩有哪些有名的算法？"></a>2、音频<code>无损压缩</code>有哪些有名的算法？</h3><ul>
 <li>哈夫曼算法</li>
@@ -267,11 +267,11 @@
 <li>ADIF</li>
 <li>ADTS</li>
 </ul>
-<img src="day08音频AAC编码/image-20220529105427279.png" srcset="/img/loading.gif" lazyload alt="image-20220529105427279" style="zoom:33%;" />
+<img src="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529105427279.png" srcset="/img/loading.gif" lazyload class="">
 
 
 
-<h3 id="6、ADTS结构详解？"><a href="#6、ADTS结构详解？" class="headerlink" title="6、ADTS结构详解？"></a>6、ADTS结构详解？</h3><img src="day08音频AAC编码/image-20220529105523745.png" srcset="/img/loading.gif" lazyload alt="image-20220529105523745" style="zoom: 50%;" />
+<h3 id="6、ADTS结构详解？"><a href="#6、ADTS结构详解？" class="headerlink" title="6、ADTS结构详解？"></a>6、ADTS结构详解？</h3><img src="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529105523745.png" srcset="/img/loading.gif" lazyload class="">
 
 <h3 id="7、通过ffmpeg命令生成aa文件"><a href="#7、通过ffmpeg命令生成aa文件" class="headerlink" title="7、通过ffmpeg命令生成aa文件"></a>7、通过ffmpeg命令生成aa文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs sh">ffmpeg -i raw_xxx.mp4 -vn -c:a libfdk_aac -ar 44100 -channels 2 -profile:a aac_he dst_xxx.aac<br></code></pre></td></tr></table></figure>
 
@@ -280,7 +280,7 @@
 <h3 id="8、借助网站分析生成的aac文件"><a href="#8、借助网站分析生成的aac文件" class="headerlink" title="8、借助网站分析生成的aac文件"></a>8、借助网站分析生成的aac文件</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://www.p23.nl/projects/aac-header/">https://www.p23.nl/projects/aac-header/</a></li>
 </ul>
-<img src="day08音频AAC编码/image-20220529110152214.png" srcset="/img/loading.gif" lazyload alt="image-20220529110152214" style="zoom: 50%;" />
+<img src="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/image-20220529110152214.png" srcset="/img/loading.gif" lazyload class="">
 
 
             </div>
