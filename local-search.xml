@@ -8,19 +8,21 @@
     <link href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/"/>
     <url>/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/</url>
     
-    <content type="html"><![CDATA[<p>test</p><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604182333615.png" class="">]]></content>
+    <content type="html"><![CDATA[<h2 id="一、认识SPS与PPS"><a href="#一、认识SPS与PPS" class="headerlink" title="一、认识SPS与PPS"></a>一、认识SPS与PPS</h2><h3 id="1、认识SPS？主要包含哪些信息？"><a href="#1、认识SPS？主要包含哪些信息？" class="headerlink" title="1、认识SPS？主要包含哪些信息？"></a>1、认识SPS？主要包含哪些信息？</h3><ul><li>SPS(Sequence Parameter Set)，序列参数集，作用于一串连续的视频图像。</li><li>比如：帧数、解码图像尺寸、参考帧数目</li></ul><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191831321.png" class=""><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191854932.png" class=""><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195729151.png" class=""><h3 id="2、认识PPS？主要包含哪些信息？"><a href="#2、认识PPS？主要包含哪些信息？" class="headerlink" title="2、认识PPS？主要包含哪些信息？"></a>2、认识PPS？主要包含哪些信息？</h3><ul><li>PPS(Picture Parameter Set)，图像参数集，作用于视频序列中的图像</li><li>比如：熵编码选择标识、片组数目</li></ul><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191808115.png" class=""><h3 id="3、掌握Profile"><a href="#3、掌握Profile" class="headerlink" title="3、掌握Profile"></a>3、掌握Profile</h3><ul><li>H264 Profile：对视频压缩特性的描述，Profile越高，说明采用了越高级的压缩特性</li></ul><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195557564.png" class="" title="image-20220604195557564"><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195603752.png" class="" title="image-20220604195603752"><h3 id="4、掌握H264-Level"><a href="#4、掌握H264-Level" class="headerlink" title="4、掌握H264 Level"></a>4、掌握H264 Level</h3><ul><li>H264 Level：是对视频的描述，Level越高，视频的码率，分辨率越高</li></ul><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195655374.png" class="" title="image-20220604195655374"><h3 id="5、视频分析工具主流有哪些（说两个）？"><a href="#5、视频分析工具主流有哪些（说两个）？" class="headerlink" title="5、视频分析工具主流有哪些（说两个）？"></a>5、视频分析工具主流有哪些（说两个）？</h3><ul><li>Evecard Stream Eye</li><li>雷神开发的工具</li></ul><h3 id="二、H264编码实战"><a href="#二、H264编码实战" class="headerlink" title="二、H264编码实战"></a>二、H264编码实战</h3><h3 id="1、基本步骤，主要四步"><a href="#1、基本步骤，主要四步" class="headerlink" title="1、基本步骤，主要四步"></a>1、基本步骤，主要四步</h3><ul><li>打开编码器</li><li>转换NV12到YUV420P</li><li>准备编码数据 AVFrame</li><li>H264编码</li></ul>]]></content>
     
     
     <categories>
       
-      <category>文章类别</category>
+      <category>音视频入门课</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>标签1</tag>
+      <tag>音视频</tag>
+      
+      <tag>ffmpeg</tag>
       
     </tags>
     
