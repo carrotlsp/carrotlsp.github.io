@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、认识 socket.io1、借助 socket.io 发送给某些对象的相关API？1234567891011&#x2F;&#x2F;给本次连接发消息socket.emit()&#x2F;&#x2F;给某个房间内所有人发消息io.in(room).emit()&#x2F;&#x2F;除本连接外，给某个房间内所有人发消息socket.to(room).emit()&#x2F;&#x2F;除本连接外，给所有人发消息socket.brocast.emit()    2、socke">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day08-WebRTC信令服务器实现">
+<meta property="og:url" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day08%E4%BF%A1%E4%BB%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、认识 socket.io1、借助 socket.io 发送给某些对象的相关API？1234567891011&#x2F;&#x2F;给本次连接发消息socket.emit()&#x2F;&#x2F;给某个房间内所有人发消息io.in(room).emit()&#x2F;&#x2F;除本连接外，给某个房间内所有人发消息socket.to(room).emit()&#x2F;&#x2F;除本连接外，给所有人发消息socket.brocast.emit()    2、socke">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day08%E4%BF%A1%E4%BB%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0/image-20220618190417842.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day08%E4%BF%A1%E4%BB%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0/image-20220618205623601.png">
+<meta property="article:published_time" content="2022-06-18T04:03:03.000Z">
+<meta property="article:modified_time" content="2022-06-18T13:01:20.365Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="音视频">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day08%E4%BF%A1%E4%BB%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0/image-20220618190417842.png">
+  
+  
+  <title>day08-WebRTC信令服务器实现 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Carrot</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day08-WebRTC信令服务器实现">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-18 12:03" pubdate>
+        June 18, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      61 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day08-WebRTC信令服务器实现</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、认识-socket-io"><a href="#一、认识-socket-io" class="headerlink" title="一、认识 socket.io"></a>一、认识 socket.io</h2><h3 id="1、借助-socket-io-发送给某些对象的相关API？"><a href="#1、借助-socket-io-发送给某些对象的相关API？" class="headerlink" title="1、借助 socket.io 发送给某些对象的相关API？"></a>1、借助 socket.io 发送给某些对象的相关API？</h3><figure class="highlight js"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//给本次连接发消息</span><br>socket.<span class="hljs-title function_">emit</span>()<br><br><span class="hljs-comment">//给某个房间内所有人发消息</span><br>io.<span class="hljs-title function_">in</span>(room).<span class="hljs-title function_">emit</span>()<br><br><span class="hljs-comment">//除本连接外，给某个房间内所有人发消息</span><br>socket.<span class="hljs-title function_">to</span>(room).<span class="hljs-title function_">emit</span>()<br><br><span class="hljs-comment">//除本连接外，给所有人发消息</span><br>socket.<span class="hljs-property">brocast</span>.<span class="hljs-title function_">emit</span>()<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、socket-io-监听和发送具体消息的格式？"><a href="#2、socket-io-监听和发送具体消息的格式？" class="headerlink" title="2、socket.io 监听和发送具体消息的格式？"></a>2、socket.io 监听和发送具体消息的格式？</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//发送action命令</span><br><span class="hljs-attr">S</span>:	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;action&#x27;</span>);<br><span class="hljs-attr">C</span>:	socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;action&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;...&#125;);<br><br><span class="hljs-comment">//发送action命令，还有data数据</span><br><span class="hljs-attr">S</span>:	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;action&#x27;</span>, data);<br><span class="hljs-attr">C</span>:	socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;action&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>)&#123;...&#125;);<br><br><span class="hljs-comment">//发送action命令，还有两个数据</span><br><span class="hljs-attr">S</span>:	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;action&#x27;</span>, arg1, arg2);<br><span class="hljs-attr">C</span>:	socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;action&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">arg1, arg2</span>)&#123;...&#125;);<br>                                             <br><span class="hljs-comment">//发送action命令，还有回调函数</span><br><span class="hljs-attr">S</span>:	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;action&#x27;</span>, data, <span class="hljs-keyword">function</span>(<span class="hljs-params">arg1, arg2</span>)&#123;...&#125;);<br><span class="hljs-attr">C</span>:	socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;action&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">data, fn</span>)&#123;...&#125;);<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、在WebRTC中信令服务器有什么作用？"><a href="#3、在WebRTC中信令服务器有什么作用？" class="headerlink" title="3、在WebRTC中信令服务器有什么作用？"></a>3、在WebRTC中信令服务器有什么作用？</h3><img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day08%E4%BF%A1%E4%BB%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0/image-20220618190417842.png" srcset="/img/loading.gif" lazyload class="" title="image-20220618190417842">
+
+<ul>
+<li>①终端之间交换<font color="red">媒体相关信息</font>（比如编码格式、是否支持音频、是否支持视频等）</li>
+<li>②终端之间交换<font color="red">网络相关信息</font>（比如ip地址、local地址、公网地址等）</li>
+<li>③终端之间进行<font color="red">一些业务操作</font> （比如加入房间、退出房间等）</li>
+</ul>
+<h3 id="4、socket-io是基于TCP还是UDP呢？"><a href="#4、socket-io是基于TCP还是UDP呢？" class="headerlink" title="4、socket.io是基于TCP还是UDP呢？"></a>4、socket.io是基于TCP还是UDP呢？</h3><ul>
+<li>对于音视频来讲可以使用UDP，丢了一两帧数据关系不大。</li>
+<li>但是对于信令或业务请求来讲，一定要能拿到可靠结果，那就需要TCP来保证传输的可靠性。</li>
+<li>socket.io 是基于TCP的</li>
+</ul>
+<h2 id="二、代码借助-socket-io-实现简易版聊天室"><a href="#二、代码借助-socket-io-实现简易版聊天室" class="headerlink" title="二、代码借助 socket.io 实现简易版聊天室"></a>二、代码借助 socket.io 实现简易版聊天室</h2><h3 id="1、安装依赖库"><a href="#1、安装依赖库" class="headerlink" title="1、安装依赖库"></a>1、安装依赖库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">这里进行指定版本，防止一些方法已经发送变化</span><br>npm install log4js@5.2.0<br>npm install socket.io@2.0.4  <br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、代码实现聊天室-服务端部分"><a href="#2、代码实现聊天室-服务端部分" class="headerlink" title="2、代码实现聊天室(服务端部分)"></a>2、代码实现聊天室(服务端部分)</h3><ul>
+<li>服务端代码</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//服务端代码</span><br><span class="hljs-meta">&#x27;use strict&#x27;</span><br><br><span class="hljs-keyword">var</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>);<br><span class="hljs-keyword">var</span> serveIndex = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;serve-index&#x27;</span>);<br><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">var</span> socketIo = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;socket.io&#x27;</span>);<br><span class="hljs-keyword">var</span> log4js = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;log4js&#x27;</span>);<br><br><span class="hljs-comment">//log4js的基本配置（无须多做了解）</span><br>log4js.<span class="hljs-title function_">configure</span>(&#123;<br>  <span class="hljs-attr">appenders</span>: &#123;<br>      <span class="hljs-attr">file</span>: &#123;<br>          <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;file&#x27;</span>,<br>          <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;app.log&#x27;</span>,<br>          <span class="hljs-attr">layout</span>: &#123;<br>              <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;pattern&#x27;</span>,<br>              <span class="hljs-attr">pattern</span>: <span class="hljs-string">&#x27;%r %p - %m&#x27;</span>,<br>          &#125;<br>      &#125;<br>  &#125;,<br>  <span class="hljs-attr">categories</span>: &#123;<br>     <span class="hljs-attr">default</span>: &#123;<br>        <span class="hljs-attr">appenders</span>: [<span class="hljs-string">&#x27;file&#x27;</span>],<br>        <span class="hljs-attr">level</span>: <span class="hljs-string">&#x27;debug&#x27;</span><br>     &#125;<br>  &#125;<br>&#125;);<br><br><span class="hljs-keyword">var</span> logger = log4js.<span class="hljs-title function_">getLogger</span>();<br><span class="hljs-keyword">var</span> app = <span class="hljs-title function_">express</span>();<br><br><span class="hljs-comment">//顺序不能换</span><br>app.<span class="hljs-title function_">use</span>(<span class="hljs-title function_">serveIndex</span>(<span class="hljs-string">&#x27;./public&#x27;</span>));<br>app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;./public&#x27;</span>));<br><br><span class="hljs-keyword">var</span> http_server = http.<span class="hljs-title function_">createServer</span>(app);<br>http_server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">9980</span>, <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>);<br><br><span class="hljs-comment">//绑定socket.io到http服务</span><br><span class="hljs-keyword">var</span> io = socketIo.<span class="hljs-title function_">listen</span>(http_server)<br><br>io.<span class="hljs-property">sockets</span>.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;connection&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>)=&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;有人发起了链接请求111&quot;</span>);<br>  <br>  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;message&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">room, data</span>)=&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;message&quot;</span> + room + data);<br>    io.<span class="hljs-title function_">in</span>(room).<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;message&#x27;</span>, room, socket.<span class="hljs-property">id</span>, data); <span class="hljs-comment">//房间内所有人，除了自己</span><br>  &#125;);<br><br>  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;join&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">room</span>)=&gt;</span> &#123;<br>		socket.<span class="hljs-title function_">join</span>(room);<br>		<span class="hljs-keyword">var</span> myRoom = io.<span class="hljs-property">sockets</span>.<span class="hljs-property">adapter</span>.<span class="hljs-property">rooms</span>[room];<br>		<span class="hljs-keyword">var</span> users = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(myRoom.<span class="hljs-property">sockets</span>).<span class="hljs-property">length</span>;<br>		logger.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;the number of user in room is: &#x27;</span> + users);<br>	 	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;joined&#x27;</span>, room, socket.<span class="hljs-property">id</span>);	<br>  &#125;);<br><br>  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;leave&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">room</span>)=&gt;</span> &#123;<br>		<span class="hljs-keyword">var</span> myRoom = io.<span class="hljs-property">sockets</span>.<span class="hljs-property">adapter</span>.<span class="hljs-property">rooms</span>[room];<br>		<span class="hljs-keyword">var</span> users = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(myRoom.<span class="hljs-property">sockets</span>).<span class="hljs-property">length</span>;<br>		logger.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;the number of user in room is: &#x27;</span> + (users-<span class="hljs-number">1</span>));<br><br>		socket.<span class="hljs-title function_">leave</span>(room);<br>		socket.<span class="hljs-title function_">to</span>(room).<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;bye&#x27;</span>, room, socket.<span class="hljs-property">id</span>)<span class="hljs-comment">//房间内所有人,除自己外</span><br>	 	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;leaved&#x27;</span>, room, socket.<span class="hljs-property">id</span>);	<br>	&#125;);<br>&#125;);<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;webrtc服务启动成功&quot;</span>);<br><br><br><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、代码实现客户端部分"><a href="#3、代码实现客户端部分" class="headerlink" title="3、代码实现客户端部分"></a>3、代码实现客户端部分</h3><ul>
+<li>index.html 代码部分</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- index.html 代码部分 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Chat Room<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;./css/main.css&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">link</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">align</span>=<span class="hljs-string">&quot;center&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>UserName: <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;Chrome&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">text</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;username&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">input</span>&gt;</span><br>				<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>room: <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;112222&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">text</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;room&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">input</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;connect&quot;</span>&gt;</span>Conect<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;leave&quot;</span> <span class="hljs-attr">disabled</span>&gt;</span>Leave<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>				<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Content: <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">disabled</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;line-height: 1.5;&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;output&quot;</span> <span class="hljs-attr">rows</span>=<span class="hljs-string">&quot;10&quot;</span> <span class="hljs-attr">cols</span>=<span class="hljs-string">&quot;100&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>				<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>Input: <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">disabled</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;input&quot;</span> <span class="hljs-attr">rows</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">cols</span>=<span class="hljs-string">&quot;100&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span><br>				<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;send&quot;</span>&gt;</span>Send<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>				<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br><br>		<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./js/client.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>.&#x2F;js&#x2F;client.js 代码实现</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// ./js/client.js 代码实现</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">&#x27;use strict&#x27;</span><br><span class="hljs-keyword">var</span> userName = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;input#username&#x27;</span>);<br><span class="hljs-keyword">var</span> inputRoom = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;input#room&#x27;</span>);<br><span class="hljs-keyword">var</span> btnConnect = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;button#connect&#x27;</span>);<br><span class="hljs-keyword">var</span> btnLeave = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;button#leave&#x27;</span>);<br><span class="hljs-keyword">var</span> outputArea = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;textarea#output&#x27;</span>);<br><span class="hljs-keyword">var</span> inputArea = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;textarea#input&#x27;</span>);<br><span class="hljs-keyword">var</span> btnSend = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;button#send&#x27;</span>);<br><br><span class="hljs-keyword">var</span> socket;<br><span class="hljs-keyword">var</span> room;<br><br>btnConnect.<span class="hljs-property">onclick</span> = <span class="hljs-function">()=&gt;</span> &#123;<br>	<span class="hljs-comment">//connect</span><br>	socket = io.<span class="hljs-title function_">connect</span>();<br><br>	<span class="hljs-comment">//recieve message</span><br>	socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;joined&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">room, id</span>) =&gt;</span> &#123;<br>		btnConnect.<span class="hljs-property">disabled</span> = <span class="hljs-literal">true</span>;<br>		btnLeave.<span class="hljs-property">disabled</span> = <span class="hljs-literal">false</span>;<br>		inputArea.<span class="hljs-property">disabled</span> = <span class="hljs-literal">false</span>;<br>		btnSend.<span class="hljs-property">disabled</span> = <span class="hljs-literal">false</span>;<br>	&#125;);<br><br>	socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;leaved&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">room, id</span>) =&gt;</span> &#123;<br>		btnConnect.<span class="hljs-property">disabled</span> = <span class="hljs-literal">false</span>;<br>		btnLeave.<span class="hljs-property">disabled</span> = <span class="hljs-literal">true</span>;<br>		inputArea.<span class="hljs-property">disabled</span> = <span class="hljs-literal">true</span>;<br>		btnSend.<span class="hljs-property">disabled</span> = <span class="hljs-literal">true</span>;<br><br>		socket.<span class="hljs-title function_">disconnect</span>();<br>	&#125;);<br><br>	socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;message&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">room, id, data</span>) =&gt;</span> &#123;<br>		<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;message:&#x27;</span> + room + id + data);<br>		outputArea.<span class="hljs-property">scrollTop</span> = outputArea.<span class="hljs-property">scrollHeight</span>; <span class="hljs-comment">//窗口总是显示最后的内容</span><br>		outputArea.<span class="hljs-property">value</span> = outputArea.<span class="hljs-property">value</span> + data + <span class="hljs-string">&quot;\n\r&quot;</span>;<br>	&#125;)<br><br>	socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;disconnect&quot;</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> &#123;<br>    btnConnect.<span class="hljs-property">disabled</span> = <span class="hljs-literal">false</span>;<br>    btnLeave.<span class="hljs-property">disabled</span> = <span class="hljs-literal">true</span>;<br>    inputArea.<span class="hljs-property">disabled</span> = <span class="hljs-literal">true</span>;<br>    btnSend.<span class="hljs-property">disabled</span> = <span class="hljs-literal">true</span>;<br>  &#125;);<br><br>	<span class="hljs-comment">//send message</span><br>	room = inputRoom.<span class="hljs-property">value</span>;<br>	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;join&#x27;</span>, room);<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(userName.<span class="hljs-property">value</span> + <span class="hljs-string">&quot;发送join信息&quot;</span>);<br>&#125;<br><br>btnSend.<span class="hljs-property">onclick</span> = <span class="hljs-function">() =&gt;</span> &#123;<br>	<span class="hljs-keyword">var</span> data = inputArea.<span class="hljs-property">value</span>;<br>	data = userName.<span class="hljs-property">value</span> + <span class="hljs-string">&quot;:&quot;</span> + data;<br>	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;message&#x27;</span>, room, data);<br>	inputArea.<span class="hljs-property">value</span> = <span class="hljs-string">&#x27;&#x27;</span>;<br>&#125;<br><br>btnLeave.<span class="hljs-property">onclick</span> = <span class="hljs-function">() =&gt;</span> &#123;<br>	room = inputRoom.<span class="hljs-property">value</span>;<br>	socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;leave&#x27;</span>, room);<br>&#125;<br><br>inputArea.<span class="hljs-property">onkeypress</span> = <span class="hljs-function">(<span class="hljs-params">event</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">//event = event || window.event;</span><br>  <span class="hljs-keyword">if</span> (event.<span class="hljs-property">keyCode</span> == <span class="hljs-number">13</span>) &#123;<br>    <span class="hljs-comment">//回车发送消息</span><br>    <span class="hljs-keyword">var</span> data = inputArea.<span class="hljs-property">value</span>;<br>    data = userName.<span class="hljs-property">value</span> + <span class="hljs-string">&quot;:&quot;</span> + data;<br>    socket.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&quot;message&quot;</span>, room, data);<br>    inputArea.<span class="hljs-property">value</span> = <span class="hljs-string">&quot;&quot;</span>;<br>    event.<span class="hljs-title function_">preventDefault</span>(); <span class="hljs-comment">//阻止默认行为</span><br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="4、简易聊天室最终效果图如下"><a href="#4、简易聊天室最终效果图如下" class="headerlink" title="4、简易聊天室最终效果图如下"></a>4、简易聊天室最终效果图如下</h3><img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day08%E4%BF%A1%E4%BB%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0/image-20220618205623601.png" srcset="/img/loading.gif" lazyload class="" title="最终实现safari和chrome聊天">
+
+
+
+<h3 id="5、附上packet-json文件内容"><a href="#5、附上packet-json文件内容" class="headerlink" title="5、附上packet.json文件内容"></a>5、附上packet.json文件内容</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js">&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;webserver&quot;</span>,<br>  <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;1.0.0&quot;</span>,<br>  <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;main&quot;</span>: <span class="hljs-string">&quot;server.js&quot;</span>,<br>  <span class="hljs-string">&quot;dependencies&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;express&quot;</span>: <span class="hljs-string">&quot;^4.18.1&quot;</span>,<br>    <span class="hljs-string">&quot;log4js&quot;</span>: <span class="hljs-string">&quot;^5.2.0&quot;</span>,<br>    <span class="hljs-string">&quot;serve-index&quot;</span>: <span class="hljs-string">&quot;^1.9.1&quot;</span>,<br>    <span class="hljs-string">&quot;socket.io&quot;</span>: <span class="hljs-string">&quot;^2.0.4&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;devDependencies&quot;</span>: &#123;&#125;,<br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;test&quot;</span>: <span class="hljs-string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span>,<br>    <span class="hljs-string">&quot;start&quot;</span>: <span class="hljs-string">&quot;node server.js&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;license&quot;</span>: <span class="hljs-string">&quot;ISC&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/WebRTC%E5%85%A5%E9%97%A8/">WebRTC入门</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+                    
+                      <a class="hover-with-bg" href="/tags/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day09-WebRTC网络基础补充：P2P/STUN/TURN/ICE知识</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day03%E8%8E%B7%E5%8F%96%E8%A7%86%E9%A2%91%E9%9F%B3%E9%A2%91/">
+                        <span class="hidden-mobile">day06-获取音频视频</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

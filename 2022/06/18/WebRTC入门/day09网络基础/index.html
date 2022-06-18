@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、基本概念先认识1、NAT的全称是什么？NAT是干什么的？ NAT：Network Address Translation，即网络地址映射 作用：①解决IPV4地址不足的问题 ②保护NAT内部计算机的安全  2、STUN的全称是什么？STUN是干什么的？ STUN：Simple Traversal of UDP Through NAT，即UDP对NAT的简单穿越方式（是一种协议）  功能：通过N">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day09-WebRTC网络基础补充：P2P&#x2F;STUN&#x2F;TURN&#x2F;ICE知识">
+<meta property="og:url" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、基本概念先认识1、NAT的全称是什么？NAT是干什么的？ NAT：Network Address Translation，即网络地址映射 作用：①解决IPV4地址不足的问题 ②保护NAT内部计算机的安全  2、STUN的全称是什么？STUN是干什么的？ STUN：Simple Traversal of UDP Through NAT，即UDP对NAT的简单穿越方式（是一种协议）  功能：通过N">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618215247077.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618215509316.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618215628498.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214518833.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214528801.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214540839.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214550416.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214733843.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214814385.png">
+<meta property="og:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214917186.png">
+<meta property="article:published_time" content="2022-06-18T10:03:03.000Z">
+<meta property="article:modified_time" content="2022-06-18T13:57:27.453Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="音视频">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618215247077.png">
+  
+  
+  <title>day09-WebRTC网络基础补充：P2P/STUN/TURN/ICE知识 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Carrot</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day09-WebRTC网络基础补充：P2P/STUN/TURN/ICE知识">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-18 18:03" pubdate>
+        June 18, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      11 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day09-WebRTC网络基础补充：P2P/STUN/TURN/ICE知识</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、基本概念先认识"><a href="#一、基本概念先认识" class="headerlink" title="一、基本概念先认识"></a>一、基本概念先认识</h2><h3 id="1、NAT的全称是什么？NAT是干什么的？"><a href="#1、NAT的全称是什么？NAT是干什么的？" class="headerlink" title="1、NAT的全称是什么？NAT是干什么的？"></a>1、NAT的全称是什么？NAT是干什么的？</h3><ul>
+<li><font color="red">NAT</font>：Network Address Translation，即网络地址映射</li>
+<li><font color="red">作用</font>：①解决IPV4地址不足的问题 ②保护NAT内部计算机的安全</li>
+</ul>
+<h3 id="2、STUN的全称是什么？STUN是干什么的？"><a href="#2、STUN的全称是什么？STUN是干什么的？" class="headerlink" title="2、STUN的全称是什么？STUN是干什么的？"></a>2、STUN的全称是什么？STUN是干什么的？</h3><ul>
+<li><p><font color="red">STUN</font>：Simple Traversal of UDP Through NAT，即UDP对NAT的简单穿越方式（是一种协议）</p>
+</li>
+<li><p><font color="red">功能</font>：通过NAT穿越，内网的计算机与外网能够进行P2P连接通信（有点中介信息服务度的感觉）</p>
+</li>
+<li><p><font color="red">缺陷</font>：①STUN不适合支持TCP连接的穿越 ②STUN方式不支持对称NAT穿越</p>
+</li>
+<li><p>STUN的存在目的就是进行NAT穿越</p>
+</li>
+<li><p>STUN是典型的客户端&#x2F;服务端模式，客户端发送请求，服务端进行响应。</p>
+</li>
+<li><p>本章对STUN协议、协议头、协议体都有详细描述，日后需要再回来看。</p>
+</li>
+</ul>
+<img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618215247077.png" srcset="/img/loading.gif" lazyload class="">
+
+<h3 id="3、TURN的全称是什么？TURN是干什么的？"><a href="#3、TURN的全称是什么？TURN是干什么的？" class="headerlink" title="3、TURN的全称是什么？TURN是干什么的？"></a>3、TURN的全称是什么？TURN是干什么的？</h3><ul>
+<li><font color="red">TURN</font>：Tranversal Using ReplayNAT，即通过Relay方式穿越NAT</li>
+<li><font color="red">功能</font>：即私网用户发出的报文都要经过 TURNServer 进行 Relay 转发</li>
+<li><font color="red">优点</font>：解决了STUN的无法穿越的问题</li>
+<li>TURN简历在STUN之上，消息格式使用STUN格式消息</li>
+<li>TURN Client 要求服务端分配一个公网IP和Port用户接收或发送数据。</li>
+</ul>
+<h3 id="4、ICE的全称是什么？ICE是干什么的？"><a href="#4、ICE的全称是什么？ICE是干什么的？" class="headerlink" title="4、ICE的全称是什么？ICE是干什么的？"></a><img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618215509316.png" srcset="/img/loading.gif" lazyload class="">4、ICE的全称是什么？ICE是干什么的？</h3><ul>
+<li><font color="red">ICE</font>：Interactive Connectivity EStablishment</li>
+<li><font color="red">功能</font>：ICE不是一种协议，而是一个framework，它整合了STUN和TURN</li>
+<li><font color="red">举例</font>：<code>从①局域网尝试、②NAT穿越尝试、③TRUN服务端中转 </code>这三种模式中，选一个最佳通信模式</li>
+</ul>
+<img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618215628498.png" srcset="/img/loading.gif" lazyload class="" title="image-20220618215628498">
+
+<h2 id="二、更深入认识NAT"><a href="#二、更深入认识NAT" class="headerlink" title="二、更深入认识NAT"></a>二、更深入认识NAT</h2><h3 id="1、再次认识NAT"><a href="#1、再次认识NAT" class="headerlink" title="1、再次认识NAT"></a>1、再次认识NAT</h3><ul>
+<li>NAT就是内网地址转换到公网地址</li>
+<li>简单来说就是一张地址<code>映射表</code></li>
+</ul>
+<h3 id="2、NAT有哪四个种类？"><a href="#2、NAT有哪四个种类？" class="headerlink" title="2、NAT有哪四个种类？"></a>2、NAT有哪四个种类？</h3><ul>
+<li>完全锥型NAT</li>
+<li>地址限制锥型NAT</li>
+<li>端口限制锥型NAT</li>
+<li>对称型NAT</li>
+</ul>
+<h3 id="3、什么是完全锥型NAT？"><a href="#3、什么是完全锥型NAT？" class="headerlink" title="3、什么是完全锥型NAT？"></a>3、什么是完全锥型NAT？</h3><ul>
+<li><p>Full cone NAT</p>
+</li>
+<li><p>内部机器A访问外网机器C，NAT打开一个端口，后面<strong>外网的任意ip和任意port</strong>都可以访问这个端口，也就是<strong>任意ip+任意port</strong>可以访问机器A</p>
+</li>
+</ul>
+<img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214518833.png" srcset="/img/loading.gif" lazyload class="" title="image-20220618214518833">
+
+<h3 id="4、什么是地址限制锥型NAT？"><a href="#4、什么是地址限制锥型NAT？" class="headerlink" title="4、什么是地址限制锥型NAT？"></a>4、什么是地址限制锥型NAT？</h3><ul>
+<li>Address Restricted Cone</li>
+<li>内部机器A访问外网机器C，NAT打开一个端口，后面<strong>机器C的任意port</strong>可以访问这个端口，就是只能<strong>固定ip+任意port</strong>访问A</li>
+</ul>
+<img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214528801.png" srcset="/img/loading.gif" lazyload class="" title="image-20220618214528801">
+
+<h3 id="5、什么是端口限制锥型NAT？"><a href="#5、什么是端口限制锥型NAT？" class="headerlink" title="5、什么是端口限制锥型NAT？"></a>5、什么是端口限制锥型NAT？</h3><ul>
+<li>Port Restricted Cone</li>
+<li>内部机器A访问外网机器C，NAT打开一个端口，后面<strong>机器C的固定port</strong>可以访问这个端口，就是只能<strong>固定ip+固定port</strong>访问A</li>
+</ul>
+<img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214540839.png" srcset="/img/loading.gif" lazyload class="" title="image-20220618214540839">
+
+<h3 id="6、什么是对称型NAT？"><a href="#6、什么是对称型NAT？" class="headerlink" title="6、什么是对称型NAT？"></a>6、什么是对称型NAT？</h3><ul>
+<li>Symmetric</li>
+<li>连接不同的外部Server，NAT打开的端口会变化。也就是内部机器A连接外网机器B时，NAT会打开一个端口，连接外网机器C时又会打开另外一个端口。</li>
+</ul>
+<img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214550416.png" srcset="/img/loading.gif" lazyload class="" title="image-20220618214550416">
+
+<h2 id="三、认识NAT穿越过程"><a href="#三、认识NAT穿越过程" class="headerlink" title="三、认识NAT穿越过程"></a>三、认识NAT穿越过程</h2><h3 id="1、NAT穿越原理是什么？"><a href="#1、NAT穿越原理是什么？" class="headerlink" title="1、NAT穿越原理是什么？"></a>1、NAT穿越原理是什么？</h3><ul>
+<li>基于各种NAT特性，让两台私网机器能够p2p通信</li>
+</ul>
+<img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214733843.png" srcset="/img/loading.gif" lazyload class="">
+
+<h3 id="2、NAT能穿越成功的组合？（记住哪两种不可能打通即可）"><a href="#2、NAT能穿越成功的组合？（记住哪两种不可能打通即可）" class="headerlink" title="2、NAT能穿越成功的组合？（记住哪两种不可能打通即可）"></a>2、NAT能穿越成功的组合？（记住哪两种不可能打通即可）</h3><img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214814385.png" srcset="/img/loading.gif" lazyload class="">
+
+<h3 id="3、NAT类型判断过程？（这图很经典，后面不懂再回来看）"><a href="#3、NAT类型判断过程？（这图很经典，后面不懂再回来看）" class="headerlink" title="3、NAT类型判断过程？（这图很经典，后面不懂再回来看）"></a>3、NAT类型判断过程？（这图很经典，后面不懂再回来看）</h3><img src="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/image-20220618214917186.png" srcset="/img/loading.gif" lazyload class="" title="image-20220618214917186">
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/WebRTC%E5%85%A5%E9%97%A8/">WebRTC入门</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+                    
+                      <a class="hover-with-bg" href="/tags/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day08%E4%BF%A1%E4%BB%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0/">
+                        <span class="hidden-mobile">day08-WebRTC信令服务器实现</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
