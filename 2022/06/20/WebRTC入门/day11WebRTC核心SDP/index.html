@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、网络抓包1、SDP在WebRTC中的地位？ SDP可以说是WebRTC的核心，因为双方进行通信的参数都在其中 如使用的编码器是什么，码流是多大，有多少个媒体流等等都在SDP中描述着  2、什么是SDP？ SDP（Session Description Protocol）它只是一种信息格式的描述标准 本身不属于传输协议，但是可以被其他传输协议用来交换必要的信息。  3、认识WebRTC中的SDP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day11-WebRTC核心之SDP详解">
+<meta property="og:url" content="http://example.com/2022/06/20/WebRTC%E5%85%A5%E9%97%A8/day11WebRTC%E6%A0%B8%E5%BF%83SDP/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、网络抓包1、SDP在WebRTC中的地位？ SDP可以说是WebRTC的核心，因为双方进行通信的参数都在其中 如使用的编码器是什么，码流是多大，有多少个媒体流等等都在SDP中描述着  2、什么是SDP？ SDP（Session Description Protocol）它只是一种信息格式的描述标准 本身不属于传输协议，但是可以被其他传输协议用来交换必要的信息。  3、认识WebRTC中的SDP">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/06/20/WebRTC%E5%85%A5%E9%97%A8/day11WebRTC%E6%A0%B8%E5%BF%83SDP/image-20220625173942004.png">
+<meta property="og:image" content="http://example.com/2022/06/20/WebRTC%E5%85%A5%E9%97%A8/day11WebRTC%E6%A0%B8%E5%BF%83SDP/image-20220625173459114.png">
+<meta property="article:published_time" content="2022-06-20T04:11:11.000Z">
+<meta property="article:modified_time" content="2022-06-25T09:42:24.903Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="音视频">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/06/20/WebRTC%E5%85%A5%E9%97%A8/day11WebRTC%E6%A0%B8%E5%BF%83SDP/image-20220625173942004.png">
+  
+  
+  <title>day11-WebRTC核心之SDP详解 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Carrot</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day11-WebRTC核心之SDP详解">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-20 12:11" pubdate>
+        June 20, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      44 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day11-WebRTC核心之SDP详解</h1>
+            
+            <div class="markdown-body">
+              <h1 id="一、网络抓包"><a href="#一、网络抓包" class="headerlink" title="一、网络抓包"></a>一、网络抓包</h1><h3 id="1、SDP在WebRTC中的地位？"><a href="#1、SDP在WebRTC中的地位？" class="headerlink" title="1、SDP在WebRTC中的地位？"></a>1、SDP在WebRTC中的地位？</h3><ul>
+<li>SDP可以说是WebRTC的核心，因为双方进行通信的参数都在其中</li>
+<li>如使用的编码器是什么，码流是多大，有多少个媒体流等等都在SDP中描述着</li>
+</ul>
+<h3 id="2、什么是SDP？"><a href="#2、什么是SDP？" class="headerlink" title="2、什么是SDP？"></a>2、什么是SDP？</h3><ul>
+<li>SDP（Session Description Protocol）它只是一种信息格式的描述标准</li>
+<li>本身不属于传输协议，但是可以被其他传输协议用来交换必要的信息。</li>
+</ul>
+<h3 id="3、认识WebRTC中的SDP，有个印象就行，后续再倒回来研究。"><a href="#3、认识WebRTC中的SDP，有个印象就行，后续再倒回来研究。" class="headerlink" title="3、认识WebRTC中的SDP，有个印象就行，后续再倒回来研究。"></a>3、认识WebRTC中的SDP，有个印象就行，后续再倒回来研究。</h3><ul>
+<li>会话层：类似全局变量，是对SDP大而全的信息统计</li>
+<li>媒体层：类似于局部变量，媒体层的数据会覆盖会话层</li>
+</ul>
+<img src="/2022/06/20/WebRTC%E5%85%A5%E9%97%A8/day11WebRTC%E6%A0%B8%E5%BF%83SDP/image-20220625173942004.png" srcset="/img/loading.gif" lazyload class="">
+
+
+
+<h3 id="4、如何获取SDP？"><a href="#4、如何获取SDP？" class="headerlink" title="4、如何获取SDP？"></a>4、如何获取SDP？</h3><figure class="highlight js"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getAnswer</span>(<span class="hljs-params">desc</span>)&#123;<br>	pc2.<span class="hljs-title function_">setLocalDescription</span>(desc);<br>	answerSdpTextarea.<span class="hljs-property">value</span> = desc.<span class="hljs-property">sdp</span><br><br>	<span class="hljs-comment">//send desc to signal</span><br>	<span class="hljs-comment">//receive desc from signal</span><br>	<br>	pc1.<span class="hljs-title function_">setRemoteDescription</span>(desc);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">getOffer</span>(<span class="hljs-params">desc</span>)&#123;<br>	pc1.<span class="hljs-title function_">setLocalDescription</span>(desc);<br>	offerSdpTextarea.<span class="hljs-property">value</span> = desc.<span class="hljs-property">sdp</span><br><br>	<span class="hljs-comment">//send desc to signal</span><br>	<span class="hljs-comment">//receive desc from signal</span><br>	<br>	pc2.<span class="hljs-title function_">setRemoteDescription</span>(desc);<br><br>	pc2.<span class="hljs-title function_">createAnswer</span>()<br>		.<span class="hljs-title function_">then</span>(getAnswer)<br>		.<span class="hljs-title function_">catch</span>(handleAnswerError);<br><br>&#125;	<br></code></pre></td></tr></table></figure>
+
+
+
+<img src="/2022/06/20/WebRTC%E5%85%A5%E9%97%A8/day11WebRTC%E6%A0%B8%E5%BF%83SDP/image-20220625173459114.png" srcset="/img/loading.gif" lazyload class="">
+
+
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><code class="hljs xml">v=0<br>o=- 6529374866365022581 2 IN IP4 127.0.0.1<br>s=-<br>t=0 0<br>a=group:BUNDLE 0<br>a=extmap-allow-mixed<br>a=msid-semantic: WMS 8WZ552nThLWpJd1OTFAcTJTEIb6s4aHH1vlF<br>m=video 9 UDP/TLS/RTP/SAVPF 96 97 98 99 100 101 127 121 125 107 108 109 124 120 123 119 35 36 41 42 114 115 116 117 118<br>c=IN IP4 0.0.0.0<br>a=rtcp:9 IN IP4 0.0.0.0<br>a=ice-ufrag:j9z9<br>a=ice-pwd:JcYFBZ/8ONKMNks8lG37N83y<br>a=ice-options:trickle<br>a=fingerprint:sha-256 A4:52:8C:A8:2B:22:8C:66:C1:03:D3:65:EC:EE:36:E4:0E:28:CB:02:FB:90:DE:EA:E6:C2:C8:B2:DE:6A:05:30<br>a=setup:actpass<br>a=mid:0<br>a=extmap:1 urn:ietf:params:rtp-hdrext:toffset<br>a=extmap:2 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time<br>a=extmap:3 urn:3gpp:video-orientation<br>a=extmap:4 http://www.ietf.org/id/draft-holmer-rmcat-transport-wide-cc-extensions-01<br>a=extmap:5 http://www.webrtc.org/experiments/rtp-hdrext/playout-delay<br>a=extmap:6 http://www.webrtc.org/experiments/rtp-hdrext/video-content-type<br>a=extmap:7 http://www.webrtc.org/experiments/rtp-hdrext/video-timing<br>a=extmap:8 http://www.webrtc.org/experiments/rtp-hdrext/color-space<br>a=extmap:9 urn:ietf:params:rtp-hdrext:sdes:mid<br>a=extmap:10 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id<br>a=extmap:11 urn:ietf:params:rtp-hdrext:sdes:repaired-rtp-stream-id<br>a=sendrecv<br>a=msid:8WZ552nThLWpJd1OTFAcTJTEIb6s4aHH1vlF 31751cde-a529-4f04-bd71-ad11336ad20b<br>a=rtcp-mux<br>a=rtcp-rsize<br>a=rtpmap:96 VP8/90000<br>a=rtcp-fb:96 goog-remb<br>a=rtcp-fb:96 transport-cc<br>a=rtcp-fb:96 ccm fir<br>a=rtcp-fb:96 nack<br>a=rtcp-fb:96 nack pli<br>a=rtpmap:97 rtx/90000<br>a=fmtp:97 apt=96<br>a=rtpmap:98 VP9/90000<br>a=rtcp-fb:98 goog-remb<br>a=rtcp-fb:98 transport-cc<br>a=rtcp-fb:98 ccm fir<br>a=rtcp-fb:98 nack<br>a=rtcp-fb:98 nack pli<br>a=fmtp:98 profile-id=0<br>a=rtpmap:99 rtx/90000<br>a=fmtp:99 apt=98<br>a=rtpmap:100 VP9/90000<br>a=rtcp-fb:100 goog-remb<br>a=rtcp-fb:100 transport-cc<br>a=rtcp-fb:100 ccm fir<br>a=rtcp-fb:100 nack<br>a=rtcp-fb:100 nack pli<br>a=fmtp:100 profile-id=2<br>a=rtpmap:101 rtx/90000<br>a=fmtp:101 apt=100<br>a=rtpmap:127 H264/90000<br>a=rtcp-fb:127 goog-remb<br>a=rtcp-fb:127 transport-cc<br>a=rtcp-fb:127 ccm fir<br>a=rtcp-fb:127 nack<br>a=rtcp-fb:127 nack pli<br>a=fmtp:127 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f<br>a=rtpmap:121 rtx/90000<br>a=fmtp:121 apt=127<br>a=rtpmap:125 H264/90000<br>a=rtcp-fb:125 goog-remb<br>a=rtcp-fb:125 transport-cc<br>a=rtcp-fb:125 ccm fir<br>a=rtcp-fb:125 nack<br>a=rtcp-fb:125 nack pli<br>a=fmtp:125 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42001f<br>a=rtpmap:107 rtx/90000<br>a=fmtp:107 apt=125<br>a=rtpmap:108 H264/90000<br>a=rtcp-fb:108 goog-remb<br>a=rtcp-fb:108 transport-cc<br>a=rtcp-fb:108 ccm fir<br>a=rtcp-fb:108 nack<br>a=rtcp-fb:108 nack pli<br>a=fmtp:108 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f<br>a=rtpmap:109 rtx/90000<br>a=fmtp:109 apt=108<br>a=rtpmap:124 H264/90000<br>a=rtcp-fb:124 goog-remb<br>a=rtcp-fb:124 transport-cc<br>a=rtcp-fb:124 ccm fir<br>a=rtcp-fb:124 nack<br>a=rtcp-fb:124 nack pli<br>a=fmtp:124 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=42e01f<br>a=rtpmap:120 rtx/90000<br>a=fmtp:120 apt=124<br>a=rtpmap:123 H264/90000<br>a=rtcp-fb:123 goog-remb<br>a=rtcp-fb:123 transport-cc<br>a=rtcp-fb:123 ccm fir<br>a=rtcp-fb:123 nack<br>a=rtcp-fb:123 nack pli<br>a=fmtp:123 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=4d001f<br>a=rtpmap:119 rtx/90000<br>a=fmtp:119 apt=123<br>a=rtpmap:35 H264/90000<br>a=rtcp-fb:35 goog-remb<br>a=rtcp-fb:35 transport-cc<br>a=rtcp-fb:35 ccm fir<br>a=rtcp-fb:35 nack<br>a=rtcp-fb:35 nack pli<br>a=fmtp:35 level-asymmetry-allowed=1;packetization-mode=0;profile-level-id=4d001f<br>a=rtpmap:36 rtx/90000<br>a=fmtp:36 apt=35<br>a=rtpmap:41 AV1/90000<br>a=rtcp-fb:41 goog-remb<br>a=rtcp-fb:41 transport-cc<br>a=rtcp-fb:41 ccm fir<br>a=rtcp-fb:41 nack<br>a=rtcp-fb:41 nack pli<br>a=rtpmap:42 rtx/90000<br>a=fmtp:42 apt=41<br>a=rtpmap:114 H264/90000<br>a=rtcp-fb:114 goog-remb<br>a=rtcp-fb:114 transport-cc<br>a=rtcp-fb:114 ccm fir<br>a=rtcp-fb:114 nack<br>a=rtcp-fb:114 nack pli<br>a=fmtp:114 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=64001f<br>a=rtpmap:115 rtx/90000<br>a=fmtp:115 apt=114<br>a=rtpmap:116 red/90000<br>a=rtpmap:117 rtx/90000<br>a=fmtp:117 apt=116<br>a=rtpmap:118 ulpfec/90000<br>a=ssrc-group:FID 436826565 1885894064<br>a=ssrc:436826565 cname:t+9nyTqxmjVC0Wq9<br>a=ssrc:436826565 msid:8WZ552nThLWpJd1OTFAcTJTEIb6s4aHH1vlF 31751cde-a529-4f04-bd71-ad11336ad20b<br>a=ssrc:436826565 mslabel:8WZ552nThLWpJd1OTFAcTJTEIb6s4aHH1vlF<br>a=ssrc:436826565 label:31751cde-a529-4f04-bd71-ad11336ad20b<br>a=ssrc:1885894064 cname:t+9nyTqxmjVC0Wq9<br>a=ssrc:1885894064 msid:8WZ552nThLWpJd1OTFAcTJTEIb6s4aHH1vlF 31751cde-a529-4f04-bd71-ad11336ad20b<br>a=ssrc:1885894064 mslabel:8WZ552nThLWpJd1OTFAcTJTEIb6s4aHH1vlF<br>a=ssrc:1885894064 label:31751cde-a529-4f04-bd71-ad11336ad20b<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/WebRTC%E5%85%A5%E9%97%A8/">WebRTC入门</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+                    
+                      <a class="hover-with-bg" href="/tags/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/25/WebRTC%E5%85%A5%E9%97%A8/day12%E5%AE%9E%E7%8E%B01v1%E9%9F%B3%E8%A7%86%E9%A2%91%E4%BA%92%E5%8A%A8%E7%9B%B4%E6%92%AD%E7%B3%BB%E7%BB%9F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day12-实现1v1音视频互动直播系统</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/19/WebRTC%E5%85%A5%E9%97%A8/day10%E7%AB%AF%E5%AF%B9%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B/">
+                        <span class="hidden-mobile">day10-WebRTC端对端1v1传输基本流程</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
