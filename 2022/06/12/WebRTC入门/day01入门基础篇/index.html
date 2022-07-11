@@ -16,12 +16,12 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、WebRTC基础概念1、一句话介绍下WebRTC是什么？ 音视频处理 + 即使通讯的开源库  2、WebRTC主要用于web吗？那主要应用于哪些领域呢？ 一开始是为了web设计的 现在不仅仅适用于web，已经全平台通用（包括iOS、安卓）  3、那么FFMpeg和WebRTC之间是什么关系呢？ 两个框架都是音视频领域的霸主。  FFMpeg：主要是多媒体文件的处理、音视频的编解码。  WebR">
+    <meta name="description" content="一、WebRTC基础概念1、一句话介绍下WebRTC是什么？ 音视频处理 + 即使通讯的开源库  2、WebRTC主要用于web吗？那主要应用于哪些领域呢？ 一开始是为了web设计的 现在不仅仅适用于web，已经全平台通用（包括iOS、安卓）  3、那么FFMpeg和WebRTC之间是什么关系呢？ 两个框架都是音视频领域的霸主。FFmpeg是基础，WebRTC也使用它  FFMpeg：更多的用于音">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day01-初始WebRTC">
 <meta property="og:url" content="http://example.com/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="一、WebRTC基础概念1、一句话介绍下WebRTC是什么？ 音视频处理 + 即使通讯的开源库  2、WebRTC主要用于web吗？那主要应用于哪些领域呢？ 一开始是为了web设计的 现在不仅仅适用于web，已经全平台通用（包括iOS、安卓）  3、那么FFMpeg和WebRTC之间是什么关系呢？ 两个框架都是音视频领域的霸主。  FFMpeg：主要是多媒体文件的处理、音视频的编解码。  WebR">
+<meta property="og:description" content="一、WebRTC基础概念1、一句话介绍下WebRTC是什么？ 音视频处理 + 即使通讯的开源库  2、WebRTC主要用于web吗？那主要应用于哪些领域呢？ 一开始是为了web设计的 现在不仅仅适用于web，已经全平台通用（包括iOS、安卓）  3、那么FFMpeg和WebRTC之间是什么关系呢？ 两个框架都是音视频领域的霸主。FFmpeg是基础，WebRTC也使用它  FFMpeg：更多的用于音">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/format,png.png">
 <meta property="og:image" content="http://example.com/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/image-20220612171615403.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://example.com/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/image-20220612172723861.png">
 <meta property="og:image" content="http://example.com/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/image-20220612172737582.png">
 <meta property="article:published_time" content="2022-06-12T05:04:03.000Z">
-<meta property="article:modified_time" content="2022-06-12T11:57:06.347Z">
+<meta property="article:modified_time" content="2022-07-05T22:50:51.408Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="音视频">
 <meta property="article:tag" content="WebRTC">
@@ -206,7 +206,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      480 字
+      506 字
     </span>
   
 
@@ -255,11 +255,11 @@
 <li>现在不仅仅适用于web，已经全平台通用（包括iOS、安卓）</li>
 </ul>
 <h3 id="3、那么FFMpeg和WebRTC之间是什么关系呢？"><a href="#3、那么FFMpeg和WebRTC之间是什么关系呢？" class="headerlink" title="3、那么FFMpeg和WebRTC之间是什么关系呢？"></a>3、那么FFMpeg和WebRTC之间是什么关系呢？</h3><ul>
-<li><p>两个框架都是音视频领域的霸主。</p>
+<li><p>两个框架都是音视频领域的霸主。FFmpeg是基础，WebRTC也使用它</p>
 </li>
-<li><p><font color="red">FFMpeg</font>：主要是多媒体文件的处理、音视频的编解码。</p>
+<li><p><font color="red">FFMpeg</font>：更多的用于音视频编辑与播放器</p>
 </li>
-<li><p><font color="red">WebRTC</font>：主要是网络抖动、网络丢包、网络评估、回音消除、降噪、自动增益等。</p>
+<li><p><font color="red">WebRTC</font>：更多的用于音视频实时通信，比如网络抖动、网络丢包、网络评估、回音消除、降噪、自动增益等。</p>
 </li>
 </ul>
 <h2 id="二、WebRTC原理与架构"><a href="#二、WebRTC原理与架构" class="headerlink" title="二、WebRTC原理与架构"></a>二、WebRTC原理与架构</h2><h3 id="1、WebRTC的整体架构图？"><a href="#1、WebRTC的整体架构图？" class="headerlink" title="1、WebRTC的整体架构图？"></a>1、WebRTC的整体架构图？</h3><img src="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/format,png.png" srcset="/img/loading.gif" lazyload class="">
@@ -280,7 +280,7 @@
 <img src="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/image-20220612171634006.png" srcset="/img/loading.gif" lazyload class="" title="image-20220612171634006">
 
 <h3 id="3、WebRTC重要的三个类理解？"><a href="#3、WebRTC重要的三个类理解？" class="headerlink" title="3、WebRTC重要的三个类理解？"></a>3、WebRTC重要的三个类理解？</h3><ul>
-<li><font color="red">MediaStream</font>：里面可以保护多个轨道，用于音视频传输</li>
+<li><font color="red">MediaStream</font>：里面可以包含多个轨道，用于音视频传输</li>
 <li><font color="red">RTCDataChannel</font>：里面可以传输文本、二进制数据(非音视频数据)</li>
 <li><font color="red">RTCPeerConnection</font>：是一个大而全、最重要的类</li>
 </ul>

@@ -248,7 +248,7 @@
       <p class="index-excerpt">
         <a href="/2022/06/25/WebRTC%E5%85%A5%E9%97%A8/day12%E5%AE%9E%E7%8E%B01v1%E9%9F%B3%E8%A7%86%E9%A2%91%E4%BA%92%E5%8A%A8%E7%9B%B4%E6%92%AD%E7%B3%BB%E7%BB%9F/" target="_self">
           
-          一、STUN&#x2F;TURN服务器1、比较出名的STUN&#x2F;TRUN服务器有哪些？ Rfc5766-turn-server coTurn ResTurn  2、下载并安装coturnapt-get install yum Why do I get “Failed to set locale, defaulting to C” when using yum? 123456export L
+          一、核心思想1、主要流程图（自己有空多绘制几遍）    二、核心代码1、服务端信令服务器代码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657&amp;#x27;use strict&amp;#x27;var http &#x3D; require(&amp;#x27;ht
         </a>
       </p>
 
@@ -487,6 +487,55 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day17iOS%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%AF%B9%E7%AB%AF/" target="_self">
+          day17-【实战】iOS端的WebRTC代码实现思路
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day17iOS%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%AF%B9%E7%AB%AF/" target="_self">
+          
+          一、单方面准备阶段（设备A）1、创建 RTCPeerConnectionFactory 工厂类12345678910111213141516- (void)createPeerConnectionFactory &amp;#123;    &#x2F;&#x2F;设置SSL传输    [RTCPeerConnectionFactory initialize];        &#x2F;&#x2F;如果点对点工厂为空    if (!facto
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-06-18 07:37" pubdate>
+              2022-06-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E5%85%A5%E9%97%A8/">WebRTC入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day03%E8%8E%B7%E5%8F%96%E8%A7%86%E9%A2%91%E9%9F%B3%E9%A2%91/" target="_self">
           day06-获取音频视频
         </a>
@@ -544,7 +593,7 @@
       <p class="index-excerpt">
         <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day02%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_self">
           
-          一、Nodejs服务器搭建1、为什么要搭建HTTPS服务器？ 搭建服务器的原因：web代码需要一个服务器，才能方便的被浏览器解析展示 搭建HTTPS的原因：访问用户的(隐私)音视频设备，需要通过HTTPS才能完全访问。  2、如何获取HTTPS证书？   然后在部署中有各个平台的部署方案，还是非常详细的。  3、部署一个最简单的https服务器，代码如下：123456789101112131415
+          一、Nodejs服务器搭建1、为什么要搭建HTTPS服务器？ 搭建服务器的原因：web代码需要一个服务器，才能方便的被浏览器解析展示 搭建HTTPS的原因：访问用户的(隐私)音视频设备，需要通过HTTPS才能完全访问。  2、如何获取HTTPS证书？   然后在部署中有各个平台的部署方案，还是非常详细的。  3、部署一个最简单的http服务器，代码如下：1234567891011121314151
         </a>
       </p>
 
@@ -593,7 +642,7 @@
       <p class="index-excerpt">
         <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/" target="_self">
           
-          一、WebRTC基础概念1、一句话介绍下WebRTC是什么？ 音视频处理 + 即使通讯的开源库  2、WebRTC主要用于web吗？那主要应用于哪些领域呢？ 一开始是为了web设计的 现在不仅仅适用于web，已经全平台通用（包括iOS、安卓）  3、那么FFMpeg和WebRTC之间是什么关系呢？ 两个框架都是音视频领域的霸主。  FFMpeg：主要是多媒体文件的处理、音视频的编解码。  WebR
+          一、WebRTC基础概念1、一句话介绍下WebRTC是什么？ 音视频处理 + 即使通讯的开源库  2、WebRTC主要用于web吗？那主要应用于哪些领域呢？ 一开始是为了web设计的 现在不仅仅适用于web，已经全平台通用（包括iOS、安卓）  3、那么FFMpeg和WebRTC之间是什么关系呢？ 两个框架都是音视频领域的霸主。FFmpeg是基础，WebRTC也使用它  FFMpeg：更多的用于音
         </a>
       </p>
 
@@ -621,55 +670,6 @@
               <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
             
               <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/" target="_self">
-          day11-【实战】视频编码/解码
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/" target="_self">
-          
-          一、认识SPS与PPS1、认识SPS？主要包含哪些信息？ SPS(Sequence Parameter Set)，序列参数集，作用于一串连续的视频图像。 比如：帧数、解码图像尺寸、参考帧数目        2、认识PPS？主要包含哪些信息？ PPS(Picture Parameter Set)，图像参数集，作用于视频序列中的图像 比如：熵编码选择标识、片组数目      3、掌握Profile H
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-04 18:12" pubdate>
-              2022-06-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
-            
-              <a href="/tags/ffmpeg/">ffmpeg</a>
             
           </div>
         
