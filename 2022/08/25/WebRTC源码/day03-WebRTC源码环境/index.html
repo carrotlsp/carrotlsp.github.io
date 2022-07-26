@@ -16,19 +16,42 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta property="og:url" content="http://example.com/archives/2022/page/2/index.html">
+    <meta name="description" content="一、WebRTC整体架构1、【重要】WebRTC的架构图    2、【重要】WebRTC的数据流转图 RTCP包是用于控制RTP包的 RTP包里面都是媒体数据      二、WebRTC源码分析环境的搭建1、哪里获取WebRTC的源码？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day03-WebRTC源码环境">
+<meta property="og:url" content="http://example.com/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、WebRTC整体架构1、【重要】WebRTC的架构图    2、【重要】WebRTC的数据流转图 RTCP包是用于控制RTP包的 RTP包里面都是媒体数据      二、WebRTC源码分析环境的搭建1、哪里获取WebRTC的源码？">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/image-20220727074051056.png">
+<meta property="og:image" content="http://example.com/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/image-20220727074121906.png">
+<meta property="article:published_time" content="2022-08-25T00:41:31.000Z">
+<meta property="article:modified_time" content="2022-07-26T23:42:54.197Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="WebRTC">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/image-20220727074051056.png">
   
   
-  <title>Archives - Hexo</title>
+  <title>day03-WebRTC源码环境 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -55,7 +78,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -156,9 +179,43 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Archive">
+            <span class="h2" id="subtitle" title="day03-WebRTC源码环境">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-08-25 08:41" pubdate>
+        August 25, 2022 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      106 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      1 分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -171,100 +228,100 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">24 posts in total.</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2022</p>
-    
-    <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day02%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day02-借助nodejs搭建HTTPS服务器</span>
-      <time style="float: right;">06-12</time>
-    </a>
-  
-    
-    <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day01-初始WebRTC</span>
-      <time style="float: right;">06-12</time>
-    </a>
-  
-    
-    <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day11-【实战】视频编码/解码</span>
-      <time style="float: right;">06-04</time>
-    </a>
-  
-    
-    <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day10H264%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day10-认识H264、H264压缩技术、码流分层NALU</span>
-      <time style="float: right;">06-04</time>
-    </a>
-  
-    
-    <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day09%E8%A7%86%E9%A2%91%E5%9F%BA%E7%A1%80/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day09-视频基础、认识YUV、采集摄像头YUV数据</span>
-      <time style="float: right;">06-04</time>
-    </a>
-  
-    
-    <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81%E5%AE%9E%E6%88%98/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day08-音频AAC编码实战(三)</span>
-      <time style="float: right;">05-29</time>
-    </a>
-  
-    
-    <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day08-音频AAC编码理论(二)</span>
-      <time style="float: right;">05-29</time>
-    </a>
-  
-    
-    <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day08%E9%9F%B3%E9%A2%91%E9%87%8D%E9%87%87%E6%A0%B7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day08-音频重采样(一)</span>
-      <time style="float: right;">05-29</time>
-    </a>
-  
-    
-    <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day07%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day07-ffmpeg集成、音频采集</span>
-      <time style="float: right;">05-28</time>
-    </a>
-  
-    
-    <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day06%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91ffmpeg/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day06-ffmpeg编译</span>
-      <time style="float: right;">05-28</time>
-    </a>
-  
-</div>
 
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/2022/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/2022/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2022/page/3/#board">3</a><a class="extend next" rel="next" href="/archives/2022/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day03-WebRTC源码环境</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、WebRTC整体架构"><a href="#一、WebRTC整体架构" class="headerlink" title="一、WebRTC整体架构"></a>一、WebRTC整体架构</h2><h3 id="1、【重要】WebRTC的架构图"><a href="#1、【重要】WebRTC的架构图" class="headerlink" title="1、【重要】WebRTC的架构图"></a>1、【重要】WebRTC的架构图</h3><img src="/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/image-20220727074051056.png" srcset="/img/loading.gif" lazyload class="" title="image-20220727074051056">
 
 
 
+<h3 id="2、【重要】WebRTC的数据流转图"><a href="#2、【重要】WebRTC的数据流转图" class="headerlink" title="2、【重要】WebRTC的数据流转图"></a>2、【重要】WebRTC的数据流转图</h3><ul>
+<li>RTCP包是用于控制RTP包的</li>
+<li>RTP包里面都是媒体数据</li>
+</ul>
+<img src="/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/image-20220727074121906.png" srcset="/img/loading.gif" lazyload class="" title="image-20220727074121906">
 
-              </div>
+
+
+<h2 id="二、WebRTC源码分析环境的搭建"><a href="#二、WebRTC源码分析环境的搭建" class="headerlink" title="二、WebRTC源码分析环境的搭建"></a>二、WebRTC源码分析环境的搭建</h2><h3 id="1、哪里获取WebRTC的源码？"><a href="#1、哪里获取WebRTC的源码？" class="headerlink" title="1、哪里获取WebRTC的源码？"></a>1、哪里获取WebRTC的源码？</h3>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/25/WebRTC%E6%BA%90%E7%A0%81/day02-WebRTC%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/">
+                        <span class="hidden-mobile">day02-WebRTC的整体认知</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -347,6 +404,19 @@
   
 
 
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 

@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>day03-WebRTC源码环境</title>
+    <link href="/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/"/>
+    <url>/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、WebRTC整体架构"><a href="#一、WebRTC整体架构" class="headerlink" title="一、WebRTC整体架构"></a>一、WebRTC整体架构</h2><h3 id="1、【重要】WebRTC的架构图"><a href="#1、【重要】WebRTC的架构图" class="headerlink" title="1、【重要】WebRTC的架构图"></a>1、【重要】WebRTC的架构图</h3><img src="/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/image-20220727074051056.png" class="" title="image-20220727074051056"><h3 id="2、【重要】WebRTC的数据流转图"><a href="#2、【重要】WebRTC的数据流转图" class="headerlink" title="2、【重要】WebRTC的数据流转图"></a>2、【重要】WebRTC的数据流转图</h3><ul><li>RTCP包是用于控制RTP包的</li><li>RTP包里面都是媒体数据</li></ul><img src="/2022/08/25/WebRTC%E6%BA%90%E7%A0%81/day03-WebRTC%E6%BA%90%E7%A0%81%E7%8E%AF%E5%A2%83/image-20220727074121906.png" class="" title="image-20220727074121906"><h2 id="二、WebRTC源码分析环境的搭建"><a href="#二、WebRTC源码分析环境的搭建" class="headerlink" title="二、WebRTC源码分析环境的搭建"></a>二、WebRTC源码分析环境的搭建</h2><h3 id="1、哪里获取WebRTC的源码？"><a href="#1、哪里获取WebRTC的源码？" class="headerlink" title="1、哪里获取WebRTC的源码？"></a>1、哪里获取WebRTC的源码？</h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>day02-WebRTC的整体认知</title>
     <link href="/2022/07/25/WebRTC%E6%BA%90%E7%A0%81/day02-WebRTC%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/"/>
     <url>/2022/07/25/WebRTC%E6%BA%90%E7%A0%81/day02-WebRTC%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/</url>
