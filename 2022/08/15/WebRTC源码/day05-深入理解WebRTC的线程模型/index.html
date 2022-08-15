@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、线程的基础知识1、本章主要内容    2、计算机组成原理      3、多线程的好处与坏处？多线程带了哪些问题？    4、如何解决多线程带来的问题？ 加锁    5、Objective-C和WebRTC中的线程模型是什么？ 休眠唤醒循环执行任务线程模型    二、WebRTC中的线程模型1、认识Thread类？ crit_：是临界区，是防止存取或读取数据时发生错乱          2、关于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day05-深入理解WebRTC的线程模型">
+<meta property="og:url" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、线程的基础知识1、本章主要内容    2、计算机组成原理      3、多线程的好处与坏处？多线程带了哪些问题？    4、如何解决多线程带来的问题？ 加锁    5、Objective-C和WebRTC中的线程模型是什么？ 休眠唤醒循环执行任务线程模型    二、WebRTC中的线程模型1、认识Thread类？ crit_：是临界区，是防止存取或读取数据时发生错乱          2、关于">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815071212363.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815071220431.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073252208.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073337468.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073343926.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073405375.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073441593.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073513306.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073648293.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073744344.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073752486.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074100020.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074110825.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074218528.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074227838.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074237035.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074243689.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074533549.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074543208.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074627969.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074643232.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074649491.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074701954.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074734300.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074745533.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074757999.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074809579.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074818282.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074827167.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074850334.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074858564.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074905954.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074943317.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074956662.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075021348.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075040204.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075114194.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075150133.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075205347.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075216615.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075224169.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075232378.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075258232.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063424033.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063433125.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063441254.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063503528.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063536578.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063633745.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063648849.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063700441.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063725960.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063734349.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063746584.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063826434.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063908231.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063931784.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063954882.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064005700.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064025336.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064120677.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064151719.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064210666.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064224778.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064236941.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064247355.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064320874.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064330644.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064351368.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064355736.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064359257.png">
+<meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064404509.png">
+<meta property="article:published_time" content="2022-08-15T12:41:31.000Z">
+<meta property="article:modified_time" content="2022-08-15T22:44:06.092Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815071212363.png">
+  
+  
+  <title>day05-深入理解WebRTC的线程模型 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Carrot</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day05-深入理解WebRTC的线程模型">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-08-15 20:41" pubdate>
+        August 15, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day05-深入理解WebRTC的线程模型</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、线程的基础知识"><a href="#一、线程的基础知识" class="headerlink" title="一、线程的基础知识"></a>一、线程的基础知识</h2><h3 id="1、本章主要内容"><a href="#1、本章主要内容" class="headerlink" title="1、本章主要内容"></a>1、本章主要内容</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815071212363.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815071212363">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815071220431.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815071220431">
+
+<h3 id="2、计算机组成原理"><a href="#2、计算机组成原理" class="headerlink" title="2、计算机组成原理"></a>2、计算机组成原理</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073252208.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073252208">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073337468.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073337468">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073343926.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073343926">
+
+<h3 id="3、多线程的好处与坏处？多线程带了哪些问题？"><a href="#3、多线程的好处与坏处？多线程带了哪些问题？" class="headerlink" title="3、多线程的好处与坏处？多线程带了哪些问题？"></a>3、多线程的好处与坏处？多线程带了哪些问题？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073405375.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073405375">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073441593.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073441593">
+
+<h3 id="4、如何解决多线程带来的问题？"><a href="#4、如何解决多线程带来的问题？" class="headerlink" title="4、如何解决多线程带来的问题？"></a>4、如何解决多线程带来的问题？</h3><ul>
+<li>加锁</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073513306.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073513306">
+
+<h3 id="5、Objective-C和WebRTC中的线程模型是什么？"><a href="#5、Objective-C和WebRTC中的线程模型是什么？" class="headerlink" title="5、Objective-C和WebRTC中的线程模型是什么？"></a>5、Objective-C和WebRTC中的线程模型是什么？</h3><ul>
+<li>休眠唤醒循环执行任务线程模型</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073648293.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073648293">
+
+<h2 id="二、WebRTC中的线程模型"><a href="#二、WebRTC中的线程模型" class="headerlink" title="二、WebRTC中的线程模型"></a>二、WebRTC中的线程模型</h2><h3 id="1、认识Thread类？"><a href="#1、认识Thread类？" class="headerlink" title="1、认识Thread类？"></a>1、认识Thread类？</h3><ul>
+<li>crit_：是临界区，是防止存取或读取数据时发生<font color="red">错乱</font></li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073744344.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073744344">
+
+
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815073752486.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815073752486">
+
+
+
+<h3 id="2、关于-Thread的几个要点？"><a href="#2、关于-Thread的几个要点？" class="headerlink" title="2、关于 Thread的几个要点？"></a>2、关于 Thread的几个要点？</h3><ul>
+<li>WebRTC中的线程是<font color="red">以事件驱动的</font></li>
+<li><font color="red">事件驱动</font>比<font color="red">轮询</font>的方式，效率高很多</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074100020.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074100020">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074110825.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074110825">
+
+<h3 id="3、WebRTC中-Thead-类到底长什么样？"><a href="#3、WebRTC中-Thead-类到底长什么样？" class="headerlink" title="3、WebRTC中 Thead 类到底长什么样？"></a>3、WebRTC中 Thead 类到底长什么样？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074218528.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074218528">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074227838.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074227838">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074237035.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074237035">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074243689.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074243689">
+
+
+
+<blockquote>
+<p>Thread类是非常庞杂的，总结起来Thread类就包含三大部分，理解这个<font color="red">非常重要</font>，不然就会面对Thread一脸懵逼</p>
+</blockquote>
+<ul>
+<li>一大类是与队列相关的</li>
+<li>一大类是与事件相关的</li>
+<li>一大类是与线程相关的</li>
+</ul>
+<h3 id="4、认识线程管理类，ThreadManager类【重要】"><a href="#4、认识线程管理类，ThreadManager类【重要】" class="headerlink" title="4、认识线程管理类，ThreadManager类【重要】"></a>4、认识线程管理类，ThreadManager类【重要】</h3><ul>
+<li>以下的图，对理解ThreadManager起到了至关重要的作用</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074533549.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074533549">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074543208.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074543208">
+
+<h3 id="5、认识thread-local-storage"><a href="#5、认识thread-local-storage" class="headerlink" title="5、认识thread local storage"></a>5、认识thread local storage</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074627969.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074627969">
+
+<h3 id="6、源码阅读，理解ThreadManager-和-thread-local-storage"><a href="#6、源码阅读，理解ThreadManager-和-thread-local-storage" class="headerlink" title="6、源码阅读，理解ThreadManager 和 thread local storage"></a>6、源码阅读，理解ThreadManager 和 thread local storage</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074643232.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074643232">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074649491.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074649491">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074701954.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074701954">
+
+
+
+<h3 id="7、WebRTC的所有线程都是由三大线程创建的，那么WebRTC的三大线程分别是哪些呢？"><a href="#7、WebRTC的所有线程都是由三大线程创建的，那么WebRTC的三大线程分别是哪些呢？" class="headerlink" title="7、WebRTC的所有线程都是由三大线程创建的，那么WebRTC的三大线程分别是哪些呢？"></a>7、WebRTC的所有线程都是由三大线程创建的，那么WebRTC的三大线程分别是哪些呢？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074734300.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074734300">
+
+<h3 id="8、从代码中查看并熟悉这三个线程？"><a href="#8、从代码中查看并熟悉这三个线程？" class="headerlink" title="8、从代码中查看并熟悉这三个线程？"></a>8、从代码中查看并熟悉这三个线程？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074745533.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074745533">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074757999.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074757999">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074809579.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074809579">
+
+
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074818282.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074818282">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074827167.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074827167">
+
+
+
+<ul>
+<li>从上图可知，WebRTC把当前线程当成了信令线程</li>
+<li>跟进去看看</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074850334.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074850334">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074858564.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074858564">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074905954.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074905954">
+
+
+
+<h2 id="三、WebRTC中的线程：线程运行、接口宏"><a href="#三、WebRTC中的线程：线程运行、接口宏" class="headerlink" title="三、WebRTC中的线程：线程运行、接口宏"></a>三、WebRTC中的线程：线程运行、接口宏</h2><h3 id="1、WebRTC是跨平台的，那么它在Windows和mac上创建线程的实现方式有什么不同呢？"><a href="#1、WebRTC是跨平台的，那么它在Windows和mac上创建线程的实现方式有什么不同呢？" class="headerlink" title="1、WebRTC是跨平台的，那么它在Windows和mac上创建线程的实现方式有什么不同呢？"></a>1、WebRTC是跨平台的，那么它在Windows和mac上创建线程的实现方式有什么不同呢？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074943317.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074943317">
+
+<ul>
+<li>以上是win平台的线程创建的代码</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815074956662.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815074956662">
+
+<ul>
+<li>以上是mac平台下创建线程的代码</li>
+</ul>
+<h3 id="2、三大线程运行的基本逻辑【重要】"><a href="#2、三大线程运行的基本逻辑【重要】" class="headerlink" title="2、三大线程运行的基本逻辑【重要】"></a>2、三大线程运行的基本逻辑【重要】</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075021348.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075021348">
+
+
+
+<h3 id="3、从实际代码的角度，理解上面两点知识点"><a href="#3、从实际代码的角度，理解上面两点知识点" class="headerlink" title="3、从实际代码的角度，理解上面两点知识点"></a>3、从实际代码的角度，理解上面两点知识点</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075040204.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075040204">
+
+
+
+<ul>
+<li>我们创建的线程对象，什么时候与我们的线程进行绑定的呢？</li>
+<li>就是下面这个时机（也就是ThreadManager和Thread绑定时机）</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075114194.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075114194">
+
+<ul>
+<li>一定是在这个线程已经启动，执行线程函数的时候才进行绑定的</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075150133.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075150133">
+
+<ul>
+<li>以上我们看到了经典的while(true)循环，也就是线程的执行逻辑</li>
+</ul>
+<h3 id="4、不同平台处理事件的API？"><a href="#4、不同平台处理事件的API？" class="headerlink" title="4、不同平台处理事件的API？"></a>4、不同平台处理事件的API？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075205347.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075205347">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075216615.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075216615">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075224169.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075224169">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075232378.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075232378">
+
+<h3 id="5、对上面的知识进行小结，小结的内容要掌握一下。"><a href="#5、对上面的知识进行小结，小结的内容要掌握一下。" class="headerlink" title="5、对上面的知识进行小结，小结的内容要掌握一下。"></a>5、对上面的知识进行小结，小结的内容要掌握一下。</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220815075258232.png" srcset="/img/loading.gif" lazyload class="" title="image-20220815075258232">
+
+<h2 id="三、WebRTC线程事件处理"><a href="#三、WebRTC线程事件处理" class="headerlink" title="三、WebRTC线程事件处理"></a>三、WebRTC线程事件处理</h2><h3 id="1、事件是如何协调线程工作的呢？"><a href="#1、事件是如何协调线程工作的呢？" class="headerlink" title="1、事件是如何协调线程工作的呢？"></a>1、事件是如何协调线程工作的呢？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063424033.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063424033">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063433125.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063433125">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063441254.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063441254">
+
+<h3 id="2、认识Get函数"><a href="#2、认识Get函数" class="headerlink" title="2、认识Get函数"></a>2、认识Get函数</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063503528.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063503528">
+
+
+
+<h3 id="3、认识Get函数中的wait函数？"><a href="#3、认识Get函数中的wait函数？" class="headerlink" title="3、认识Get函数中的wait函数？"></a>3、认识Get函数中的wait函数？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063536578.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063536578">
+
+
+
+<h2 id="四、接口宏"><a href="#四、接口宏" class="headerlink" title="四、接口宏"></a>四、接口宏</h2><h3 id="1、WebRTC中常见的接口，都是借助接口宏实现的"><a href="#1、WebRTC中常见的接口，都是借助接口宏实现的" class="headerlink" title="1、WebRTC中常见的接口，都是借助接口宏实现的"></a>1、WebRTC中常见的接口，都是借助接口宏实现的</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063633745.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063633745">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063648849.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063648849">
+
+
+
+
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063700441.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063700441">
+
+<h3 id="2、实现自定义接口"><a href="#2、实现自定义接口" class="headerlink" title="2、实现自定义接口"></a>2、实现自定义接口</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063725960.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063725960">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063734349.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063734349">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063746584.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063746584">
+
+<h3 id="3、思考为什么WebRTC要把接口设计得这么复杂？"><a href="#3、思考为什么WebRTC要把接口设计得这么复杂？" class="headerlink" title="3、思考为什么WebRTC要把接口设计得这么复杂？"></a>3、思考为什么WebRTC要把接口设计得这么复杂？</h3><ul>
+<li>代理层将【应用层】和【WebRTC核心库】做了一层隔离</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063826434.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063826434">
+
+<h3 id="4、思考WebRTC这样隔离有什么好处呢？"><a href="#4、思考WebRTC这样隔离有什么好处呢？" class="headerlink" title="4、思考WebRTC这样隔离有什么好处呢？"></a>4、思考WebRTC这样隔离有什么好处呢？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063908231.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063908231">
+
+<h3 id="5、接口类关系图，这些图要学会来画"><a href="#5、接口类关系图，这些图要学会来画" class="headerlink" title="5、接口类关系图，这些图要学会来画"></a>5、接口类关系图，这些图要学会来画</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063931784.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063931784">
+
+
+
+
+
+<h3 id="6、观察PeerConnectionFactory这个宏展开的样子，从而理解接口宏"><a href="#6、观察PeerConnectionFactory这个宏展开的样子，从而理解接口宏" class="headerlink" title="6、观察PeerConnectionFactory这个宏展开的样子，从而理解接口宏"></a>6、观察PeerConnectionFactory这个宏展开的样子，从而理解接口宏</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816063954882.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816063954882">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064005700.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064005700">
+
+<h3 id="7、WebRTC接口调用过程？"><a href="#7、WebRTC接口调用过程？" class="headerlink" title="7、WebRTC接口调用过程？"></a>7、WebRTC接口调用过程？</h3><ul>
+<li>为什么能搞出这么厉害的图</li>
+<li>太强了，一定要学会来</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064025336.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064025336">
+
+<h3 id="8、结合实际代码进行分析和链路跟踪"><a href="#8、结合实际代码进行分析和链路跟踪" class="headerlink" title="8、结合实际代码进行分析和链路跟踪"></a>8、结合实际代码进行分析和链路跟踪</h3><ul>
+<li>首先找到两个重要的宏</li>
+<li>BEGIN_GINALING_PROXY_MAP</li>
+<li>BEGIN_PROXY_MAP</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064120677.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064120677">
+
+<ul>
+<li>再看RPOXY_MAP_BOILERPLATE这个宏</li>
+<li>定义了宏的名字，还有别名</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064151719.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064151719">
+
+<ul>
+<li>再看WORKER_PROXY_MAP_BOILERPLATE 这个宏</li>
+<li>主要是处理构造函数</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064210666.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064210666">
+
+<ul>
+<li>再看第三个子宏，REFCOUNTED_PROXY_MAP_BOILERPLATE</li>
+<li>这个宏用于析构函数的定义</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064224778.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064224778">
+
+<ul>
+<li>END_ROXY_MAP，只定义了一个类花括号的结束，这个很好理解</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064236941.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064236941">
+
+<ul>
+<li>PROXY_METHOD0 ，最后一个数字代表参数格式，这个宏主要用于定义方法</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064247355.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064247355">
+
+<h3 id="9、思考：我们从应用层调用到WebRTC的核心层，需要经过这么漫长的过程，大概11步，会不会影响WebRTC的调用效率呢？"><a href="#9、思考：我们从应用层调用到WebRTC的核心层，需要经过这么漫长的过程，大概11步，会不会影响WebRTC的调用效率呢？" class="headerlink" title="9、思考：我们从应用层调用到WebRTC的核心层，需要经过这么漫长的过程，大概11步，会不会影响WebRTC的调用效率呢？"></a>9、思考：我们从应用层调用到WebRTC的核心层，需要经过这么漫长的过程，大概11步，会不会影响WebRTC的调用效率呢？</h3><ul>
+<li>其实不会，因为经过WebRTC的优化，实际上只要经过两三个步骤，就调用到了WebRTC的核心层</li>
+</ul>
+<h3 id="10、在宏定义的学习过程中，我们看到post方法，该方法主要作用是什么呢？"><a href="#10、在宏定义的学习过程中，我们看到post方法，该方法主要作用是什么呢？" class="headerlink" title="10、在宏定义的学习过程中，我们看到post方法，该方法主要作用是什么呢？"></a>10、在宏定义的学习过程中，我们看到post方法，该方法主要作用是什么呢？</h3><ul>
+<li>post方法：进行线程的切换</li>
+</ul>
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064320874.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064320874">
+
+<h3 id="11、在WebRTC中线程切换主要有哪些方法？"><a href="#11、在WebRTC中线程切换主要有哪些方法？" class="headerlink" title="11、在WebRTC中线程切换主要有哪些方法？"></a>11、在WebRTC中线程切换主要有哪些方法？</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064330644.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064330644">
+
+<ul>
+<li>post和postTask是异步调用</li>
+<li>send和invoke 是同步调用</li>
+</ul>
+<h3 id="12、学习post方法的细节"><a href="#12、学习post方法的细节" class="headerlink" title="12、学习post方法的细节"></a>12、学习post方法的细节</h3><img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064351368.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064351368">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064355736.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064355736">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064359257.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064359257">
+
+<img src="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/image-20220816064404509.png" srcset="/img/loading.gif" lazyload class="" title="image-20220816064404509">
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/28/WebRTC%E6%BA%90%E7%A0%81/day04-%E5%BC%80%E5%90%AFWebRTC%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8B%E8%B7%AF/">
+                        <span class="hidden-mobile">day04-开启WebRTC源码分析之路</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
