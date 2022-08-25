@@ -18,7 +18,7 @@
   
     <meta name="description" content="一、认识SDP1、为什么要选择SDP格式作为WebRTC的传输格式？ 与XML相比较，SDP采用key-value的模式，数据存放比较紧凑，网络传输更加节约带宽 SDP采用key-value模式，也更容易读写数据  2、SDP的结构图，太棒了！     m：就是media，表示媒体曾  a：就是attribute，表示属性  c：就是connection，表示连接  v：就是version，代表S">
 <meta property="og:type" content="article">
-<meta property="og:title" content="day05-深入理解WebRTC的线程模型">
+<meta property="og:title" content="day06-WebRTC媒体协商">
 <meta property="og:url" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="一、认识SDP1、为什么要选择SDP格式作为WebRTC的传输格式？ 与XML相比较，SDP采用key-value的模式，数据存放比较紧凑，网络传输更加节约带宽 SDP采用key-value模式，也更容易读写数据  2、SDP的结构图，太棒了！     m：就是media，表示媒体曾  a：就是attribute，表示属性  c：就是connection，表示连接  v：就是version，代表S">
@@ -91,14 +91,14 @@
 <meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/image-20220821103348485.png">
 <meta property="og:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/image-20220821103353549.png">
 <meta property="article:published_time" content="2022-08-15T12:41:31.000Z">
-<meta property="article:modified_time" content="2022-08-21T02:34:01.407Z">
+<meta property="article:modified_time" content="2022-08-25T23:41:20.274Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="WebRTC">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/image-20220821085122868.png">
   
   
-  <title>day05-深入理解WebRTC的线程模型 - Hexo</title>
+  <title>day06-WebRTC媒体协商 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -244,7 +244,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="day05-深入理解WebRTC的线程模型">
+            <span class="h2" id="subtitle" title="day06-WebRTC媒体协商">
               
             </span>
 
@@ -303,7 +303,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">day05-深入理解WebRTC的线程模型</h1>
+            <h1 style="display: none">day06-WebRTC媒体协商</h1>
             
             <div class="markdown-body">
               <h2 id="一、认识SDP"><a href="#一、认识SDP" class="headerlink" title="一、认识SDP"></a>一、认识SDP</h2><h3 id="1、为什么要选择SDP格式作为WebRTC的传输格式？"><a href="#1、为什么要选择SDP格式作为WebRTC的传输格式？" class="headerlink" title="1、为什么要选择SDP格式作为WebRTC的传输格式？"></a>1、为什么要选择SDP格式作为WebRTC的传输格式？</h3><ul>

@@ -4,6 +4,106 @@
   
   
   <entry>
+    <title>day10-深入理解WebRTC网络传输</title>
+    <link href="/2022/08/29/WebRTC%E6%BA%90%E7%A0%81/day10-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93/"/>
+    <url>/2022/08/29/WebRTC%E6%BA%90%E7%A0%81/day10-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day09-音频引擎</title>
+    <link href="/2022/08/28/WebRTC%E6%BA%90%E7%A0%81/day09-%E9%9F%B3%E9%A2%91%E5%BC%95%E6%93%8E/"/>
+    <url>/2022/08/28/WebRTC%E6%BA%90%E7%A0%81/day09-%E9%9F%B3%E9%A2%91%E5%BC%95%E6%93%8E/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day08-视频数据采集</title>
+    <link href="/2022/08/19/WebRTC%E6%BA%90%E7%A0%81/day08-%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/"/>
+    <url>/2022/08/19/WebRTC%E6%BA%90%E7%A0%81/day08-%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day07-音频数据采集</title>
+    <link href="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/"/>
+    <url>/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、音频设备的初始化"><a href="#一、音频设备的初始化" class="headerlink" title="一、音频设备的初始化"></a>一、音频设备的初始化</h2><h3 id="1、ADM的全称是什么？"><a href="#1、ADM的全称是什么？" class="headerlink" title="1、ADM的全称是什么？"></a>1、ADM的全称是什么？</h3><ul><li>Audio Device Module，音频设备模块</li><li>掌握以下是 Audio Device Module 的类关系图</li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074429949.png" class="" title="image-20220826074429949"><h3 id="2、创建ADM的时机"><a href="#2、创建ADM的时机" class="headerlink" title="2、创建ADM的时机"></a>2、创建ADM的时机</h3><ul><li>总结一句话：就是我们在创建 <code>PeerConnectionFactory</code> 的时候，就会创建 ADM 对象</li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074520651.png" class="" title="image-20220826074520651"><h3 id="3、创建ADM的核心过程"><a href="#3、创建ADM的核心过程" class="headerlink" title="3、创建ADM的核心过程"></a>3、创建ADM的核心过程</h3><ul><li>注意点：会看到两次创建 <code>MMDevice COM 组件</code> 的过程，第一次是为了检测平台是否支持，是否能用。第二次才是真正的创建</li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074551719.png" class="" title="image-20220826074551719"><h3 id="4、认识Windows下的-Core-Audio"><a href="#4、认识Windows下的-Core-Audio" class="headerlink" title="4、认识Windows下的 Core Audio"></a>4、认识Windows下的 <code>Core Audio</code></h3><ul><li><p>Windows下的 <code>Core Audio</code>是比较底层的API，WebRTC就需要这种比较底层的API，可以尽量达到低延迟的效果。</p><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074613195.png" class="" title="image-20220826074613195"></li></ul><h3 id="5、了解-音频设备的种类【主要两种】"><a href="#5、了解-音频设备的种类【主要两种】" class="headerlink" title="5、了解 音频设备的种类【主要两种】"></a>5、了解 音频设备的种类【主要两种】</h3><ul><li>一定要分清楚 <code>音频适配器设备</code> vs <code>音频终端设备</code></li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074632646.png" class="" title="image-20220826074632646"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074637383.png" class="" title="image-20220826074637383"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074641370.png" class="" title="image-20220826074641370"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074645366.png" class="" title="image-20220826074645366"><h3 id="6、Core-Audio-API的种类【了解即可】"><a href="#6、Core-Audio-API的种类【了解即可】" class="headerlink" title="6、Core Audio API的种类【了解即可】"></a>6、Core Audio API的种类【了解即可】</h3><ul><li>有独享声音和主音量，这两个概念</li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074705344.png" class="" title="image-20220826074705344"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074714160.png" class="" title="image-20220826074714160"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074717878.png" class="" title="image-20220826074717878"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074721348.png" class="" title="image-20220826074721348"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074726857.png" class="" title="image-20220826074726857"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074730319.png" class="" title="image-20220826074730319"><h3 id="7、初始化ADM的流程图，后续看代码帮助理解的关键图"><a href="#7、初始化ADM的流程图，后续看代码帮助理解的关键图" class="headerlink" title="7、初始化ADM的流程图，后续看代码帮助理解的关键图"></a>7、初始化ADM的流程图，后续看代码帮助理解的关键图</h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074739289.png" class="" title="image-20220826074739289"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074744624.png" class="" title="image-20220826074744624"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074749260.png" class="" title="image-20220826074749260"><h3 id="8、初始化扬声器"><a href="#8、初始化扬声器" class="headerlink" title="8、初始化扬声器"></a>8、初始化扬声器</h3><ul><li>重点理解：speaker 一般指的就是<code>扬声器</code></li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074756799.png" class="" title="image-20220826074756799"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074800186.png" class="" title="image-20220826074800186"><h3 id="9、WebRTC设置channel个数"><a href="#9、WebRTC设置channel个数" class="headerlink" title="9、WebRTC设置channel个数"></a>9、WebRTC设置channel个数</h3><ul><li>数据要给扬声器，首先要把数据缓存在一个<code>buffer</code>中，然后扬声器再从<code>buffer</code>中读取数据，播放出来</li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074821704.png" class="" title="image-20220826074821704"><h3 id="10、-ADM初始化之InitMicrophone"><a href="#10、-ADM初始化之InitMicrophone" class="headerlink" title="10、 ADM初始化之InitMicrophone"></a>10、 ADM初始化之InitMicrophone</h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074837399.png" class="" title="image-20220826074837399"><h2 id="二、接下来就是借助上面已经初始化好的设备，进行播放和采集了"><a href="#二、接下来就是借助上面已经初始化好的设备，进行播放和采集了" class="headerlink" title="二、接下来就是借助上面已经初始化好的设备，进行播放和采集了"></a>二、接下来就是借助上面已经初始化好的设备，进行播放和采集了</h2><h3 id="1、理解AudioState"><a href="#1、理解AudioState" class="headerlink" title="1、理解AudioState"></a>1、理解AudioState</h3><ul><li>总结：AudioState是连接上层页面以及底层音频设备的中间层</li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074901348.png" class="" title="image-20220826074901348"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074906484.png" class="" title="image-20220826074906484"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074910136.png" class="" title="image-20220826074910136"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074915523.png" class="" title="image-20220826074915523"><h3 id="2、上面是WebRTC多人同时通信的两种架构-Mesh架构-和-SFU架构"><a href="#2、上面是WebRTC多人同时通信的两种架构-Mesh架构-和-SFU架构" class="headerlink" title="2、上面是WebRTC多人同时通信的两种架构 Mesh架构 和 SFU架构"></a>2、上面是WebRTC多人同时通信的两种架构 Mesh架构 和 SFU架构</h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074931890.png" class="" title="image-20220826074931890"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074935103.png" class="" title="image-20220826074935103"><h3 id="3、Engine、PC、Channel、stream-对象之间的关系？"><a href="#3、Engine、PC、Channel、stream-对象之间的关系？" class="headerlink" title="3、Engine、PC、Channel、stream 对象之间的关系？"></a>3、Engine、PC、Channel、stream 对象之间的关系？</h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074954007.png" class="" title="image-20220826074954007"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826074956972.png" class="" title="image-20220826074956972"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075000012.png" class="" title="image-20220826075000012"><h3 id="4、WebRTC是如何播放声音的？"><a href="#4、WebRTC是如何播放声音的？" class="headerlink" title="4、WebRTC是如何播放声音的？"></a>4、WebRTC是如何播放声音的？</h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075007094.png" class="" title="image-20220826075007094"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075010541.png" class="" title="image-20220826075010541"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075013598.png" class="" title="image-20220826075013598"><ul><li>总结：<ul><li>①创建ADM对象以及初始化是在PeerconnectionFactory的initialize中进行的</li><li>②而声音播放的逻辑实在媒体协商之后，调用setRemoteDescription的时候，再其内部执行的</li></ul></li></ul><h3 id="5、InitPlay-的基础知识"><a href="#5、InitPlay-的基础知识" class="headerlink" title="5、InitPlay 的基础知识"></a>5、InitPlay 的基础知识</h3><ul><li>IsInitialized 这个名字不错，学会来</li></ul><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075041245.png" class="" title="image-20220826075041245"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075050830.png" class="" title="image-20220826075050830"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075054423.png" class="" title="image-20220826075054423"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075057120.png" class="" title="image-20220826075057120"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075101323.png" class="" title="image-20220826075101323"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075106206.png" class="" title="image-20220826075106206"><h3 id="6、播放声音的基础API"><a href="#6、播放声音的基础API" class="headerlink" title="6、播放声音的基础API"></a>6、播放声音的基础API</h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075114697.png" class="" title="image-20220826075114697"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075118267.png" class="" title="image-20220826075118267"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075121263.png" class="" title="image-20220826075121263"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075129237.png" class="" title="image-20220826075129237"><h3 id="7、播放声音的流程？"><a href="#7、播放声音的流程？" class="headerlink" title="7、播放声音的流程？"></a>7、播放声音的流程？</h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075136708.png" class="" title="image-20220826075136708"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075140431.png" class="" title="image-20220826075140431"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075144069.png" class="" title="image-20220826075144069"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075147767.png" class="" title="image-20220826075147767"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075151540.png" class="" title="image-20220826075151540"><h3 id="8、再次认识音频DMO组件"><a href="#8、再次认识音频DMO组件" class="headerlink" title="8、再次认识音频DMO组件"></a>8、再次认识音频DMO组件</h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075158308.png" class="" title="image-20220826075158308"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075201116.png" class="" title="image-20220826075201116"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075203610.png" class="" title="image-20220826075203610"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075221576.png" class="" title="image-20220826075221576"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075236773.png" class="" title="image-20220826075236773"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075244600.png" class="" title="image-20220826075244600"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075248821.png" class="" title="image-20220826075248821"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075252316.png" class="" title="image-20220826075252316"><h3 id="9、认识-InitRecording"><a href="#9、认识-InitRecording" class="headerlink" title="9、认识 InitRecording"></a>9、认识 <code>InitRecording</code></h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075300312.png" class="" title="image-20220826075300312"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075303047.png" class="" title="image-20220826075303047"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075306033.png" class="" title="image-20220826075306033"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075308904.png" class="" title="image-20220826075308904"><h3 id="10、认识-StartRecording"><a href="#10、认识-StartRecording" class="headerlink" title="10、认识 StartRecording"></a>10、认识 <code>StartRecording</code></h3><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075315971.png" class="" title="image-20220826075315971"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075321474.png" class="" title="image-20220826075321474"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075324285.png" class="" title="image-20220826075324285"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075327265.png" class="" title="image-20220826075327265"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075333720.png" class="" title="image-20220826075333720"><img src="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/image-20220826075340420.png" class="" title="image-20220826075340420">]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>day05-深入理解WebRTC的线程模型</title>
     <link href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/"/>
     <url>/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</url>
@@ -29,7 +129,7 @@
   
   
   <entry>
-    <title>day05-深入理解WebRTC的线程模型</title>
+    <title>day06-WebRTC媒体协商</title>
     <link href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/"/>
     <url>/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/</url>
     
