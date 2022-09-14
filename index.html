@@ -191,15 +191,62 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/09/18/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E5%9B%9B/" target="_self">
+          day12-WebRTC服务质量之四、FEC
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/09/18/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E5%9B%9B/" target="_self">
+          
+          五、FEC1、什么是FEC？        2、FEC的原理是什么？   其实就是Data1和Data2进行异或操作（系统为0，不同为1），产生一个新的包R。 当Data1丢失时，可以通过 Data2和R进行异或操作，恢复 Data1的数据。 这就是两个包的FEC      那么三个包怎么办呢？其实也一样 1、2、3异或生成冗余包R1；如果3丢了，可以通过1、2、R1恢复3的数据 但是如果4、5都
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-18 20:41" pubdate>
+              2022-09-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/09/15/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%B8%89/" target="_self">
-          day12-WebRTC服务质量之三
+          day12-WebRTC服务质量之三、Pacer、JitterBufferr
         </a>
       </h1>
 
       <p class="index-excerpt">
         <a href="/2022/09/15/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%B8%89/" target="_self">
           
-          二、ICE、Candidate
+          三、认识Pacer1、Pacer的作用是什么？ 让数据在网络上发送得更平滑，防止因数据的突增导致网络发生拥塞。    2、Pacer是什么时候创建的？   这种流程图，也是超级棒啊  3、关于Pacer的两个重要函数、两种工作模式？         WebRTC如何处理是否需要发送保活包？当没有音视频数据时，才需要发送保活包。      4、认识Pacer中非常重要的数据结构 RoundBobin
         </a>
       </p>
 
@@ -585,53 +632,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2022-08-18 20:41" pubdate>
               2022-08-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" target="_self">
-          day05-深入理解WebRTC的线程模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" target="_self">
-          
-          一、线程的基础知识1、本章主要内容    2、计算机组成原理      3、多线程的好处与坏处？多线程带了哪些问题？    4、如何解决多线程带来的问题？ 加锁    5、Objective-C和WebRTC中的线程模型是什么？ 休眠唤醒循环执行任务线程模型    二、WebRTC中的线程模型1、认识Thread类？ crit_：是临界区，是防止存取或读取数据时发生错乱          2、关于
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-15 20:41" pubdate>
-              2022-08-15
             </time>
           </div>
         
