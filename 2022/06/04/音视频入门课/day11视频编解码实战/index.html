@@ -19,35 +19,35 @@
     <meta name="description" content="一、认识SPS与PPS1、认识SPS？主要包含哪些信息？ SPS(Sequence Parameter Set)，序列参数集，作用于一串连续的视频图像。 比如：帧数、解码图像尺寸、参考帧数目        2、认识PPS？主要包含哪些信息？ PPS(Picture Parameter Set)，图像参数集，作用于视频序列中的图像 比如：熵编码选择标识、片组数目      3、掌握Profile H">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day11-【实战】视频编码&#x2F;解码">
-<meta property="og:url" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:url" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="一、认识SPS与PPS1、认识SPS？主要包含哪些信息？ SPS(Sequence Parameter Set)，序列参数集，作用于一串连续的视频图像。 比如：帧数、解码图像尺寸、参考帧数目        2、认识PPS？主要包含哪些信息？ PPS(Picture Parameter Set)，图像参数集，作用于视频序列中的图像 比如：熵编码选择标识、片组数目      3、掌握Profile H">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191831321.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191854932.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195729151.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191808115.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195557564.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195603752.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195655374.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605192735416.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605182230483.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605192501173.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193400253.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193427742.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193433084.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193440303.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193445364.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193450647.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193456071.png">
-<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193501269.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191831321.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191854932.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195729151.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191808115.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195557564.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195603752.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195655374.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605192735416.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605182230483.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605192501173.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193400253.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193427742.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193433084.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193440303.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193445364.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193450647.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193456071.png">
+<meta property="og:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193501269.png">
 <meta property="article:published_time" content="2022-06-04T10:12:21.000Z">
 <meta property="article:modified_time" content="2022-06-05T11:35:09.605Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="音视频">
 <meta property="article:tag" content="ffmpeg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191831321.png">
+<meta name="twitter:image" content="http://example.com/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191831321.png">
   
   
   <title>day11-【实战】视频编码/解码 - Hexo</title>
@@ -262,31 +262,31 @@
 <li>SPS(Sequence Parameter Set)，序列参数集，作用于一串连续的视频图像。</li>
 <li>比如：帧数、解码图像尺寸、参考帧数目</li>
 </ul>
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191831321.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191831321.png" srcset="/img/loading.gif" lazyload class="">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191854932.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191854932.png" srcset="/img/loading.gif" lazyload class="">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195729151.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195729151.png" srcset="/img/loading.gif" lazyload class="">
 
 <h3 id="2、认识PPS？主要包含哪些信息？"><a href="#2、认识PPS？主要包含哪些信息？" class="headerlink" title="2、认识PPS？主要包含哪些信息？"></a>2、认识PPS？主要包含哪些信息？</h3><ul>
 <li>PPS(Picture Parameter Set)，图像参数集，作用于视频序列中的图像</li>
 <li>比如：熵编码选择标识、片组数目</li>
 </ul>
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191808115.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604191808115.png" srcset="/img/loading.gif" lazyload class="">
 
 
 
 <h3 id="3、掌握Profile"><a href="#3、掌握Profile" class="headerlink" title="3、掌握Profile"></a>3、掌握Profile</h3><ul>
 <li>H264 Profile：对视频压缩特性的描述，Profile越高，说明采用了越高级的压缩特性</li>
 </ul>
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195557564.png" srcset="/img/loading.gif" lazyload class="" title="image-20220604195557564">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195557564.png" srcset="/img/loading.gif" lazyload class="" title="image-20220604195557564">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195603752.png" srcset="/img/loading.gif" lazyload class="" title="image-20220604195603752">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195603752.png" srcset="/img/loading.gif" lazyload class="" title="image-20220604195603752">
 
 <h3 id="4、掌握H264-Level"><a href="#4、掌握H264-Level" class="headerlink" title="4、掌握H264 Level"></a>4、掌握H264 Level</h3><ul>
 <li>H264 Level：是对视频的描述，Level越高，视频的码率，分辨率越高</li>
 </ul>
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195655374.png" srcset="/img/loading.gif" lazyload class="" title="image-20220604195655374">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220604195655374.png" srcset="/img/loading.gif" lazyload class="" title="image-20220604195655374">
 
 <h3 id="5、视频分析工具主流有哪些（说两个）？"><a href="#5、视频分析工具主流有哪些（说两个）？" class="headerlink" title="5、视频分析工具主流有哪些（说两个）？"></a>5、视频分析工具主流有哪些（说两个）？</h3><ul>
 <li>Evecard Stream Eye</li>
@@ -303,11 +303,11 @@
 <li>YUV420p数据存放结构：YYYYYYYYYYUUUVVV</li>
 <li><font color="red">从NV12中分别提取出Y、U、V数据，然后进行重新组合存放，即可。</font></li>
 </ul>
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605192735416.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605192735416.png" srcset="/img/loading.gif" lazyload class="">
 
 
 
-<h3 id="3、在进行NV12转YUV420p时，由于手误向文件中写入了两次数据，播放文件，会出现什么现象？"><a href="#3、在进行NV12转YUV420p时，由于手误向文件中写入了两次数据，播放文件，会出现什么现象？" class="headerlink" title="3、在进行NV12转YUV420p时，由于手误向文件中写入了两次数据，播放文件，会出现什么现象？"></a>3、在进行NV12转YUV420p时，由于手误向文件中写入了两次数据，播放文件，会出现什么现象？</h3><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605182230483.png" srcset="/img/loading.gif" lazyload class="">
+<h3 id="3、在进行NV12转YUV420p时，由于手误向文件中写入了两次数据，播放文件，会出现什么现象？"><a href="#3、在进行NV12转YUV420p时，由于手误向文件中写入了两次数据，播放文件，会出现什么现象？" class="headerlink" title="3、在进行NV12转YUV420p时，由于手误向文件中写入了两次数据，播放文件，会出现什么现象？"></a>3、在进行NV12转YUV420p时，由于手误向文件中写入了两次数据，播放文件，会出现什么现象？</h3><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605182230483.png" srcset="/img/loading.gif" lazyload class="">
 
 
 
@@ -330,7 +330,7 @@
 <ul>
 <li>通过上面指令，就可以明显看到u、v分量的闪烁效果。而 y分量的缺只是播放速度减慢了。</li>
 </ul>
-<h3 id="4、在编码H264的时候，如果少了下面图中两个步骤，会产生什么效果？"><a href="#4、在编码H264的时候，如果少了下面图中两个步骤，会产生什么效果？" class="headerlink" title="4、在编码H264的时候，如果少了下面图中两个步骤，会产生什么效果？"></a>4、在编码H264的时候，如果少了下面图中两个步骤，会产生什么效果？</h3><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605192501173.png" srcset="/img/loading.gif" lazyload class="">
+<h3 id="4、在编码H264的时候，如果少了下面图中两个步骤，会产生什么效果？"><a href="#4、在编码H264的时候，如果少了下面图中两个步骤，会产生什么效果？" class="headerlink" title="4、在编码H264的时候，如果少了下面图中两个步骤，会产生什么效果？"></a>4、在编码H264的时候，如果少了下面图中两个步骤，会产生什么效果？</h3><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605192501173.png" srcset="/img/loading.gif" lazyload class="">
 
 
 
@@ -345,21 +345,21 @@
 <ul>
 <li>注意：如果没有调用 <code>avcodec_open2</code> 会导致 <code>avcodec_send_frame</code> 报错：<font color="red"><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/69643784/avcodec-send-frame-returns-invalid-argument">avcodec_send_frame returns “invalid argument”</a></font></li>
 </ul>
-<h2 id="三、x264参数详解、参考资料（暂时不看吧，只做记录）"><a href="#三、x264参数详解、参考资料（暂时不看吧，只做记录）" class="headerlink" title="三、x264参数详解、参考资料（暂时不看吧，只做记录）"></a>三、x264参数详解、参考资料（暂时不看吧，只做记录）</h2><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193400253.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193400253">
+<h2 id="三、x264参数详解、参考资料（暂时不看吧，只做记录）"><a href="#三、x264参数详解、参考资料（暂时不看吧，只做记录）" class="headerlink" title="三、x264参数详解、参考资料（暂时不看吧，只做记录）"></a>三、x264参数详解、参考资料（暂时不看吧，只做记录）</h2><img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193400253.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193400253">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193427742.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193427742">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193427742.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193427742">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193433084.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193433084">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193433084.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193433084">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193440303.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193440303">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193440303.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193440303">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193445364.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193445364">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193445364.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193445364">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193450647.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193450647">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193450647.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193450647">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193456071.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193456071">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193456071.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193456071">
 
-<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193501269.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193501269">
+<img src="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/image-20220605193501269.png" srcset="/img/loading.gif" lazyload class="" title="image-20220605193501269">
 
             </div>
             <hr>
@@ -406,7 +406,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E7%AC%AC%E4%B8%80%E5%AD%A3/day10H264%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+                      <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day10H264%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
                         <span class="hidden-mobile">day10-认识H264、H264压缩技术、码流分层NALU</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
