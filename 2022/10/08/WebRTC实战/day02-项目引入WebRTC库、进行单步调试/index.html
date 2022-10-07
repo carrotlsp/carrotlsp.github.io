@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前面day01的文章已经编译生成了WebRTC.framework，如何将它引入到自己的项目中呢？ 首先创建一个全新的 WebrtcLearnDemo 的iOS项目，配置好手机证书，然后关闭项目的 bitcode 设置。  一、项目引入WebRTC库（引入法）① WebrtcLearnDemo -&gt; General -&gt; Frameworks  ② 设置Framework的searc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day02-项目引入WebRTC库、进行单步调试">
+<meta property="og:url" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前面day01的文章已经编译生成了WebRTC.framework，如何将它引入到自己的项目中呢？ 首先创建一个全新的 WebrtcLearnDemo 的iOS项目，配置好手机证书，然后关闭项目的 bitcode 设置。  一、项目引入WebRTC库（引入法）① WebrtcLearnDemo -&gt; General -&gt; Frameworks  ② 设置Framework的searc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007105606114.png">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007105734200.png">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007110654111.png">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007111023517.png">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007112334887.png">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007112421660.png">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007113602745.png">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007113904301.png">
+<meta property="og:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007114136319.png">
+<meta property="article:published_time" content="2022-10-08T08:31:29.000Z">
+<meta property="article:modified_time" content="2022-10-07T03:41:54.810Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007105606114.png">
+  
+  
+  <title>day02-项目引入WebRTC库、进行单步调试 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Carrot</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day02-项目引入WebRTC库、进行单步调试">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-10-08 16:31" pubdate>
+        October 8, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      708 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      6 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day02-项目引入WebRTC库、进行单步调试</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>前面<code>day01</code>的文章已经编译生成了WebRTC.framework，如何将它引入到自己的项目中呢？</p>
+<p>首先创建一个全新的 <code>WebrtcLearnDemo</code> 的iOS项目，配置好手机证书，然后关闭项目的 <code>bitcode</code> 设置。</p>
+</blockquote>
+<h2 id="一、项目引入WebRTC库（引入法）"><a href="#一、项目引入WebRTC库（引入法）" class="headerlink" title="一、项目引入WebRTC库（引入法）"></a>一、项目引入WebRTC库（引入法）</h2><h3 id="①-WebrtcLearnDemo-gt-General-gt-Frameworks"><a href="#①-WebrtcLearnDemo-gt-General-gt-Frameworks" class="headerlink" title="① WebrtcLearnDemo -&gt; General -&gt; Frameworks"></a>① <code>WebrtcLearnDemo -&gt; General -&gt; Frameworks</code></h3><img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007105606114.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007105606114">
+
+<h3 id="②-设置Framework的searchPaths"><a href="#②-设置Framework的searchPaths" class="headerlink" title="② 设置Framework的searchPaths"></a>② <code>设置Framework的searchPaths</code></h3><img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007105734200.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007105734200">
+
+<h3 id="③运行成功"><a href="#③运行成功" class="headerlink" title="③运行成功"></a>③运行成功</h3><img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007110654111.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007110654111">
+
+
+
+<h2 id="二、项目引入WebRTC库（拖入法）"><a href="#二、项目引入WebRTC库（拖入法）" class="headerlink" title="二、项目引入WebRTC库（拖入法）"></a>二、项目引入WebRTC库（拖入法）</h2><h3 id="①直接把-WebRTC-framework-拖入项目中"><a href="#①直接把-WebRTC-framework-拖入项目中" class="headerlink" title="①直接把 WebRTC.framework 拖入项目中"></a>①直接把 <code>WebRTC.framework</code> 拖入项目中</h3><img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007111023517.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007111023517">
+
+
+
+<h3 id="②修改Framework的引入和签名方式"><a href="#②修改Framework的引入和签名方式" class="headerlink" title="②修改Framework的引入和签名方式"></a>②修改Framework的引入和签名方式</h3><img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007112334887.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007112334887">
+
+<p>如果没有步操作，将会有如下报错：</p>
+<p> <font color="red"><strong>dyld[71229]: Library not loaded: @rpath&#x2F;WebRTC.framework&#x2F;WebRTC</strong></font></p>
+<h3 id="③运行代码成功"><a href="#③运行代码成功" class="headerlink" title="③运行代码成功"></a>③运行代码成功</h3><img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007112421660.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007112421660">
+
+
+
+<h2 id="三、项目引入WebRTC库（断点法）"><a href="#三、项目引入WebRTC库（断点法）" class="headerlink" title="三、项目引入WebRTC库（断点法）"></a>三、项目引入WebRTC库（断点法）</h2><h3 id="①无法WebRTC源码断点"><a href="#①无法WebRTC源码断点" class="headerlink" title="①无法WebRTC源码断点"></a>①无法WebRTC源码断点</h3><p>在上面介绍的 <code>项目引入WebRTC库（引入法）</code>  实现后，我们发现断点只能在我们自己项目中，无法进入 <code>WebRTC.framework</code> 源码进行调试。</p>
+<img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007113602745.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007113602745">
+
+
+
+<h3 id="②给项目设置符号断点，（具体原因在-day01中介绍过）"><a href="#②给项目设置符号断点，（具体原因在-day01中介绍过）" class="headerlink" title="②给项目设置符号断点，（具体原因在 day01中介绍过）"></a>②给项目设置<code>符号断点</code>，（具体原因在 <code>day01</code>中介绍过）</h3><p>在执行 <code>-[AppDelegate application:didFinishLaunchingWithOptions:]</code> 时自动设置source-map，<code>settings set target.source-map &quot;./../../&quot; &quot;/Users/carrot/Documents/webrtc-source/webrtc/src&quot;</code>就省得每次手动设置了。</p>
+<img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007113904301.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007113904301">
+
+
+
+<h3 id="③成功源码断点"><a href="#③成功源码断点" class="headerlink" title="③成功源码断点"></a>③成功源码断点</h3><p>可以看到，已经可以成功对WebRTC的源码进行单步调试了。</p>
+<img src="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/image-20221007114136319.png" srcset="/img/loading.gif" lazyload class="" title="image-20221007114136319">
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/08/%E6%A8%A1%E6%9D%BF/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day02-项目引入WebRTC库、进行单步调试</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/07/WebRTC%E5%AE%9E%E6%88%98/day01-%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E3%80%81%E7%BC%96%E8%AF%91%E3%80%81%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95AppRTCMobile/">
+                        <span class="hidden-mobile">day01-源码下载、编译、断点调试AppRTCMobile</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
