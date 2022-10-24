@@ -4,6 +4,81 @@
   
   
   <entry>
+    <title>day04-媒体协商</title>
+    <link href="/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/"/>
+    <url>/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/</url>
+    
+    <content type="html"><![CDATA[<h3 id="1、媒体协商起了主要哪些作用？"><a href="#1、媒体协商起了主要哪些作用？" class="headerlink" title="1、媒体协商起了主要哪些作用？"></a>1、媒体协商起了主要哪些作用？</h3><ul><li>交换双方的<font color="red">音频编解码器信息、视频编解码器信息</font></li><li>音频主要参数：采样大小、采样率、声道数</li><li>视频主要参数：帧率、分辨率</li></ul><h3 id="2、媒体协商的步骤？8个步骤，必须要能手绘。"><a href="#2、媒体协商的步骤？8个步骤，必须要能手绘。" class="headerlink" title="2、媒体协商的步骤？8个步骤，必须要能手绘。"></a>2、媒体协商的步骤？8个步骤，必须要能手绘。</h3><ul><li>目的：找到共同支持的编解码器以及编解码器相关的参数。</li></ul><img src="/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/image-20221021065158573.png" class="" title="image-20221021065158573"><h3 id="3、媒体协商的时序图，这个流程必须很清楚。【手绘】"><a href="#3、媒体协商的时序图，这个流程必须很清楚。【手绘】" class="headerlink" title="3、媒体协商的时序图，这个流程必须很清楚。【手绘】"></a>3、媒体协商的时序图，这个流程必须很清楚。【手绘】</h3><ul><li>四个角色：<font color="red">ClientA、ClientB、Signal、Coturn</font></li></ul><img src="/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/image-20221021065341434.png" class="" title="image-20221021065341434"><h3 id="4、思考和尝试，如何知道WebRTC处于媒体协商的那个阶段呢？（TODO）"><a href="#4、思考和尝试，如何知道WebRTC处于媒体协商的那个阶段呢？（TODO）" class="headerlink" title="4、思考和尝试，如何知道WebRTC处于媒体协商的那个阶段呢？（TODO）"></a>4、思考和尝试，如何知道WebRTC处于媒体协商的那个阶段呢？（TODO）</h3><ul><li>什么时候是Offer阶段？什么时候是Answer阶段？</li><li><code>核心点</code>：WebRTC媒体协商过程是有<font color="red">状态机</font>的，<code>状态机不合适的时候进行其他操作，会导致媒体协商失败</code>。</li></ul><img src="/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/image-20221025065451156.png" class="" title="image-20221025065451156"><h3 id="5、传统协商存储什么问题？完美协商是怎么解决的？"><a href="#5、传统协商存储什么问题？完美协商是怎么解决的？" class="headerlink" title="5、传统协商存储什么问题？完美协商是怎么解决的？"></a>5、传统协商存储什么问题？完美协商是怎么解决的？</h3><ul><li><code>传统协商</code>：如果状态不对的时候，进行其他协商操作，会导致整个协商过程失败。</li><li><code>举例说明</code>：如果ClientA处于<code>have-local-offer</code>阶段，有收到对端的<code>Offer</code>，就会导致协商失败，因为从上图可知，只有在<code>stable</code>阶段才能接收对端的<code>Offer</code>信息。</li></ul><img src="/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/image-20221025065931230.png" class="" title="image-20221025065931230">]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码Repeat</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day0102-初识WebRTC、WebRTC整体架构</title>
+    <link href="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day00-%E6%A8%A1%E6%9D%BF/"/>
+    <url>/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day00-%E6%A8%A1%E6%9D%BF/</url>
+    
+    <content type="html"><![CDATA[<h2 id="day01指针关键知识点"><a href="#day01指针关键知识点" class="headerlink" title="day01指针关键知识点"></a>day01指针关键知识点</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码Repeat</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day02-初识WebRTC、WebRTC整体架构</title>
+    <link href="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day02-%E5%88%9D%E8%AF%86WebRTC%E3%80%81WebRTC%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/"/>
+    <url>/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day02-%E5%88%9D%E8%AF%86WebRTC%E3%80%81WebRTC%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、day01初识WebRTC"><a href="#一、day01初识WebRTC" class="headerlink" title="一、day01初识WebRTC"></a>一、day01初识WebRTC</h2><h3 id="1、WebRTC的网络模块好在哪里？"><a href="#1、WebRTC的网络模块好在哪里？" class="headerlink" title="1、WebRTC的网络模块好在哪里？"></a>1、WebRTC的网络模块好在哪里？</h3><ul><li>保障数据的实时性（&lt;500ms）</li><li>可以实时准确的评估出带宽大小（REMB、TCC）</li><li>优秀的防拥塞控制算法（GCC）</li><li>保障网络带宽使用的公平性（TCP、GCC）</li><li>抗丢包（NACK、FEC）</li><li>防抖动、防乱序（JitterBuffer、NetEQ）</li><li>可以传输各种数据（音视频、文本、二进制数据）</li></ul><h3 id="2、WebRTC的音视频引擎强大在哪里？"><a href="#2、WebRTC的音视频引擎强大在哪里？" class="headerlink" title="2、WebRTC的音视频引擎强大在哪里？"></a>2、WebRTC的音视频引擎强大在哪里？</h3><ul><li>支持多种音视频编解码器（AV1&#x2F;VP9&#x2F;VP8、 OPUS&#x2F;ISAC）</li><li>采用了最先进的音视频编解码器（AV1、OPUS）</li><li>多种音视频格式可以互通（VP8、H264）</li><li>能够快速集成新的编解码器</li></ul><h3 id="3、WebRTC的-3A-模块是哪些？"><a href="#3、WebRTC的-3A-模块是哪些？" class="headerlink" title="3、WebRTC的 3A 模块是哪些？"></a>3、WebRTC的 3A 模块是哪些？</h3><ul><li>自动增益</li><li>回音消除</li><li>降噪</li><li>将传统算法用到了极致，不仅仅支持软件方法还支持硬件方法</li></ul><h3 id="4、WebRTC的安全性体系在哪些方面？"><a href="#4、WebRTC的安全性体系在哪些方面？" class="headerlink" title="4、WebRTC的安全性体系在哪些方面？"></a>4、WebRTC的安全性体系在哪些方面？</h3><ul><li>通过动态分配用户名&#x2F;密码保证用户的有效性</li><li>通过指纹保证证书的真实性</li><li>通过DTLS-SRTP对数据进行加密</li><li>还支持端到端数据加密</li></ul><h2 id="二、day02-认识WebRTC的架构"><a href="#二、day02-认识WebRTC的架构" class="headerlink" title="二、day02 认识WebRTC的架构"></a>二、day02 认识WebRTC的架构</h2><h3 id="1、直播一般分哪两种？"><a href="#1、直播一般分哪两种？" class="headerlink" title="1、直播一般分哪两种？"></a>1、直播一般分哪两种？</h3><ul><li>传统娱乐直播：直播购物、娱乐直播、游戏直播；RTMP&#x2F;HLS 底层都是基于 ffmpeg 来实现的</li><li>实时互动直播：音视频会议、在线互动课堂；RTP&#x2F;STRP 基于 WebRTC 实现的</li></ul><h3 id="2、两种数据的详细对比？"><a href="#2、两种数据的详细对比？" class="headerlink" title="2、两种数据的详细对比？"></a>2、两种数据的详细对比？</h3><ul><li><p>下面这个图，要自己重绘一下</p></li><li><p>至少能从三个方面吧</p></li></ul><img src="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day02-%E5%88%9D%E8%AF%86WebRTC%E3%80%81WebRTC%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/image-20221019064013318.png" class="" title="image-20221019064013318"><img src="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day02-%E5%88%9D%E8%AF%86WebRTC%E3%80%81WebRTC%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/image-20221019064017658.png" class="" title="image-20221019064017658"><h3 id="3、实时互动直播难点在哪里（说两点）？"><a href="#3、实时互动直播难点在哪里（说两点）？" class="headerlink" title="3、实时互动直播难点在哪里（说两点）？"></a>3、实时互动直播难点在哪里（说两点）？</h3><ul><li>对实时性要求高 （&lt; 500ms）</li><li>音视频服务质量与实时性之间是有矛盾的</li></ul><h3 id="4、一个UDP大概能带多少数据？TCP在实时性上的致命缺陷是什么？"><a href="#4、一个UDP大概能带多少数据？TCP在实时性上的致命缺陷是什么？" class="headerlink" title="4、一个UDP大概能带多少数据？TCP在实时性上的致命缺陷是什么？"></a>4、一个UDP大概能带多少数据？TCP在实时性上的致命缺陷是什么？</h3><ul><li>一个UDP包理论上能带1500字节的数据，实际上掐头去尾，也就能带 1400 字节。</li><li>TCP为什么会导致直播延迟大：<font color="red">TCP的重传超时退避机制</font></li></ul><h3 id="5、WebRTC的整体架构图？（四层，要能自己手绘出来）"><a href="#5、WebRTC的整体架构图？（四层，要能自己手绘出来）" class="headerlink" title="5、WebRTC的整体架构图？（四层，要能自己手绘出来）"></a>5、WebRTC的整体架构图？（四层，要能自己手绘出来）</h3><ul><li>灵魂图之一</li></ul><img src="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day02-%E5%88%9D%E8%AF%86WebRTC%E3%80%81WebRTC%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/image-20221021064113030.png" class="" title="image-20221021064113030"><h3 id="6、WebRTC数据流转图？（灵魂图，必须能手绘）"><a href="#6、WebRTC数据流转图？（灵魂图，必须能手绘）" class="headerlink" title="6、WebRTC数据流转图？（灵魂图，必须能手绘）"></a>6、WebRTC数据流转图？（灵魂图，必须能手绘）</h3><ul><li>从接收侧的流程？</li><li>从发送侧的流程<img src="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day02-%E5%88%9D%E8%AF%86WebRTC%E3%80%81WebRTC%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/image-20221021064210576.png" class="" title="image-20221021064210576"></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码Repeat</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>day02-项目引入WebRTC库、进行单步调试</title>
     <link href="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/"/>
     <url>/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/</url>

@@ -16,19 +16,39 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta property="og:url" content="http://example.com/archives/2022/06/index.html">
+    <meta name="description" content="day01指针关键知识点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day0102-初识WebRTC、WebRTC整体架构">
+<meta property="og:url" content="http://example.com/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day00-%E6%A8%A1%E6%9D%BF/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="day01指针关键知识点">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-18T08:31:29.000Z">
+<meta property="article:modified_time" content="2022-10-18T22:28:08.626Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="WebRTC">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>Archives - Hexo</title>
+  <title>day0102-初识WebRTC、WebRTC整体架构 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -55,7 +75,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -156,9 +176,43 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Archive">
+            <span class="h2" id="subtitle" title="day0102-初识WebRTC、WebRTC整体架构">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-10-18 16:31" pubdate>
+        October 18, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      12 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      1 分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -171,100 +225,94 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">43 posts in total.</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2022</p>
-    
-    <a href="/2022/06/26/WebRTC%E5%85%A5%E9%97%A8/day12coTurn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day12-coTurn服务器搭建</span>
-      <time style="float: right;">06-26</time>
-    </a>
-  
-    
-    <a href="/2022/06/25/WebRTC%E5%85%A5%E9%97%A8/day12%E5%AE%9E%E7%8E%B01v1%E9%9F%B3%E8%A7%86%E9%A2%91%E4%BA%92%E5%8A%A8%E7%9B%B4%E6%92%AD%E7%B3%BB%E7%BB%9F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day12-实现1v1音视频互动直播系统</span>
-      <time style="float: right;">06-25</time>
-    </a>
-  
-    
-    <a href="/2022/06/20/WebRTC%E5%85%A5%E9%97%A8/day11WebRTC%E6%A0%B8%E5%BF%83SDP/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day11-WebRTC核心之SDP详解</span>
-      <time style="float: right;">06-20</time>
-    </a>
-  
-    
-    <a href="/2022/06/19/WebRTC%E5%85%A5%E9%97%A8/day10%E7%AB%AF%E5%AF%B9%E7%AB%AF%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day10-WebRTC端对端1v1传输基本流程</span>
-      <time style="float: right;">06-19</time>
-    </a>
-  
-    
-    <a href="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day09%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day09-WebRTC网络基础补充：P2P/STUN/TURN/ICE知识</span>
-      <time style="float: right;">06-18</time>
-    </a>
-  
-    
-    <a href="/2022/06/18/WebRTC%E5%85%A5%E9%97%A8/day08%E4%BF%A1%E4%BB%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day08-WebRTC信令服务器实现</span>
-      <time style="float: right;">06-18</time>
-    </a>
-  
-    
-    <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day03%E8%8E%B7%E5%8F%96%E8%A7%86%E9%A2%91%E9%9F%B3%E9%A2%91/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day06-获取音频视频</span>
-      <time style="float: right;">06-12</time>
-    </a>
-  
-    
-    <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day02%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day02-借助nodejs搭建HTTPS服务器</span>
-      <time style="float: right;">06-12</time>
-    </a>
-  
-    
-    <a href="/2022/06/12/WebRTC%E5%85%A5%E9%97%A8/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day01-初始WebRTC</span>
-      <time style="float: right;">06-12</time>
-    </a>
-  
-    
-    <a href="/2022/06/04/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day11%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%AE%9E%E6%88%98/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">day11-【实战】视频编码/解码</span>
-      <time style="float: right;">06-04</time>
-    </a>
-  
-</div>
 
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2022/06/page/2/#board">2</a><a class="extend next" rel="next" href="/archives/2022/06/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-
-
-
-
-              </div>
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day0102-初识WebRTC、WebRTC整体架构</h1>
+            
+            <div class="markdown-body">
+              <h2 id="day01指针关键知识点"><a href="#day01指针关键知识点" class="headerlink" title="day01指针关键知识点"></a>day01指针关键知识点</h2>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day04-媒体协商</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day02-%E5%88%9D%E8%AF%86WebRTC%E3%80%81WebRTC%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/">
+                        <span class="hidden-mobile">day02-初识WebRTC、WebRTC整体架构</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -347,6 +395,19 @@
   
 
 
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 
