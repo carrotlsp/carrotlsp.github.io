@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、编解码器信息的收集1、学完本节要能回答以下问题？ AddTrack如何生成Transceiver？ payload type 从哪里来？ 每个 payload type 对应的值从哪儿来？ 使用的传输协议如何确定？  2、webRTC的入口函数是哪个？ CreatePeerConnectionFactory      3、以 CreateBuildinAudioEncoderFactory 为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day06-媒体协商2-编解码器信息收集">
+<meta property="og:url" content="http://example.com/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、编解码器信息的收集1、学完本节要能回答以下问题？ AddTrack如何生成Transceiver？ payload type 从哪里来？ 每个 payload type 对应的值从哪儿来？ 使用的传输协议如何确定？  2、webRTC的入口函数是哪个？ CreatePeerConnectionFactory      3、以 CreateBuildinAudioEncoderFactory 为">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125065917777.png">
+<meta property="og:image" content="http://example.com/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125070735719.png">
+<meta property="og:image" content="http://example.com/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125070836017.png">
+<meta property="og:image" content="http://example.com/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125070926354.png">
+<meta property="og:image" content="http://example.com/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125071118047.png">
+<meta property="article:published_time" content="2022-11-24T23:31:29.000Z">
+<meta property="article:modified_time" content="2022-11-24T23:12:10.747Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125065917777.png">
+  
+  
+  <title>day06-媒体协商2-编解码器信息收集 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>望穿秋水</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day06-媒体协商2-编解码器信息收集">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-11-25 07:31" pubdate>
+        November 25, 2022 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day06-媒体协商2-编解码器信息收集</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、编解码器信息的收集"><a href="#一、编解码器信息的收集" class="headerlink" title="一、编解码器信息的收集"></a>一、编解码器信息的收集</h2><h3 id="1、学完本节要能回答以下问题？"><a href="#1、学完本节要能回答以下问题？" class="headerlink" title="1、学完本节要能回答以下问题？"></a>1、学完本节要能回答以下问题？</h3><ul>
+<li><font color="red">AddTrack</font>如何生成Transceiver？</li>
+<li><font color="red">payload type</font> 从哪里来？</li>
+<li>每个 <font color="red">payload type</font> 对应的值从哪儿来？</li>
+<li>使用的传输协议如何确定？</li>
+</ul>
+<h3 id="2、webRTC的入口函数是哪个？"><a href="#2、webRTC的入口函数是哪个？" class="headerlink" title="2、webRTC的入口函数是哪个？"></a>2、webRTC的入口函数是哪个？</h3><ul>
+<li><code>CreatePeerConnectionFactory</code></li>
+</ul>
+<img src="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125065917777.png" srcset="/img/loading.gif" lazyload class="" title="image-20221125065917777">
+
+
+
+<h3 id="3、以-CreateBuildinAudioEncoderFactory-为例，介绍如何生成对应的-payload-type？"><a href="#3、以-CreateBuildinAudioEncoderFactory-为例，介绍如何生成对应的-payload-type？" class="headerlink" title="3、以 CreateBuildinAudioEncoderFactory 为例，介绍如何生成对应的 payload type？"></a>3、以 <font color="red">CreateBuildinAudioEncoderFactory</font> 为例，介绍如何生成对应的 payload type？</h3><ul>
+<li>需要了解C++ 可变参数模板的用法，以及如何使用递归法展开可变参数模板。</li>
+<li>make_ref_counted 是 webRTC 的内存管理体系</li>
+<li>下面是传入的payload type类型，以可变模板参数的方式传入，从下往上调用栈</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs c++"><br>--------&gt; make_ref_counted&lt;audio_encoder_factory_template_impl::AudioEncoderFactoryT&lt;Ts...&gt;&gt;(<span class="hljs-literal">nullptr</span>)<br>------&gt; CreateAudioEncoderFactory&lt;AudioEncoderOpus, NotAdvertised&lt;AudioEncoderMultiChannelOpus&gt;,AudioEncoderG711, NotAdvertised&lt;AudioEncoderL16&gt;&gt;()<br>----&gt; webrtc::<span class="hljs-built_in">CreateBuiltinAudioEncoderFactory</span>()<br>--&gt; -[RTCPeerConnectionFactory initWithEncoderFactory:decoderFactory:]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>核心之处</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 这边是外部获取支持的编码器信息的调用函数</span><br>	<span class="hljs-function">std::vector&lt;AudioCodecSpec&gt; <span class="hljs-title">GetSupportedEncoders</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;<br>    std::vector&lt;AudioCodecSpec&gt; specs;<br>    Helper&lt;Ts...&gt;::<span class="hljs-built_in">AppendSupportedEncoders</span>(&amp;specs);<br>    <span class="hljs-keyword">return</span> specs;<br>  &#125;<br><br><span class="hljs-comment">// 对具有可变模板参数进行解包</span><br><span class="hljs-comment">// Inductive case: Called with n + 1 template parameters; calls subroutines</span><br><span class="hljs-comment">// with n template parameters.</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span>... Ts&gt;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Helper</span>&lt;T, Ts...&gt; &#123;<br>  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">AppendSupportedEncoders</span><span class="hljs-params">(std::vector&lt;AudioCodecSpec&gt;* specs)</span> </span>&#123;<br>    T::<span class="hljs-built_in">AppendSupportedEncoders</span>(specs);<br>    Helper&lt;Ts...&gt;::<span class="hljs-built_in">AppendSupportedEncoders</span>(specs);<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">// 对0个参数的方法进行重载，终止可变模板参数解包的递归函数</span><br><span class="hljs-comment">// Base case: 0 template parameters.</span><br><span class="hljs-keyword">template</span> &lt;&gt;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Helper</span>&lt;&gt; &#123;<br>  <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">AppendSupportedEncoders</span><span class="hljs-params">(std::vector&lt;AudioCodecSpec&gt;* specs)</span> </span>&#123;&#125;<br>  <span class="hljs-function"><span class="hljs-type">static</span> absl::optional&lt;AudioCodecInfo&gt; <span class="hljs-title">QueryAudioEncoder</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">      <span class="hljs-type">const</span> SdpAudioFormat&amp; format)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> absl::<span class="hljs-literal">nullopt</span>;<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="4、编解码器信息收集的步骤？"><a href="#4、编解码器信息收集的步骤？" class="headerlink" title="4、编解码器信息收集的步骤？"></a>4、编解码器信息收集的步骤？</h3><img src="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125070735719.png" srcset="/img/loading.gif" lazyload class="" title="image-20221125070735719">
+
+<ul>
+<li>上面是完整过程，也就是核心步骤，大纲一定要记住</li>
+</ul>
+<h3 id="5、收集音频编解码器的时机？"><a href="#5、收集音频编解码器的时机？" class="headerlink" title="5、收集音频编解码器的时机？"></a>5、收集音频编解码器的时机？</h3><img src="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125070836017.png" srcset="/img/loading.gif" lazyload class="" title="image-20221125070836017">
+
+<ul>
+<li>CompositeMediaEngine会创建音频、视频媒体引擎；这两个引擎是WebRTC中最重要的两个引擎。</li>
+<li>通过 AudioEncoderFactoryT&lt;&gt;::GetSupportedEncoders 来获取支持的音频编解码器</li>
+<li>此时只是完成了音视频编解码器信息收集的初级阶段。</li>
+</ul>
+<h3 id="6、如何将上面的收集到的编解码器信息与SDP建立联系呢？"><a href="#6、如何将上面的收集到的编解码器信息与SDP建立联系呢？" class="headerlink" title="6、如何将上面的收集到的编解码器信息与SDP建立联系呢？"></a>6、如何将上面的收集到的编解码器信息与SDP建立联系呢？</h3><img src="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125070926354.png" srcset="/img/loading.gif" lazyload class="" title="image-20221125070926354">
+
+<ul>
+<li>TODO：按照上面的步骤，结合视频，进行源码解读</li>
+</ul>
+<h3 id="7、小结"><a href="#7、小结" class="headerlink" title="7、小结"></a>7、小结</h3><img src="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/image-20221125071118047.png" srcset="/img/loading.gif" lazyload class="" title="image-20221125071118047">
+
+<ul>
+<li>TODO：上图非常精髓，要自己画几遍</li>
+<li>也回答MediaEngine是什么时候创建的？就是在CreatePeerConnectionFactory中创建的。</li>
+<li>为什么音频编解码器是分开的有两个，而视频编解码器是只有一个呢？</li>
+<li>在 6-6 小节中有对此图的详细讲解，多听几遍吧！！！一定要多听了，讲得太好了</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/WebRTC/">WebRTC</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/16/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%931/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day11-WebRTC网络传输1-NetworkManager、初识ICE、Candidate概念</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/27/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%861-SDP%E8%AF%A6%E8%A7%A3/">
+                        <span class="hidden-mobile">day06-媒体协商1-SDP详解</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

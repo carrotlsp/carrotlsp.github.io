@@ -191,6 +191,241 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/" target="_self">
+          day02-项目引入WebRTC库、进行单步调试
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/" target="_self">
+          
+          前面day01的文章已经编译生成了WebRTC.framework，如何将它引入到自己的项目中呢？ 首先创建一个全新的 WebrtcLearnDemo 的iOS项目，配置好手机证书，然后关闭项目的 bitcode 设置。  一、项目引入WebRTC库（引入法）① WebrtcLearnDemo -&gt; General -&gt; Frameworks  ② 设置Framework的searc
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-08 16:31" pubdate>
+              2022-10-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E5%AE%9E%E6%88%98/">WebRTC实战</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/08/%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%88%AB/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/" target="_self">
+          day02-项目引入WebRTC库、进行单步调试
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/10/08/%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%88%AB/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/" target="_self">
+          
+          day01指针关键知识点
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-08 16:31" pubdate>
+              2022-10-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%88%AB/">模板类别</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/10/07/WebRTC%E5%AE%9E%E6%88%98/day01-%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E3%80%81%E7%BC%96%E8%AF%91%E3%80%81%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95AppRTCMobile/" target="_self">
+          day01-源码下载、编译、断点调试AppRTCMobile
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/10/07/WebRTC%E5%AE%9E%E6%88%98/day01-%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E3%80%81%E7%BC%96%E8%AF%91%E3%80%81%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95AppRTCMobile/" target="_self">
+          
+          环境：Xcode13.2、macOS Big Sur 11.6.1  一、源码下载 在音视频领域中，WebRTC可以说是一个绕不开的宝库，包括了 音视频采集、编码、传输、解码、渲染的全过程。  设置代理因为众所周知的原因，要下载WebRTC的源码是需要代理工具的。 123export https_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:7890 http_proxy&#x3D;http:&#x2F;&#x2F;127.
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-10-07 16:31" pubdate>
+              2022-10-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E5%AE%9E%E6%88%98/">WebRTC实战</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/18/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E5%9B%9B/" target="_self">
+          day12-WebRTC服务质量之四、FEC
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/09/18/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E5%9B%9B/" target="_self">
+          
+          五、FEC1、什么是FEC？        2、FEC的原理是什么？   其实就是Data1和Data2进行异或操作（系统为0，不同为1），产生一个新的包R。 当Data1丢失时，可以通过 Data2和R进行异或操作，恢复 Data1的数据。 这就是两个包的FEC      那么三个包怎么办呢？其实也一样 1、2、3异或生成冗余包R1；如果3丢了，可以通过1、2、R1恢复3的数据 但是如果4、5都
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-18 20:41" pubdate>
+              2022-09-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/15/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%B8%89/" target="_self">
+          day12-WebRTC服务质量之三、Pacer、JitterBufferr
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/09/15/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%B8%89/" target="_self">
+          
+          三、认识Pacer1、Pacer的作用是什么？ 让数据在网络上发送得更平滑，防止因数据的突增导致网络发生拥塞。    2、Pacer是什么时候创建的？   这种流程图，也是超级棒啊  3、关于Pacer的两个重要函数、两种工作模式？         WebRTC如何处理是否需要发送保活包？当没有音视频数据时，才需要发送保活包。      4、认识Pacer中非常重要的数据结构 RoundBobin
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-15 20:41" pubdate>
+              2022-09-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/09/14/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%BA%8C/" target="_self">
           day12-WebRTC服务质量之二
         </a>
@@ -397,241 +632,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2022-09-03 20:41" pubdate>
               2022-09-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/28/WebRTC%E6%BA%90%E7%A0%81/day09-%E9%9F%B3%E9%A2%91%E5%BC%95%E6%93%8E/" target="_self">
-          day09-音频引擎
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/28/WebRTC%E6%BA%90%E7%A0%81/day09-%E9%9F%B3%E9%A2%91%E5%BC%95%E6%93%8E/" target="_self">
-          
-          1、章节概述，知道学完本章能知道些什么？    2、音频引擎类关系图？   adm：AudioDeviceModule，通过它我们可以从设备中读取数据，还可以将数据写入到扬声器中。 encoder_factory：我们最终的编码器就是通过它创建出来的。 decoder_factory：我们最终的解码器就是通过它创建出来的。 audio_mixer：混音器，是将多路流混成一路流，最终通过扬声器播放出
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-28 20:41" pubdate>
-              2022-08-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/19/WebRTC%E6%BA%90%E7%A0%81/day08-%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" target="_self">
-          day08-视频数据采集
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/19/WebRTC%E6%BA%90%E7%A0%81/day08-%E8%A7%86%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" target="_self">
-          
-          
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-19 20:41" pubdate>
-              2022-08-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" target="_self">
-          day07-音频数据采集
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/18/WebRTC%E6%BA%90%E7%A0%81/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" target="_self">
-          
-          一、音频设备的初始化1、ADM的全称是什么？ Audio Device Module，音频设备模块 掌握以下是 Audio Device Module 的类关系图    2、创建ADM的时机 总结一句话：就是我们在创建 PeerConnectionFactory 的时候，就会创建 ADM 对象    3、创建ADM的核心过程 注意点：会看到两次创建 MMDevice COM 组件 的过程，第一次是
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-18 20:41" pubdate>
-              2022-08-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" target="_self">
-          day05-深入理解WebRTC的线程模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" target="_self">
-          
-          一、线程的基础知识1、本章主要内容    2、计算机组成原理      3、多线程的好处与坏处？多线程带了哪些问题？    4、如何解决多线程带来的问题？ 加锁    5、Objective-C和WebRTC中的线程模型是什么？ 休眠唤醒循环执行任务线程模型    二、WebRTC中的线程模型1、认识Thread类？ crit_：是临界区，是防止存取或读取数据时发生错乱          2、关于
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-15 20:41" pubdate>
-              2022-08-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/" target="_self">
-          day06-WebRTC媒体协商
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/" target="_self">
-          
-          一、认识SDP1、为什么要选择SDP格式作为WebRTC的传输格式？ 与XML相比较，SDP采用key-value的模式，数据存放比较紧凑，网络传输更加节约带宽 SDP采用key-value模式，也更容易读写数据  2、SDP的结构图，太棒了！     m：就是media，表示媒体曾  a：就是attribute，表示属性  c：就是connection，表示连接  v：就是version，代表S
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-15 20:41" pubdate>
-              2022-08-15
             </time>
           </div>
         
