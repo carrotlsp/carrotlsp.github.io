@@ -16,21 +16,42 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="day01指针关键知识点">
+    <meta name="description" content="一、Candidate 交给应用层的、Connection生成过程1、WebRTC 为什么要将收集到的各种 Candidate 交给应用层？ 因为通信的双方，需要获取对方的 Candidate 才能开始尝试与对端进行连接。    2、WebRTC 中的网络连接用什么表示？它由哪两个重要部分构成？ WebRTC 中用 Connection 表示一个网络连接 Connection 由本地Port和远端">
 <meta property="og:type" content="article">
-<meta property="og:title" content="day11-WebRTC网络传输5">
+<meta property="og:title" content="day11-WebRTC网络传输5-Candidate传递给应用层、Connection生成&#x2F;排序&#x2F;选择&#x2F;裁剪">
 <meta property="og:url" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="day01指针关键知识点">
+<meta property="og:description" content="一、Candidate 交给应用层的、Connection生成过程1、WebRTC 为什么要将收集到的各种 Candidate 交给应用层？ 因为通信的双方，需要获取对方的 Candidate 才能开始尝试与对端进行连接。    2、WebRTC 中的网络连接用什么表示？它由哪两个重要部分构成？ WebRTC 中用 Connection 表示一个网络连接 Connection 由本地Port和远端">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321064349698.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321064848479.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065237938.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065829665.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065840160.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065925761.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065952857.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065956782.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070001961.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070007129.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070123982.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070128437.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070133075.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070137282.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070141939.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070442199.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070447058.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070454666.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070528711.png">
+<meta property="og:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070535472.png">
 <meta property="article:published_time" content="2023-03-26T08:31:29.000Z">
-<meta property="article:modified_time" content="2023-03-15T23:08:00.249Z">
+<meta property="article:modified_time" content="2023-03-20T23:08:17.097Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="WebRTC">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321064349698.png">
   
   
-  <title>day11-WebRTC网络传输5 - Hexo</title>
+  <title>day11-WebRTC网络传输5-Candidate传递给应用层、Connection生成/排序/选择/裁剪 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +197,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="day11-WebRTC网络传输5">
+            <span class="h2" id="subtitle" title="day11-WebRTC网络传输5-Candidate传递给应用层、Connection生成/排序/选择/裁剪">
               
             </span>
 
@@ -197,7 +218,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      12 字
+      1k 字
     </span>
   
 
@@ -206,7 +227,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      9 分钟
     </span>
   
 
@@ -235,10 +256,90 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">day11-WebRTC网络传输5</h1>
+            <h1 style="display: none">day11-WebRTC网络传输5-Candidate传递给应用层、Connection生成/排序/选择/裁剪</h1>
             
             <div class="markdown-body">
-              <h2 id="day01指针关键知识点"><a href="#day01指针关键知识点" class="headerlink" title="day01指针关键知识点"></a>day01指针关键知识点</h2>
+              <h2 id="一、Candidate-交给应用层的、Connection生成过程"><a href="#一、Candidate-交给应用层的、Connection生成过程" class="headerlink" title="一、Candidate 交给应用层的、Connection生成过程"></a>一、Candidate 交给应用层的、Connection生成过程</h2><h3 id="1、WebRTC-为什么要将收集到的各种-Candidate-交给应用层？"><a href="#1、WebRTC-为什么要将收集到的各种-Candidate-交给应用层？" class="headerlink" title="1、WebRTC 为什么要将收集到的各种 Candidate 交给应用层？"></a>1、WebRTC 为什么要将收集到的各种 Candidate 交给应用层？</h3><ul>
+<li>因为通信的双方，需要获取对方的 Candidate 才能开始尝试与对端进行连接。</li>
+</ul>
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321064349698.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321064349698">
+
+<h3 id="2、WebRTC-中的网络连接用什么表示？它由哪两个重要部分构成？"><a href="#2、WebRTC-中的网络连接用什么表示？它由哪两个重要部分构成？" class="headerlink" title="2、WebRTC 中的网络连接用什么表示？它由哪两个重要部分构成？"></a>2、WebRTC 中的网络连接用什么表示？它由哪两个重要部分构成？</h3><ul>
+<li>WebRTC 中用 Connection 表示一个网络连接</li>
+<li>Connection 由本地Port和远端Candidate构成</li>
+</ul>
+<h3 id="3、WebRTC-创建连接的三种方式是哪三种？"><a href="#3、WebRTC-创建连接的三种方式是哪三种？" class="headerlink" title="3、WebRTC 创建连接的三种方式是哪三种？"></a>3、WebRTC 创建连接的三种方式是哪三种？</h3><ul>
+<li>控制方，收到对端Candidate后，调用 AddIceCandidate时</li>
+<li>被控制方，先收到对端Candidate后，生成本地Port时</li>
+<li>控制方，收到Candidate之前，收到另一端的BindingRequest请求时</li>
+</ul>
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321064848479.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321064848479">
+
+<ul>
+<li><p>由上图中可以知道 WebRTC 创建 Connecton 的方式有很多种，这就导致会创建出很多Connection，但是最终只需要一个Connection，所以后面会对Connection进行裁剪。</p>
+</li>
+<li><p>TODO：代码上观察一下，到底生成了多少Connection？</p>
+</li>
+</ul>
+<h2 id="二、Connection-排序"><a href="#二、Connection-排序" class="headerlink" title="二、Connection 排序"></a>二、Connection 排序</h2><h3 id="1、WebRTC-是在什么时机以及什么方法内，对Connection进行排序的？"><a href="#1、WebRTC-是在什么时机以及什么方法内，对Connection进行排序的？" class="headerlink" title="1、WebRTC 是在什么时机以及什么方法内，对Connection进行排序的？"></a>1、WebRTC 是在什么时机以及什么方法内，对Connection进行排序的？</h3><img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065237938.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321065237938">
+
+<ul>
+<li>上述流程会调用 SortConnectionAndUpdateState 进行Connection的排序。</li>
+</ul>
+<h3 id="2、一个特别重要的函数-SortAndSwitchConnection，它实现了哪三大功能？"><a href="#2、一个特别重要的函数-SortAndSwitchConnection，它实现了哪三大功能？" class="headerlink" title="2、一个特别重要的函数 SortAndSwitchConnection，它实现了哪三大功能？"></a>2、一个特别重要的函数 SortAndSwitchConnection，它实现了哪三大功能？</h3><ul>
+<li>SortAndSwitchConnection</li>
+<li>该函数中实现了三大功能：Connection排序、裁剪和连通性检测</li>
+</ul>
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065829665.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321065829665">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065840160.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321065840160">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065925761.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321065925761">
+
+<ul>
+<li>上图的Connections，就是之前介绍通过三种方式获取的所有Connection</li>
+<li>比较方式，先借助 CompareConnections(..)进行比较，如果cmp&#x3D;&#x3D;0，那么就比较他们的rtt()也就是时延</li>
+</ul>
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065952857.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321065952857">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321065956782.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321065956782">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070001961.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070001961">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070007129.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070007129">
+
+<h2 id="三、WebRTC是如何选择Connection的？如何裁剪的呢？"><a href="#三、WebRTC是如何选择Connection的？如何裁剪的呢？" class="headerlink" title="三、WebRTC是如何选择Connection的？如何裁剪的呢？"></a>三、WebRTC是如何选择Connection的？如何裁剪的呢？</h2><h3 id="1、关键函数-ShouldSwitchConnection"><a href="#1、关键函数-ShouldSwitchConnection" class="headerlink" title="1、关键函数 ShouldSwitchConnection"></a>1、关键函数 ShouldSwitchConnection</h3><img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070123982.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070123982">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070128437.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070128437">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070133075.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070133075">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070137282.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070137282">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070141939.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070141939">
+
+<ul>
+<li>上面五种情况，可能导致切换连接。</li>
+</ul>
+<h3 id="2、选择出来了比较合适的Connection之后，如何对Connection进行裁剪呢？"><a href="#2、选择出来了比较合适的Connection之后，如何对Connection进行裁剪呢？" class="headerlink" title="2、选择出来了比较合适的Connection之后，如何对Connection进行裁剪呢？"></a>2、选择出来了比较合适的Connection之后，如何对Connection进行裁剪呢？</h3><img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070442199.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070442199">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070447058.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070447058">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070454666.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070454666">
+
+<ul>
+<li>我们要知道Connection的裁剪，一定是在Connection选择之后，才进行裁剪的。</li>
+</ul>
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070528711.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070528711">
+
+<img src="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/image-20230321070535472.png" srcset="/img/loading.gif" lazyload class="" title="image-20230321070535472">
+
+<blockquote>
+<p>核心知识两点：</p>
+<p>①裁剪工作一定是选择出了最优的Connection之后，才能对其他Connection进行裁剪。</p>
+<p>②裁剪的具体流程如上所述。</p>
+</blockquote>
+
             </div>
             <hr>
             <div>
@@ -283,7 +384,7 @@
                     
                     
                       <a href="/2023/03/22/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%934/">
-                        <span class="hidden-mobile">day11-WebRTC网络传输4-Turn协议、Turn连接、Turn消息机制</span>
+                        <span class="hidden-mobile">day11-WebRTC网络传输4-Turn协议、Turn连接、Turn消息机制、Turn类型的candidate</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
