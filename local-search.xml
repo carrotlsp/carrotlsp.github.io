@@ -4,61 +4,61 @@
   
   
   <entry>
+    <title>day12-WebRTC服务质量2-RTCP</title>
+    <link href="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/"/>
+    <url>/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、RTCP协议"><a href="#一、RTCP协议" class="headerlink" title="一、RTCP协议"></a>一、RTCP协议</h2><h3 id="1、在以太网中，一个数据包的长度是最长多少字节？RTCP在哪个层？"><a href="#1、在以太网中，一个数据包的长度是最长多少字节？RTCP在哪个层？" class="headerlink" title="1、在以太网中，一个数据包的长度是最长多少字节？RTCP在哪个层？"></a>1、在以太网中，一个数据包的长度是最长多少字节？RTCP在哪个层？</h3><ul><li>一个数据包的长度 <font color="red">最长是1500</font> 个字节</li><li>RTCP协议在 <font color="red">应用层</font></li></ul><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624075345336.png" class="" title="image-20230624075345336"><h3 id="2、RTCP-Header中包括哪些域？（对着图要能解释每个域的含义）"><a href="#2、RTCP-Header中包括哪些域？（对着图要能解释每个域的含义）" class="headerlink" title="2、RTCP Header中包括哪些域？（对着图要能解释每个域的含义）"></a>2、RTCP Header中包括哪些域？（对着图要能解释每个域的含义）</h3><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624075438423.png" class="" title="image-20230624075438423"><ul><li><strong>Version：</strong> 代表版本号</li><li><strong>P：</strong> Padding，代表是否有填充位</li><li><strong>Count：</strong> 代表我们这个RTCP包中包含的 Report Block 有多少个。</li><li><strong>Type：</strong> 根据功能的将RTCP的类型分成了很多种，比如RR、SR等。</li><li><strong>Length：</strong> 表示我们这个RTCP数据有多长。</li></ul><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624075730967.png" class="" title="image-20230624075730967"><h3 id="3、有哪些常见的RTCP-Type？"><a href="#3、有哪些常见的RTCP-Type？" class="headerlink" title="3、有哪些常见的RTCP Type？"></a>3、有哪些常见的RTCP Type？</h3><ul><li><strong>200 SR</strong> Sender Report packet ： 发送报告，就是我一共发了多少个包，需要在发送报告中写明，最终发送给对端。</li><li><strong>201 RR</strong> Receiver Report packet：接受报告，就是我接收了多少数据，哪些数据丢了，丢失率是多少，最终形成RR类型的RTCP报告，发送给对端。这样发送端就知道，在一段时间内我发送了多少数据，丢失了多少数据。</li><li><strong>202 SDES</strong> Source Description packet：它表示的是对一个媒体流的描述，比如一个音频的SRC是114455，那么对于这个音频流的具体信息，我们就可以通过SDES了解更多信息。</li><li><strong>203 BYE</strong> Goobye packet：也就是说我们不需要再传输数据的时候，我们可以向对方发送一个BYE消息，这样双方数据的传输就结束了。</li><li><strong>204 APP</strong> Application-defined packet：如果我们企业内部向使用自己内部定义的RTCP的时候，就使用APP类型进行自定义。</li></ul><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624075915334.png" class="" title="image-20230624075915334"><h3 id="4、另外针对WebRTC还有几种比较常见的RTCP-Type？"><a href="#4、另外针对WebRTC还有几种比较常见的RTCP-Type？" class="headerlink" title="4、另外针对WebRTC还有几种比较常见的RTCP Type？"></a>4、另外针对WebRTC还有几种比较常见的RTCP Type？</h3><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624081011816.png" class="" title="image-20230624081011816"><ul><li><p><strong>192 FIR</strong> Full INTRA-frame Request：代表向对方请求一个关键帧，比如多人会议中，突然有一个新用户加入，就需要通过FIR报文向其他用户请求一个关键帧，才能正常展示。</p></li><li><p><strong>193 NACK</strong> Negative Acknowledgement：当接收端收到的数据包有丢失的情况下，它会给发送端发送一个NACK，发送端收到NACK之后看看有没有超时，如果没有超时，就会重传接收端丢失的包。</p></li><li><p><strong>205 RTPFB</strong> Generic RTP Feedback. ：表示一般性的RTP Feedback，这种类型的RTCP中又有很多子类型，后面再做详细介绍。</p></li><li><p><strong>206 PSFB</strong> Payload-specific Feedback. ：也就是根据我们的负载情况，返回的一些RTCP信息。留作后续再做介绍。</p></li></ul><h2 id="二、SR、RR类型的RTCP"><a href="#二、SR、RR类型的RTCP" class="headerlink" title="二、SR、RR类型的RTCP"></a>二、SR、RR类型的RTCP</h2><h3 id="1、认识-RTCP-SR类型？一个SR中包含多少个Report-Block？为什么SR中也包含了接受数据的情况？"><a href="#1、认识-RTCP-SR类型？一个SR中包含多少个Report-Block？为什么SR中也包含了接受数据的情况？" class="headerlink" title="1、认识 RTCP SR类型？一个SR中包含多少个Report Block？为什么SR中也包含了接受数据的情况？"></a>1、认识 RTCP SR类型？一个SR中包含多少个Report Block？为什么SR中也包含了接受数据的情况？</h3><ul><li><strong>一个SR中包含多少个Report Block：</strong>一个SR中可以包含多个Report Block，具体多少个取决于有多少路流。</li><li><strong>为什么SR中也包含了接受数据的情况</strong>：主要是可以节省带宽。</li></ul><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624083107036.png" class="" title="image-20230624083107036"><h3 id="2、RTCP-中-Sender-Infomation-block中的主要数据？区分NTP和Timestamp这两个时间的区别？"><a href="#2、RTCP-中-Sender-Infomation-block中的主要数据？区分NTP和Timestamp这两个时间的区别？" class="headerlink" title="2、RTCP 中 Sender Infomation block中的主要数据？区分NTP和Timestamp这两个时间的区别？"></a>2、RTCP 中 Sender Infomation block中的主要数据？区分NTP和Timestamp这两个时间的区别？</h3><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624083530567.png" class="" title="image-20230624083530567"><ul><li><strong>NTP：</strong> 是真实世界的时间戳，是绝对时间戳，所有RTP包中的NTP标准是相同的。（比如音视频同步）</li><li><strong>Timestamp：</strong> 是相对时间戳，只针对单当前流的。不同流的RTP之间的Timestamp没有关系。</li></ul><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624083812871.png" class="" title="image-20230624083812871"><h3 id="3、RTCP-中-Receiver-Infomation-block中的主要数据？"><a href="#3、RTCP-中-Receiver-Infomation-block中的主要数据？" class="headerlink" title="3、RTCP 中 Receiver Infomation block中的主要数据？"></a>3、RTCP 中 Receiver Infomation block中的主要数据？</h3><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624083946475.png" class="" title="image-20230624083946475"><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624084021562.png" class="" title="image-20230624084021562"><h3 id="4、RTCP中的RR报文？"><a href="#4、RTCP中的RR报文？" class="headerlink" title="4、RTCP中的RR报文？"></a>4、RTCP中的RR报文？</h3><img src="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/image-20230624084318070.png" class="" title="image-20230624084318070">]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码Repeat</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day12-WebRTC服务质量3-NACK</title>
+    <link href="/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F3-NACK/"/>
+    <url>/2023/06/24/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F3-NACK/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、RTCP协议"><a href="#一、RTCP协议" class="headerlink" title="一、RTCP协议"></a>一、RTCP协议</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码Repeat</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>day12-WebRTC服务质量1-RTP协议、RTP扩展协议</title>
     <link href="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/"/>
     <url>/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/</url>
     
     <content type="html"><![CDATA[<h2 id="一、WebRTC服务质量综述"><a href="#一、WebRTC服务质量综述" class="headerlink" title="一、WebRTC服务质量综述"></a>一、WebRTC服务质量综述</h2><h3 id="1、一句话概述试试通信的目标是什么？"><a href="#1、一句话概述试试通信的目标是什么？" class="headerlink" title="1、一句话概述试试通信的目标是什么？"></a>1、一句话概述试试通信的目标是什么？</h3><ul><li>尽可能逼近或者达到<font color="red">面对面</font>交流的效果。</li></ul><h3 id="2、如果要达到上面实时通信的目标，我们要看哪三个重要指标？"><a href="#2、如果要达到上面实时通信的目标，我们要看哪三个重要指标？" class="headerlink" title="2、如果要达到上面实时通信的目标，我们要看哪三个重要指标？"></a>2、如果要达到上面实时通信的目标，我们要看哪三个重要指标？</h3><ul><li>实时通信的延迟指标</li><li>音频服务质量</li><li>视频服务质量</li></ul><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622072418723.png" class="" title="image-20230622072418723"><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622072424230.png" class="" title="image-20230622072424230"><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622072429443.png" class="" title="image-20230622072429443"><h3 id="3、音视频质量与带宽大小、实时性、网络质量之间有矛盾吗？"><a href="#3、音视频质量与带宽大小、实时性、网络质量之间有矛盾吗？" class="headerlink" title="3、音视频质量与带宽大小、实时性、网络质量之间有矛盾吗？"></a>3、音视频质量与带宽大小、实时性、网络质量之间有矛盾吗？</h3><ul><li><font color="red">有矛盾的：</font>一般来说音视频质量要求越高，那么需要的带宽就越大，实时性就会降低，需要更高的网络质量来传输。</li></ul><h3 id="4、WebRTC是从哪些方面来解决这些矛盾呢？（暂时无法全面理解没关系）"><a href="#4、WebRTC是从哪些方面来解决这些矛盾呢？（暂时无法全面理解没关系）" class="headerlink" title="4、WebRTC是从哪些方面来解决这些矛盾呢？（暂时无法全面理解没关系）"></a>4、WebRTC是从哪些方面来解决这些矛盾呢？（暂时无法全面理解没关系）</h3><ul><li>这个图，对应1202，可以多听一听。</li></ul><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622072656830.png" class="" title="image-20230622072656830"><h2 id="二、RTP协议"><a href="#二、RTP协议" class="headerlink" title="二、RTP协议"></a>二、RTP协议</h2><h3 id="1、RTP-x2F-RTCP协议在整个协议栈中的位置？（传输层？应用层？）"><a href="#1、RTP-x2F-RTCP协议在整个协议栈中的位置？（传输层？应用层？）" class="headerlink" title="1、RTP&#x2F;RTCP协议在整个协议栈中的位置？（传输层？应用层？）"></a>1、RTP&#x2F;RTCP协议在整个协议栈中的位置？（传输层？应用层？）</h3><ul><li>属于 <font color="red">应用层</font> 协议，基于传输层的UDP协议之上。</li></ul><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622072902760.png" class="" title="image-20230622072902760"><h3 id="2、RTP-Header-中的主要字段，要能分别说出下图中字段的含义？"><a href="#2、RTP-Header-中的主要字段，要能分别说出下图中字段的含义？" class="headerlink" title="2、RTP Header 中的主要字段，要能分别说出下图中字段的含义？"></a>2、RTP Header 中的主要字段，要能分别说出下图中字段的含义？</h3><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622072946383.png" class="" title="image-20230622072946383"><ul><li><strong>V：</strong>Version，代表版本号，默认是2，表示第二版本的RTP头协议。</li><li><strong>P：</strong>Padding，表示RTP中是否具有填充数据，如果为1代表有填充数据。</li><li><strong>X：</strong>表示RTP中是否具有扩展头，为1表示有扩展头。</li><li><strong>CC：</strong>Contribute Source，表示对于这份数据来说，它是由哪些源共同产生的，CC代表贡献值的个数。如果有2个贡献者，那么CC的值就为2。</li><li><strong>M：</strong>Mark，标记位，值为1时，代表我们视频帧分包之后的最后一个包。</li><li><strong>PT：</strong>PayloadType，也就是我们这个包的负载数据是什么。比如音频Opus是111，视频是127。</li><li><strong>Sequence Number：</strong>包序号，主要用于包排序，以及丢包重传机制的依据。</li><li><strong>Timestamp：</strong>代表我们这个数据源产生的时间戳。对于视频帧来说，同一个帧可能会被分成几十个包，但是这些包产生的时间相同，所以它们的 Timestamp 也是相同的。还有一个特性，Timestamp是随着时间的流逝，递增的。</li><li><strong>SSRC：</strong>同步源标识符，如果你同时发送了共享桌面流和视频流，这两个流的PT可能是相同的，但是它们的SSRC是独立的，就可以借助SSRC区分。</li><li><strong>CSRC：</strong>代表我们这个数据，是由哪个贡献者贡献的。</li></ul><h2 id="三、RTP扩展协议"><a href="#三、RTP扩展协议" class="headerlink" title="三、RTP扩展协议"></a>三、RTP扩展协议</h2><h3 id="1、在RTP头中的哪个标记位表示RTP是带有扩展头的"><a href="#1、在RTP头中的哪个标记位表示RTP是带有扩展头的" class="headerlink" title="1、在RTP头中的哪个标记位表示RTP是带有扩展头的?"></a>1、在RTP头中的哪个标记位表示RTP是带有扩展头的?</h3><ul><li><strong>X</strong>位置为1，表示带有扩展头</li></ul><h3 id="2、扩展头中的Profile代表什么含义？"><a href="#2、扩展头中的Profile代表什么含义？" class="headerlink" title="2、扩展头中的Profile代表什么含义？"></a>2、扩展头中的Profile代表什么含义？</h3><ul><li><strong>Profile表示扩展头的格式</strong></li></ul><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080507599.png" class="" title="image-20230622080507599"><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080511896.png" class="" title="image-20230622080511896"><h3 id="3、扩展头中的Length代表什么含义？"><a href="#3、扩展头中的Length代表什么含义？" class="headerlink" title="3、扩展头中的Length代表什么含义？"></a>3、扩展头中的Length代表什么含义？</h3><ul><li>表示后面跟着的扩展头有几个字节</li></ul><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080551539.png" class="" title="image-20230622080551539"><h3 id="4、看图理解什么是一字节的扩展头？什么是两字节的扩展头？"><a href="#4、看图理解什么是一字节的扩展头？什么是两字节的扩展头？" class="headerlink" title="4、看图理解什么是一字节的扩展头？什么是两字节的扩展头？"></a>4、看图理解什么是一字节的扩展头？什么是两字节的扩展头？</h3><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080611617.png" class="" title="image-20230622080611617"><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080616401.png" class="" title="image-20230622080616401"><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080621134.png" class="" title="image-20230622080621134"><ul><li>【在一字节的扩展头中】上图中紧跟ID后面的L，表示后面的Data部分数据长度是(L+1)字节。</li></ul><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080631770.png" class="" title="image-20230622080631770"><ul><li>【在两字节的扩展头中】上图中紧跟ID后面的L，表示后面的Data部分数据长度是(L)字节，比如L&#x3D;0，表示后面没有数据。这个与一字节扩展头是不同的。</li></ul><h3 id="5、在WebRTC中有哪些用到的扩展头-了解即可"><a href="#5、在WebRTC中有哪些用到的扩展头-了解即可" class="headerlink" title="5、在WebRTC中有哪些用到的扩展头(了解即可)"></a>5、在WebRTC中有哪些用到的扩展头(了解即可)</h3><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080649659.png" class="" title="image-20230622080649659"><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080654875.png" class="" title="image-20230622080654875"><h3 id="6、最后我们认识一个完整RTP头"><a href="#6、最后我们认识一个完整RTP头" class="headerlink" title="6、最后我们认识一个完整RTP头"></a>6、最后我们认识一个完整RTP头</h3><ul><li>12-4中10分有比较详细，总体的讲解。</li></ul><img src="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/image-20230622080711863.png" class="" title="image-20230622080711863">]]></content>
-    
-    
-    <categories>
-      
-      <category>WebRTC源码Repeat</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>WebRTC</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>day12-WebRTC服务质量1-RTP协议</title>
-    <link href="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/"/>
-    <url>/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F2-RTCP%E5%8D%8F%E8%AE%AE/</url>
-    
-    <content type="html"><![CDATA[<h2 id="一、WebRTC服务质量综述"><a href="#一、WebRTC服务质量综述" class="headerlink" title="一、WebRTC服务质量综述"></a>一、WebRTC服务质量综述</h2>]]></content>
-    
-    
-    <categories>
-      
-      <category>WebRTC源码Repeat</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>WebRTC</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>day12-WebRTC服务质量1-RTP协议</title>
-    <link href="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F3-NACK/"/>
-    <url>/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F3-NACK/</url>
-    
-    <content type="html"><![CDATA[<h2 id="一、WebRTC服务质量综述"><a href="#一、WebRTC服务质量综述" class="headerlink" title="一、WebRTC服务质量综述"></a>一、WebRTC服务质量综述</h2>]]></content>
     
     
     <categories>
