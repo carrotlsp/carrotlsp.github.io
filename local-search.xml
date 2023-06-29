@@ -4,7 +4,32 @@
   
   
   <entry>
-    <title>day12-WebRTC服务质量4-RTP协议</title>
+    <title>day12-WebRTC服务质量5-FEC</title>
+    <link href="/2023/07/02/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F5/"/>
+    <url>/2023/07/02/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F5/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、WebRTC服务质量综述"><a href="#一、WebRTC服务质量综述" class="headerlink" title="一、WebRTC服务质量综述"></a>一、WebRTC服务质量综述</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC源码Repeat</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day12-WebRTC服务质量4-Pacer</title>
     <link href="/2023/07/01/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F4/"/>
     <url>/2023/07/01/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F4/</url>
     
