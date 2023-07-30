@@ -4,6 +4,81 @@
   
   
   <entry>
+    <title>day03-自动化脚本代码编写</title>
+    <link href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day03-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99/"/>
+    <url>/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day03-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、iOS真机安装WebDriverAgent图文详解"><a href="#一、iOS真机安装WebDriverAgent图文详解" class="headerlink" title="一、iOS真机安装WebDriverAgent图文详解"></a>一、iOS真机安装WebDriverAgent图文详解</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>自动化测试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>自动化测试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day02-自动化脚本代码工具安装</title>
+    <link href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day02-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85/"/>
+    <url>/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day02-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、安装自动化工具Airtest"><a href="#一、安装自动化工具Airtest" class="headerlink" title="一、安装自动化工具Airtest"></a>一、安装自动化工具Airtest</h2><p>Airtest是网易开源的一个自动化测试工具，支持iOS、安卓、Windows、Mac</p><p>去Airtest官网下载：<a href="http://airtest.netease.com/">http://airtest.netease.com/</a></p><h1 id="二、运行方式"><a href="#二、运行方式" class="headerlink" title="二、运行方式"></a>二、运行方式</h1><p>参考官方的介绍：<a href="https://airtest.readthedocs.io/zh_CN/latest/README_MORE.html">https://airtest.readthedocs.io/zh_CN/latest/README_MORE.html</a></p><h2 id="三、核心API"><a href="#三、核心API" class="headerlink" title="三、核心API"></a>三、核心API</h2><p>核心API：<a href="https://airtest.readthedocs.io/en/latest/all_module/airtest.core.api.html">https://airtest.readthedocs.io/en/latest/all_module/airtest.core.api.html</a></p><h3 id="1、touch-用于触发点击事件"><a href="#1、touch-用于触发点击事件" class="headerlink" title="1、touch 用于触发点击事件"></a>1、touch 用于触发点击事件</h3><p>可以用图片识别的方式点击</p><figure class="highlight python-repl"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs python-repl"><span class="hljs-meta prompt_">&gt;&gt;&gt;</span> <span class="language-python">touch(Template(<span class="hljs-string">r&quot;tpl1606730579419.png&quot;</span>, target_pos=<span class="hljs-number">5</span>))</span><br></code></pre></td></tr></table></figure><p>可以点击指定坐标</p><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">&gt;&gt;&gt; touch((<span class="hljs-number">100</span>, <span class="hljs-number">100</span>))<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>自动化测试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>自动化测试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day01-WebDriverAgent安装</title>
+    <link href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day01-iOS%E7%9C%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/"/>
+    <url>/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day01-iOS%E7%9C%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、iOS真机安装WebDriverAgent图文详解"><a href="#一、iOS真机安装WebDriverAgent图文详解" class="headerlink" title="一、iOS真机安装WebDriverAgent图文详解"></a>一、iOS真机安装WebDriverAgent图文详解</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在做iOS自动化测试的时候，一般都需要确保手机上已经安装有WebDriverAgent应用，这个WDA应用可以是Airtest修改版、Appium修改版也可以是Facebook原版，今天我们以Appium修改版为例来进行说明，其他版本同样适用。</p><p>安装依赖：‍</p><figure class="highlight cmake"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs cmake">pip3 <span class="hljs-keyword">install</span> -U tidevice<br></code></pre></td></tr></table></figure><p>拉取代码：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/appium/</span>WebDriverAgent<br></code></pre></td></tr></table></figure><h3 id="证书设置"><a href="#证书设置" class="headerlink" title="证书设置"></a>证书设置</h3><p>1、进入WebDriverAgent项目根目录，双击打开WebDriverAgent.xcodeproj，然后在Xcode中的TARGETS里选中WebDriverAgentLib，按照下图数字序号依次点击，注意步骤4要开启自动管理签名。</p><img src="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day01-iOS%E7%9C%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/9312e2472c604fbeba9ea7070866501e~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" class="" title="图片"><p>2、证书配置好之后，分别选择WebDriverAgentRunner和目标设备，<font color="red"><strong>以Test方式运行，切记Test方式</strong></font></p><img src="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day01-iOS%E7%9C%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/91381d4c490e4f789450fdcbf92f42c4~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" class="" title="图片"><p>3、运行Test，就可以在Xcode控制台看到下面的输出信息：</p><img src="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day01-iOS%E7%9C%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/2e6f38f1338d4e6f8b1ebd750e328aa5~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" class="" title="图片"><p>通过上面给出的IP和端口，加上&#x2F;status合成一个url地址，例如<a href="https://link.juejin.cn/?target=http://10.0.0.1:8100/status%EF%BC%8C%E7%84%B6%E5%90%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E5%BC%80%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%87%BA%E7%8E%B0%E4%B8%8B%E5%9B%BE%E7%9A%84%E8%BE%93%E5%87%BA%EF%BC%8C%E5%B0%B1%E8%AF%B4%E6%98%8EWDA%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F%E4%BA%86%E3%80%82">http://10.0.0.1:8100/status，然后浏览器打开，如果出现下图的输出，就说明WDA安装成功了。</a></p><img src="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day01-iOS%E7%9C%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/861b028a43784597a8e68a1194a6293f~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" class="" title="图片"><p><font color="red">但是有些国产的iPhone机器通过手机的IP和端口还不能访问，此时需要将手机的端口转发到Mac上，这个时候执行下面的命令即可</font>：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tidevice</span> relay <span class="hljs-number">8100</span> <span class="hljs-number">8100</span><br></code></pre></td></tr></table></figure><p>参考文章：</p><p><a href="https://juejin.cn/post/6993892294705283080">https://juejin.cn/post/6993892294705283080</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>自动化测试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>自动化测试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>day12-WebRTC服务质量5-FEC</title>
     <link href="/2023/07/02/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F5/"/>
     <url>/2023/07/02/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F5/</url>
@@ -471,6 +546,31 @@
     <tags>
       
       <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>day01-mac同时使用内网和外网【转载】</title>
+    <link href="/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/"/>
+    <url>/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/</url>
+    
+    <content type="html"><![CDATA[<p>在公司办公通常都会连内网，而连内网最大的限制就是不可以使用外网，那遇到问题也就不能google，而当连接无线的时候，内网的东西就不可以访问，也就不能正常办公，对于我这种小白来说，工作中遇到的问题数不胜数，又不能什么事都请教同事，这可真是让人头大~~~~</p><p>那我们是不是可以内外网同时访问呢，答案当然是可以的，解决方法本质上就是 由于<strong>内网网段的个数是有限个的，所以内网网段设置本地静态路由，即添加内网网段指向对应内网的网关，让内网网段全部走对应内网路由，默认网段全部走默认外网路由</strong><br><strong>简单说就是 访问内网网站使用内网，其余所有网站默认使用外网</strong>，这样你的电脑就可以内外网均可访问了。</p><p>这边总结一下关于mac怎么配置同时使用内网和外网，以下双网卡配置方法是针对外网用WIFI，内网用有线，但是要注意的是双网卡也可以都是有线或者都是无线，其配置思路本质也是一样的。</p><p>话不多说，请<strong>严格按照以下步骤</strong>设置：</p><p><strong>第一步：设置正确的网卡服务顺序</strong></p><p>进入 系统偏好设置 - 网络 - 设定服务顺序，拖动来进行网络优先级设置。使连接外网的网卡位于内网网卡之上。此时可以正常访问外网</p><img src="/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBATXJf5LiN5LqM,size_20,color_FFFFFF,t_70,g_se,x_16.png" class="" title="在这里插入图片描述"><p><strong>第二步：查看内网网卡的网关地址</strong></p><p>路由器IP即为下一步设置需要用到的<a href="https://so.csdn.net/so/search?q=%E7%BD%91%E5%85%B3%E5%9C%B0%E5%9D%80&spm=1001.2101.3001.7020">网关地址</a><br>子网掩码下一步设置也需要用到</p><img src="/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBATXJf5LiN5LqM,size_20,color_FFFFFF,t_70,g_se,x_16-20230731075127287.png" class="" title="在这里插入图片描述"><p><strong>第三步：设置本地静态路由，添加内网网段指向对应内网的网关</strong></p><p>（这一步需要在MacOS的终端内执行命令，打开终端的方式参考 MacOS如何打开终端）<br>先介绍2条关于添加和删除的命令，下面有具体例子<br>添加：</p><figure class="highlight nginx"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route add -net <span class="hljs-number">10.0.0.0</span> -netmask <span class="hljs-number">255.0.0.0</span> <span class="hljs-number">10.0.2.1</span><br>sudo route add -net <span class="hljs-number">30.1.0.0</span> -netmask <span class="hljs-number">255.255.0.0</span> <span class="hljs-number">10.0.2.1</span><br></code></pre></td></tr></table></figure><p>删除：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route delete -net <span class="hljs-number">10.0.0.0</span> -netmask <span class="hljs-number">255.0.0.0</span> <span class="hljs-number">10.0.2.1</span><br>sudo route delete -net <span class="hljs-number">30.1.0.0</span> -netmask <span class="hljs-number">255.255.0.0</span> <span class="hljs-number">10.0.2.1</span><br></code></pre></td></tr></table></figure><p>net参数对应网段IP，netmask是子网掩码。最后的IP是内网网关，即上一步看到的路由器IP地址</p><p>比如内网想访问的网址是 <a href="http://10.90.20.27/fh%EF%BC%8C%E5%86%85%E7%BD%91%E7%BD%91%E5%85%B3%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%88%9A%E6%89%8D%E7%9C%8B%E5%88%B0%E7%9A%84%E8%B7%AF%E7%94%B1%E5%99%A8IP%E5%9C%B0%E5%9D%80%E4%B8%BA">http://10.90.20.27/fh，内网网关也就是刚才看到的路由器IP地址为</a> 172.16.84.254，则使用以下命令添加和删除<br>添加</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route add -net <span class="hljs-number">10.90.20.0</span> -netmask <span class="hljs-number">255.255.255.0</span> <span class="hljs-number">172.16.84.254</span><br></code></pre></td></tr></table></figure><p>删除</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route delete -net <span class="hljs-number">10.90.20.0</span> -netmask <span class="hljs-number">255.255.255.0</span> <span class="hljs-number">172.16.84.254</span><br></code></pre></td></tr></table></figure><p>其实不妨把10网段的全部网址都设置一下，（主要就是注意一下网段(10.0.0.0)和子网掩码(255.0.0.0)对应关系就好），用以下命令添加</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route add -net <span class="hljs-number">10.0.0.0</span> -netmask <span class="hljs-number">255.0.0.0</span> <span class="hljs-number">172.16.84.254</span><br></code></pre></td></tr></table></figure><p>至此内外网路由是已经配置好了。</p><p>第四步：配置内网域名和内网DNS解析</p><p>在MacOS系统中，不支持同时添加内网和外网DNS服务器地址到外网网卡来起到解析内网地址的作用，因此我们要把内网域名和对应的ip地址写到&#x2F;etc&#x2F;hosts文件中进行本地解析。</p><p>较为方便的方法是：先关闭外网网卡，进入纯内网模式，ping内网域名得到内网IP地址，再将IP地址和域名写入到hosts中，操作步骤如下。</p><p>通过ping命令，获取对应域名的IP地址</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">MacBook-Pro:root#<span class="hljs-built_in"> ping </span>aaa.bbb.com<span class="hljs-built_in"></span><br><span class="hljs-built_in">PING </span>aaa.bbb.com (10.12.8.25): 56 data bytes<br>64 bytes <span class="hljs-keyword">from</span> 10.12.8.25: <span class="hljs-attribute">icmp_seq</span>=0 <span class="hljs-attribute">ttl</span>=61 <span class="hljs-attribute">time</span>=15.934 ms<br>64 bytes <span class="hljs-keyword">from</span> 10.12.8.25: <span class="hljs-attribute">icmp_seq</span>=1 <span class="hljs-attribute">ttl</span>=61 <span class="hljs-attribute">time</span>=16.219 ms<br>64 bytes <span class="hljs-keyword">from</span> 10.12.8.25: <span class="hljs-attribute">icmp_seq</span>=2 <span class="hljs-attribute">ttl</span>=61 <span class="hljs-attribute">time</span>=15.713 ms<br>64 bytes <span class="hljs-keyword">from</span> 10.12.8.25: <span class="hljs-attribute">icmp_seq</span>=3 <span class="hljs-attribute">ttl</span>=61 <span class="hljs-attribute">time</span>=15.755 ms<br></code></pre></td></tr></table></figure><p>将IP地址和对应的域名写入 &#x2F;etc&#x2F;hosts 文件中</p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">MacBook-Pro:root# echo <span class="hljs-string">&quot;10.12.8.25 aaa.bbb.com&quot;</span> &gt;&gt;<span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure><p>细心一点，一定要注意不要写错了！！</p><p>至此，就已经完成配置完成啦，此时你的mac就可以内外网均可访问了，但是要注意重启后，需要重新设置。</p><p>————————————————<br>版权声明：本文为CSDN博主「ni_darling」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/weixin_44637703/article/details/121626312">https://blog.csdn.net/weixin_44637703/article/details/121626312</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Mac电脑技巧</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Mac电脑技巧</tag>
       
     </tags>
     

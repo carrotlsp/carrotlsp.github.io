@@ -1,0 +1,502 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在公司办公通常都会连内网，而连内网最大的限制就是不可以使用外网，那遇到问题也就不能google，而当连接无线的时候，内网的东西就不可以访问，也就不能正常办公，对于我这种小白来说，工作中遇到的问题数不胜数，又不能什么事都请教同事，这可真是让人头大~~~~ 那我们是不是可以内外网同时访问呢，答案当然是可以的，解决方法本质上就是 由于内网网段的个数是有限个的，所以内网网段设置本地静态路由，即添加内网网段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day01-mac同时使用内网和外网【转载】">
+<meta property="og:url" content="http://example.com/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在公司办公通常都会连内网，而连内网最大的限制就是不可以使用外网，那遇到问题也就不能google，而当连接无线的时候，内网的东西就不可以访问，也就不能正常办公，对于我这种小白来说，工作中遇到的问题数不胜数，又不能什么事都请教同事，这可真是让人头大~~~~ 那我们是不是可以内外网同时访问呢，答案当然是可以的，解决方法本质上就是 由于内网网段的个数是有限个的，所以内网网段设置本地静态路由，即添加内网网段">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBATXJf5LiN5LqM,size_20,color_FFFFFF,t_70,g_se,x_16.png">
+<meta property="og:image" content="http://example.com/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBATXJf5LiN5LqM,size_20,color_FFFFFF,t_70,g_se,x_16-20230731075127287.png">
+<meta property="article:published_time" content="2022-10-08T08:31:29.000Z">
+<meta property="article:modified_time" content="2023-07-30T23:54:13.337Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Mac电脑技巧">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBATXJf5LiN5LqM,size_20,color_FFFFFF,t_70,g_se,x_16.png">
+  
+  
+  <title>day01-mac同时使用内网和外网【转载】 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>望穿秋水</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day01-mac同时使用内网和外网【转载】">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-10-08 16:31" pubdate>
+        October 8, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day01-mac同时使用内网和外网【转载】</h1>
+            
+            <div class="markdown-body">
+              <p>在公司办公通常都会连内网，而连内网最大的限制就是不可以使用外网，那遇到问题也就不能google，而当连接无线的时候，内网的东西就不可以访问，也就不能正常办公，对于我这种小白来说，工作中遇到的问题数不胜数，又不能什么事都请教同事，这可真是让人头大~~~~</p>
+<p>那我们是不是可以内外网同时访问呢，答案当然是可以的，解决方法本质上就是 由于<strong>内网网段的个数是有限个的，所以内网网段设置本地静态路由，即添加内网网段指向对应内网的网关，让内网网段全部走对应内网路由，默认网段全部走默认外网路由</strong><br><strong>简单说就是 访问内网网站使用内网，其余所有网站默认使用外网</strong>，这样你的电脑就可以内外网均可访问了。</p>
+<p>这边总结一下关于mac怎么配置同时使用内网和外网，以下双网卡配置方法是针对外网用WIFI，内网用有线，但是要注意的是双网卡也可以都是有线或者都是无线，其配置思路本质也是一样的。</p>
+<p>话不多说，请<strong>严格按照以下步骤</strong>设置：</p>
+<p><strong>第一步：设置正确的网卡服务顺序</strong></p>
+<p>进入 系统偏好设置 - 网络 - 设定服务顺序，拖动来进行网络优先级设置。使连接外网的网卡位于内网网卡之上。此时可以正常访问外网</p>
+<img src="/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBATXJf5LiN5LqM,size_20,color_FFFFFF,t_70,g_se,x_16.png" srcset="/img/loading.gif" lazyload class="" title="在这里插入图片描述">
+
+
+
+<p><strong>第二步：查看内网网卡的网关地址</strong></p>
+<p>路由器IP即为下一步设置需要用到的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E7%BD%91%E5%85%B3%E5%9C%B0%E5%9D%80&spm=1001.2101.3001.7020">网关地址</a><br>子网掩码下一步设置也需要用到</p>
+<img src="/2022/10/08/%E6%9D%82%E8%AE%B0/day01-mac%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%91%E5%92%8C%E5%A4%96%E7%BD%91/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBATXJf5LiN5LqM,size_20,color_FFFFFF,t_70,g_se,x_16-20230731075127287.png" srcset="/img/loading.gif" lazyload class="" title="在这里插入图片描述">
+
+
+
+<p><strong>第三步：设置本地静态路由，添加内网网段指向对应内网的网关</strong></p>
+<p>（这一步需要在MacOS的终端内执行命令，打开终端的方式参考 MacOS如何打开终端）<br>先介绍2条关于添加和删除的命令，下面有具体例子<br>添加：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route add -net <span class="hljs-number">10.0.0.0</span> -netmask <span class="hljs-number">255.0.0.0</span> <span class="hljs-number">10.0.2.1</span><br>sudo route add -net <span class="hljs-number">30.1.0.0</span> -netmask <span class="hljs-number">255.255.0.0</span> <span class="hljs-number">10.0.2.1</span><br></code></pre></td></tr></table></figure>
+
+
+<p>删除：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route delete -net <span class="hljs-number">10.0.0.0</span> -netmask <span class="hljs-number">255.0.0.0</span> <span class="hljs-number">10.0.2.1</span><br>sudo route delete -net <span class="hljs-number">30.1.0.0</span> -netmask <span class="hljs-number">255.255.0.0</span> <span class="hljs-number">10.0.2.1</span><br></code></pre></td></tr></table></figure>
+
+
+<p>net参数对应网段IP，netmask是子网掩码。最后的IP是内网网关，即上一步看到的路由器IP地址</p>
+<p>比如内网想访问的网址是 <a target="_blank" rel="noopener" href="http://10.90.20.27/fh%EF%BC%8C%E5%86%85%E7%BD%91%E7%BD%91%E5%85%B3%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%88%9A%E6%89%8D%E7%9C%8B%E5%88%B0%E7%9A%84%E8%B7%AF%E7%94%B1%E5%99%A8IP%E5%9C%B0%E5%9D%80%E4%B8%BA">http://10.90.20.27/fh，内网网关也就是刚才看到的路由器IP地址为</a> 172.16.84.254，则使用以下命令添加和删除<br>添加</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route add -net <span class="hljs-number">10.90.20.0</span> -netmask <span class="hljs-number">255.255.255.0</span> <span class="hljs-number">172.16.84.254</span><br></code></pre></td></tr></table></figure>
+
+
+<p>删除</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route delete -net <span class="hljs-number">10.90.20.0</span> -netmask <span class="hljs-number">255.255.255.0</span> <span class="hljs-number">172.16.84.254</span><br></code></pre></td></tr></table></figure>
+
+
+<p>其实不妨把10网段的全部网址都设置一下，（主要就是注意一下网段(10.0.0.0)和子网掩码(255.0.0.0)对应关系就好），用以下命令添加</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> route add -net <span class="hljs-number">10.0.0.0</span> -netmask <span class="hljs-number">255.0.0.0</span> <span class="hljs-number">172.16.84.254</span><br></code></pre></td></tr></table></figure>
+
+
+<p>至此内外网路由是已经配置好了。</p>
+<p>第四步：配置内网域名和内网DNS解析</p>
+<p>在MacOS系统中，不支持同时添加内网和外网DNS服务器地址到外网网卡来起到解析内网地址的作用，因此我们要把内网域名和对应的ip地址写到&#x2F;etc&#x2F;hosts文件中进行本地解析。</p>
+<p>较为方便的方法是：先关闭外网网卡，进入纯内网模式，ping内网域名得到内网IP地址，再将IP地址和域名写入到hosts中，操作步骤如下。</p>
+<p>通过ping命令，获取对应域名的IP地址</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">MacBook-Pro:root#<span class="hljs-built_in"> ping </span>aaa.bbb.com<span class="hljs-built_in"></span><br><span class="hljs-built_in">PING </span>aaa.bbb.com (10.12.8.25): 56 data bytes<br>64 bytes <span class="hljs-keyword">from</span> 10.12.8.25: <span class="hljs-attribute">icmp_seq</span>=0 <span class="hljs-attribute">ttl</span>=61 <span class="hljs-attribute">time</span>=15.934 ms<br>64 bytes <span class="hljs-keyword">from</span> 10.12.8.25: <span class="hljs-attribute">icmp_seq</span>=1 <span class="hljs-attribute">ttl</span>=61 <span class="hljs-attribute">time</span>=16.219 ms<br>64 bytes <span class="hljs-keyword">from</span> 10.12.8.25: <span class="hljs-attribute">icmp_seq</span>=2 <span class="hljs-attribute">ttl</span>=61 <span class="hljs-attribute">time</span>=15.713 ms<br>64 bytes <span class="hljs-keyword">from</span> 10.12.8.25: <span class="hljs-attribute">icmp_seq</span>=3 <span class="hljs-attribute">ttl</span>=61 <span class="hljs-attribute">time</span>=15.755 ms<br></code></pre></td></tr></table></figure>
+
+<p>将IP地址和对应的域名写入 &#x2F;etc&#x2F;hosts 文件中</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">MacBook-Pro:root# echo <span class="hljs-string">&quot;10.12.8.25 aaa.bbb.com&quot;</span> &gt;&gt;<span class="hljs-regexp">/etc/</span>hosts	<br></code></pre></td></tr></table></figure>
+
+
+<p>细心一点，一定要注意不要写错了！！</p>
+<p>至此，就已经完成配置完成啦，此时你的mac就可以内外网均可访问了，但是要注意重启后，需要重新设置。</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「ni_darling」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44637703/article/details/121626312">https://blog.csdn.net/weixin_44637703/article/details/121626312</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Mac%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">Mac电脑技巧</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Mac%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/">Mac电脑技巧</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/08/%E6%A8%A1%E6%9D%BF%E7%B1%BB%E5%88%AB/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day02-项目引入WebRTC库、进行单步调试</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/07/WebRTC%E5%AE%9E%E6%88%98/day01-%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD%E3%80%81%E7%BC%96%E8%AF%91%E3%80%81%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95AppRTCMobile/">
+                        <span class="hidden-mobile">day01-源码下载、编译、断点调试AppRTCMobile</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
