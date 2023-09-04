@@ -16,15 +16,15 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1、ADM在iOS上创建过程？1234567891011121314151617- (instancetype)    initWithEncoderFactory:(nullable id&lt;RTC_OBJC_TYPE(RTCVideoEncoderFactory)&gt;)encoderFactory            decoderFactory:(nullable id&lt;RT">
+    <meta name="description" content="1、ADM在iOS上创建过程？12345678910111213141516171819202122- (instancetype)    initWithEncoderFactory:(nullable id&lt;RTC_OBJC_TYPE(RTCVideoEncoderFactory)&gt;)encoderFactory            decoderFactory:(nullabl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="day07-音频数据采集2-ADM创建过程、本地音频的采集&amp;&amp;加密封装&amp;&amp;传输">
 <meta property="og:url" content="http://example.com/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%862/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1、ADM在iOS上创建过程？1234567891011121314151617- (instancetype)    initWithEncoderFactory:(nullable id&lt;RTC_OBJC_TYPE(RTCVideoEncoderFactory)&gt;)encoderFactory            decoderFactory:(nullable id&lt;RT">
+<meta property="og:description" content="1、ADM在iOS上创建过程？12345678910111213141516171819202122- (instancetype)    initWithEncoderFactory:(nullable id&lt;RTC_OBJC_TYPE(RTCVideoEncoderFactory)&gt;)encoderFactory            decoderFactory:(nullabl">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-11-24T23:35:29.000Z">
-<meta property="article:modified_time" content="2023-09-04T22:57:46.567Z">
+<meta property="article:modified_time" content="2023-09-04T23:14:52.451Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="WebRTC">
 <meta name="twitter:card" content="summary_large_image">
@@ -197,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.8k 字
+      6.9k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      57 分钟
+      58 分钟
     </span>
   
 
@@ -238,7 +238,7 @@
             <h1 style="display: none">day07-音频数据采集2-ADM创建过程、本地音频的采集&amp;&amp;加密封装&amp;&amp;传输</h1>
             
             <div class="markdown-body">
-              <h3 id="1、ADM在iOS上创建过程？"><a href="#1、ADM在iOS上创建过程？" class="headerlink" title="1、ADM在iOS上创建过程？"></a>1、ADM在iOS上创建过程？</h3><figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><pre><code class="hljs c++">- (instancetype)<br>    initWithEncoderFactory:(nullable id&lt;<span class="hljs-built_in">RTC_OBJC_TYPE</span>(RTCVideoEncoderFactory)&gt;)encoderFactory<br>            decoderFactory:(nullable id&lt;<span class="hljs-built_in">RTC_OBJC_TYPE</span>(RTCVideoDecoderFactory)&gt;)decoderFactory <br>&#123;<br>	调用 [self audioDeviceModule].<span class="hljs-built_in">get</span>() 获取ADM<br>&#125;<br><br>- (rtc::scoped_refptr&lt;webrtc::AudioDeviceModule&gt;)audioDeviceModule<br>&#123;<br>	调用 webrtc::<span class="hljs-built_in">CreateAudioDeviceModule</span>() 继续创建ADM<br>	再间距调用 <span class="hljs-function">rtc::scoped_refptr&lt;AudioDeviceModule&gt; <span class="hljs-title">CreateAudioDeviceModule</span><span class="hljs-params">(<span class="hljs-type">bool</span> bypass_voice_processing)</span> 继续创建</span><br><span class="hljs-function">&#125;</span><br><span class="hljs-function"></span><br><span class="hljs-function">rtc::scoped_refptr&lt;AudioDeviceModule&gt; <span class="hljs-title">CreateAudioDeviceModule</span><span class="hljs-params">(<span class="hljs-type">bool</span> bypass_voice_processing)</span> </span><br><span class="hljs-function"></span>&#123;<br>	调用 rtc::<span class="hljs-built_in">make_ref_counted</span>&lt;ios_adm::AudioDeviceModuleIOS&gt;(bypass_voice_processing) 最终创建了出了ADM是AudioDeviceModuleIOS类型<br>&#125;<br></code></pre></td></tr></table></figure>
+              <h3 id="1、ADM在iOS上创建过程？"><a href="#1、ADM在iOS上创建过程？" class="headerlink" title="1、ADM在iOS上创建过程？"></a>1、ADM在iOS上创建过程？</h3><figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><pre><code class="hljs c++">- (instancetype)<br>    initWithEncoderFactory:(nullable id&lt;<span class="hljs-built_in">RTC_OBJC_TYPE</span>(RTCVideoEncoderFactory)&gt;)encoderFactory<br>            decoderFactory:(nullable id&lt;<span class="hljs-built_in">RTC_OBJC_TYPE</span>(RTCVideoDecoderFactory)&gt;)decoderFactory <br>&#123;<br>	 [self audioDeviceModule].<span class="hljs-built_in">get</span>() <span class="hljs-comment">//调用获取ADM</span><br>&#125;<br><br>- (rtc::scoped_refptr&lt;webrtc::AudioDeviceModule&gt;)audioDeviceModule<br>&#123;<br>	 webrtc::<span class="hljs-built_in">CreateAudioDeviceModule</span>() <span class="hljs-comment">//调用继续创建ADM</span><br>	 <span class="hljs-built_in">CreateAudioDeviceModule</span>(<span class="hljs-type">bool</span> bypass_voice_processing) <span class="hljs-comment">//再继续调用</span><br>&#125;<br><br><span class="hljs-function">rtc::scoped_refptr&lt;AudioDeviceModule&gt; <span class="hljs-title">CreateAudioDeviceModule</span><span class="hljs-params">(<span class="hljs-type">bool</span> bypass_voice_processing)</span> </span><br><span class="hljs-function"></span>&#123;<br>	rtc::<span class="hljs-built_in">make_ref_counted</span>&lt;ios_adm::AudioDeviceModuleIOS&gt;(bypass_voice_processing) <span class="hljs-comment">//调用</span><br>&#125;<br><br>rtc::<span class="hljs-built_in">make_ref_counted</span>&lt;ios_adm::AudioDeviceModuleIOS&gt;(bypass_voice_processing)<br>&#123;<br>  <span class="hljs-comment">// 最终创建了出了ADM是AudioDeviceModuleIOS类型</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
