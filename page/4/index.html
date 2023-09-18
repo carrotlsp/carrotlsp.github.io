@@ -191,6 +191,147 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/09/18/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E5%9B%9B/" target="_self">
+          day12-WebRTC服务质量之四、FEC
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/09/18/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E5%9B%9B/" target="_self">
+          
+          五、FEC1、什么是FEC？        2、FEC的原理是什么？   其实就是Data1和Data2进行异或操作（系统为0，不同为1），产生一个新的包R。 当Data1丢失时，可以通过 Data2和R进行异或操作，恢复 Data1的数据。 这就是两个包的FEC      那么三个包怎么办呢？其实也一样 1、2、3异或生成冗余包R1；如果3丢了，可以通过1、2、R1恢复3的数据 但是如果4、5都
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-18 20:41" pubdate>
+              2022-09-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/15/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%B8%89/" target="_self">
+          day12-WebRTC服务质量之三、Pacer、JitterBufferr
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/09/15/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%B8%89/" target="_self">
+          
+          三、认识Pacer1、Pacer的作用是什么？ 让数据在网络上发送得更平滑，防止因数据的突增导致网络发生拥塞。    2、Pacer是什么时候创建的？   这种流程图，也是超级棒啊  3、关于Pacer的两个重要函数、两种工作模式？         WebRTC如何处理是否需要发送保活包？当没有音视频数据时，才需要发送保活包。      4、认识Pacer中非常重要的数据结构 RoundBobin
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-15 20:41" pubdate>
+              2022-09-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/09/14/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%BA%8C/" target="_self">
+          day12-WebRTC服务质量之二
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/09/14/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%BA%8C/" target="_self">
+          
+          二、丢包相关的内容1、NACK的作用是什么？RTX的作用是什么？ NACK：用于通知丢了哪些包 RTX：用于重传丢失的包       图中媒体协商阶段解读：这个视频媒体流使用的是VP8、可以使用NACK通知丢包、 96和97是关联关系、97是96的丢包重传流 【必须掌握】这图是纲领  2、WebRTC接收端如何判断是否发生了丢包？ 通过对收到包进行重拍之后，发现Sequence number依然不
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-09-14 20:41" pubdate>
+              2022-09-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/09/11/WebRTC%E6%BA%90%E7%A0%81/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F%E4%B9%8B%E4%B8%80/" target="_self">
           day12-WebRTC服务质量之一
         </a>
@@ -491,147 +632,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2022-08-18 20:41" pubdate>
               2022-08-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" target="_self">
-          day05-深入理解WebRTC的线程模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day05-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3WebRTC%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/" target="_self">
-          
-          一、线程的基础知识1、本章主要内容    2、计算机组成原理      3、多线程的好处与坏处？多线程带了哪些问题？    4、如何解决多线程带来的问题？ 加锁    5、Objective-C和WebRTC中的线程模型是什么？ 休眠唤醒循环执行任务线程模型    二、WebRTC中的线程模型1、认识Thread类？ crit_：是临界区，是防止存取或读取数据时发生错乱          2、关于
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-15 20:41" pubdate>
-              2022-08-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/" target="_self">
-          day06-WebRTC媒体协商
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/15/WebRTC%E6%BA%90%E7%A0%81/day06-WebRTC%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/" target="_self">
-          
-          一、认识SDP1、为什么要选择SDP格式作为WebRTC的传输格式？ 与XML相比较，SDP采用key-value的模式，数据存放比较紧凑，网络传输更加节约带宽 SDP采用key-value模式，也更容易读写数据  2、SDP的结构图，太棒了！     m：就是media，表示媒体曾  a：就是attribute，表示属性  c：就是connection，表示连接  v：就是version，代表S
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-15 20:41" pubdate>
-              2022-08-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81/">WebRTC源码</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/07/28/WebRTC%E6%BA%90%E7%A0%81/day04-%E5%BC%80%E5%90%AFWebRTC%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8B%E8%B7%AF/" target="_self">
-          day04-开启WebRTC源码分析之路
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/07/28/WebRTC%E6%BA%90%E7%A0%81/day04-%E5%BC%80%E5%90%AFWebRTC%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8B%E8%B7%AF/" target="_self">
-          
-          一、认识官方提供的demo1、学习WebRTC要牢牢抓住哪个demo？为什么？ 抓住：peerConnection_client 这个demo【只有Windows环境有】 原因：因为这个demo几乎囊括了WebRTC所有主要用法  2、peerconnection_client 的主要工作流程是什么？    3、peerconnection_client 类关系图    4、peerconnect
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-07-28 09:41" pubdate>
-              2022-07-28
             </time>
           </div>
         

@@ -191,6 +191,147 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day03-%E5%88%A9%E7%94%A8Wireshark%E5%88%86%E6%9E%90H264%E7%A0%81%E6%B5%81/" target="_self">
+          day03-利用Wireshark分析H264码流
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day03-%E5%88%A9%E7%94%A8Wireshark%E5%88%86%E6%9E%90H264%E7%A0%81%E6%B5%81/" target="_self">
+          
+          一、找到脚本放置的路径①使用前面介绍的抓包方式，抓取数据包。②找到连续的UDP大片数据，大概率就是I帧数据。右键 —&gt; DecodeAs -&gt; 把current中的值改成RTP             ③我们可以看到PT&#x3D;127然后在 WireShark 工具栏中选择 Edit –&gt; preferences –&gt; protocols –&gt; H264，把“H2
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-18 07:33" pubdate>
+              2023-09-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Wireshark/">Wireshark</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Wireshark/">Wireshark</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day02-Wireshark%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E5%AF%86%E6%96%B9%E5%BC%8F/" target="_self">
+          day02-Wireshark自定义解密方式
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day02-Wireshark%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E5%AF%86%E6%96%B9%E5%BC%8F/" target="_self">
+          
+          一、找到脚本放置的路径旧版本的wireshark需要手动引入，而新的会自动加载。我的版本是 3.4.4，会自动加载。 先找到wireshark的安装目录： 帮助–&gt;关于Wireshark –&gt;文件夹 可以查看所有的路径重新加载各种lua脚本快捷键是： ctrl+shift+L  自动加载： 将自定义的lua脚本放到 xxx \ Wireshark \ plugins 下就可以了，这个目
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-18 07:31" pubdate>
+              2023-09-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Wireshark/">Wireshark</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Wireshark/">Wireshark</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/" target="_self">
+          day01-iOS抓iPhone的wireshark数据包
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/" target="_self">
+          
+          在iOS应用开发过程中，通过抓包调试服务接口的场景时常出现。Charles和Wireshark是我在iOS开发过程中最常用的两款软件。  Charles是很强大的网络请求抓包工具，常用于抓包HTTP&#x2F;HTTPS请求。而作者在做IoT项目时，智能硬件配网协议是基于TCP&#x2F;UDP或者蓝牙的，需要用Wireshark进行抓包调试。Wireshark官网 一、获取iPhone的UDI
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-18 07:28" pubdate>
+              2023-09-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Wireshark/">Wireshark</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Wireshark/">Wireshark</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day03-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99/" target="_self">
           day03-自动化脚本代码编写
         </a>
@@ -491,147 +632,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2023-06-24 09:31" pubdate>
               2023-06-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/" target="_self">
-          day12-WebRTC服务质量1-RTP协议、RTP扩展协议
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/06/22/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F1-RTP%E5%8D%8F%E8%AE%AE/" target="_self">
-          
-          一、WebRTC服务质量综述1、一句话概述试试通信的目标是什么？ 尽可能逼近或者达到面对面交流的效果。  2、如果要达到上面实时通信的目标，我们要看哪三个重要指标？ 实时通信的延迟指标 音频服务质量 视频服务质量        3、音视频质量与带宽大小、实时性、网络质量之间有矛盾吗？ 有矛盾的：一般来说音视频质量要求越高，那么需要的带宽就越大，实时性就会降低，需要更高的网络质量来传输。  4、We
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-06-22 09:31" pubdate>
-              2023-06-22
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/03/28/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%937/" target="_self">
-          day11-WebRTC网络传输7-网络传输类的创建与数据传输
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/03/28/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%937/" target="_self">
-          
-          一、网络传输类的创建与数据传输1、总纲图：ICE相关的类是如何创建的？本端的音视频数据是如何发送的，对端的音视频数据是如何接收的？   此图超级精髓  2、来看第一步，WebRTC是如何将网络传输中的这些对象创建出来的？ 一开始就是创建PeerConnection，也就是途中绿色的部分。  PeerConnection是由PeerConnectionFactory创建出来的。  在我们创建Peer
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-28 16:31" pubdate>
-              2023-03-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/03/27/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%936/" target="_self">
-          day11-WebRTC网络传输6-连通性检测
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/03/27/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%936/" target="_self">
-          
-          一、连通性检测1、连通性检测的过程？   情况①： 在应用层收到Candidate之后，就会调用AddIceCandidate这个方法，然后就按照图中左侧的调用栈，一路调用到核心层； 在P2PTransportChannel::FinishAddingRemoteCandidate 这个函数中，首先会调用CreateConnections将Connection对象创建出来；之后它会调用SortCo
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-03-27 16:31" pubdate>
-              2023-03-27
             </time>
           </div>
         

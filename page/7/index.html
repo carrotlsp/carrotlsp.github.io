@@ -191,6 +191,151 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day08%E9%9F%B3%E9%A2%91%E9%87%8D%E9%87%87%E6%A0%B7/" target="_self">
+          day08-音频重采样(一)
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day08%E9%9F%B3%E9%A2%91%E9%87%8D%E9%87%87%E6%A0%B7/" target="_self">
+          
+          一、音频重采样1、什么是音频重采样？  2、什么情况下需要进行音频重采样？ 情况一：从设备采集的音频数据与编码器要求的数据不一致 情况二：播放器要求的音频数据与要播放的音频数据不一致 情况三：要方便某些运算的时候  3、简述音频重采样主要三个步骤？ 设置重采样参数，并初始化重采样上下文。  12345swr_ctx &#x3D; swr_alloc_set_opts(NULL,
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-29 10:30" pubdate>
+              2022-05-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+              <a href="/tags/ffmpeg/">ffmpeg</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day07%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86/" target="_self">
+          day07-ffmpeg集成、音频采集
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day07%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86/" target="_self">
+          
+          一、集成FFmpeg到MacApp项目1、创建一个mac的App应用，语言选择swift。  2、将ffmpeg目录下的 lib 和 include 拷贝到项目中。    3、将ffmpeg库引入项目中    4、引入ffmpeg头文件    5、加入代码测试 test.h  123456789#ifndef test_h#define test_h#include &lt;stdio.h&gt;
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-28 18:33" pubdate>
+              2022-05-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+              <a href="/tags/ffmpeg/">ffmpeg</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day06%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91ffmpeg/" target="_self">
+          day06-ffmpeg编译
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day06%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91ffmpeg/" target="_self">
+          
+          一、手动编译ffmpeg1、目标这里先提前说明一下，最后希望达到的效果：  编译出ffmpeg、ffprobe、ffplay三个命令行工具 只产生动态库，不产生静态库 将 fdk-aac、x264、x265集成到FFmpeg中  2、下载源码下载源码ffmpeg-4.3.2.tar.xz，然后解压。     3、安装依赖库 brew install yasm ffmpeg的编译过程依赖yasm 若
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-28 18:08" pubdate>
+              2022-05-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day05%E9%9F%B3%E9%A2%91%E5%9F%BA%E7%A1%80%E7%AF%87/" target="_self">
           day05-音频基础篇
         </a>
