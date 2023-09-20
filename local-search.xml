@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>day02-Excel中Right/Left/Len/Find/Mid/Substitute函数用法</title>
+    <link href="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/"/>
+    <url>/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>EXCEL&#x2F;WPS中文本函数LEFT、RIGHT、LEN、MID、SUBSTITUTE、FIND用法总结如下 </p></blockquote><h2 id="一、Left函数用法"><a href="#一、Left函数用法" class="headerlink" title="一、Left函数用法"></a>一、Left函数用法</h2><ul><li>从左侧开始取特定长度的字符串。</li></ul><img src="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/image-20230919111619045.png" class="" title="image-20230919111619045"><h2 id="二、Right函数用法"><a href="#二、Right函数用法" class="headerlink" title="二、Right函数用法"></a>二、Right函数用法</h2><ul><li>从右侧开始取特定长度的字符串。</li></ul><img src="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/image-20230919111837438.png" class="" title="image-20230919111837438"><h2 id="三、Len函数用法"><a href="#三、Len函数用法" class="headerlink" title="三、Len函数用法"></a>三、Len函数用法</h2><ul><li>一个字符串的总长度</li></ul><img src="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/image-20230919112007394.png" class="" title="image-20230919112007394"><h2 id="四、Mid函数用法"><a href="#四、Mid函数用法" class="headerlink" title="四、Mid函数用法"></a>四、Mid函数用法</h2><ul><li>从一个字符串中间特定位置开始查找特定字符长度。</li></ul><img src="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/image-20230919112229449.png" class="" title="image-20230919112229449"><h2 id="五、Substitute函数用法"><a href="#五、Substitute函数用法" class="headerlink" title="五、Substitute函数用法"></a>五、Substitute函数用法</h2><ul><li>将一个字符串中的特定字符串替换成另一个字符串。</li></ul><img src="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/image-20230919113134632.png" class="" title="image-20230919113134632"><h2 id="六、Find函数用法"><a href="#六、Find函数用法" class="headerlink" title="六、Find函数用法"></a>六、Find函数用法</h2><ul><li>找一个<strong>目标字符串</strong>在<strong>原始字符串</strong>中的位置</li></ul><img src="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/image-20230919113429986.png" class="" title="image-20230919113429986"><h2 id="七、一道综合题目，从上面的列中提取出seq的值"><a href="#七、一道综合题目，从上面的列中提取出seq的值" class="headerlink" title="七、一道综合题目，从上面的列中提取出seq的值"></a>七、一道综合题目，从上面的列中提取出seq的值</h2><img src="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/image-20230919151608145.png" class="" title="image-20230919151608145"><figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">具体公式如下</span><br>=MID(K176,FIND(&quot;Seq&quot;,K176)+4,FIND(&quot;,&quot;,K176,FIND(&quot;Seq&quot;,K176))-FIND(&quot;Seq&quot;,K176)-4)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">FIND(<span class="hljs-string">&quot;Seq&quot;</span>,K176) 找出<span class="hljs-built_in">seq</span>的位置</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">FIND(<span class="hljs-string">&quot;,&quot;</span>,K176,FIND(<span class="hljs-string">&quot;Seq&quot;</span>,K176)) 找出<span class="hljs-built_in">seq</span>后面第一个逗号的位置</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">FIND(<span class="hljs-string">&quot;,&quot;</span>,K176,FIND(<span class="hljs-string">&quot;Seq&quot;</span>,K176))-FIND(<span class="hljs-string">&quot;Seq&quot;</span>,K176)-4 用逗号的位置减去<span class="hljs-built_in">seq</span>=的位置，再-4，最终得到数字的长度</span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">最终用MID函数根据前面获得起始位置+字符串长度，截取出数值。完成提取</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Excel</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Excel</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>day03-利用Wireshark分析H264码流</title>
     <link href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day03-%E5%88%A9%E7%94%A8Wireshark%E5%88%86%E6%9E%90H264%E7%A0%81%E6%B5%81/"/>
     <url>/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day03-%E5%88%A9%E7%94%A8Wireshark%E5%88%86%E6%9E%90H264%E7%A0%81%E6%B5%81/</url>
