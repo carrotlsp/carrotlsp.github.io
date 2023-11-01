@@ -16,25 +16,25 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在iOS应用开发过程中，通过抓包调试服务接口的场景时常出现。Charles和Wireshark是我在iOS开发过程中最常用的两款软件。  Charles是很强大的网络请求抓包工具，常用于抓包HTTP&#x2F;HTTPS请求。而作者在做IoT项目时，智能硬件配网协议是基于TCP&#x2F;UDP或者蓝牙的，需要用Wireshark进行抓包调试。Wireshark官网 一、获取iPhone的UDI">
+    <meta name="description" content="一、iOS设备选择12小时[NSDateFormatter dateFromString:] 返回 nil 问题1234NSDateFormatter *formatter &#x3D; [[NSDateFormatter alloc] init];formatter.dateFormat &#x3D; @&quot;yyyy-MM-dd HH:mm:ss&quot;; NSString *dateStr &#x3D; @&amp;q">
 <meta property="og:type" content="article">
-<meta property="og:title" content="day01-iOS抓iPhone的wireshark数据包">
-<meta property="og:url" content="http://example.com/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/index.html">
+<meta property="og:title" content="day01-NSDateFormatter相关问题">
+<meta property="og:url" content="http://example.com/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在iOS应用开发过程中，通过抓包调试服务接口的场景时常出现。Charles和Wireshark是我在iOS开发过程中最常用的两款软件。  Charles是很强大的网络请求抓包工具，常用于抓包HTTP&#x2F;HTTPS请求。而作者在做IoT项目时，智能硬件配网协议是基于TCP&#x2F;UDP或者蓝牙的，需要用Wireshark进行抓包调试。Wireshark官网 一、获取iPhone的UDI">
+<meta property="og:description" content="一、iOS设备选择12小时[NSDateFormatter dateFromString:] 返回 nil 问题1234NSDateFormatter *formatter &#x3D; [[NSDateFormatter alloc] init];formatter.dateFormat &#x3D; @&quot;yyyy-MM-dd HH:mm:ss&quot;; NSString *dateStr &#x3D; @&amp;q">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/webp">
-<meta property="og:image" content="http://example.com/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/webp-20230918170235617">
-<meta property="og:image" content="http://example.com/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/webp-20230918170259224">
+<meta property="og:image" content="http://example.com/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/IMG_3395.PNG">
+<meta property="og:image" content="http://example.com/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/IMG_3396.PNG">
+<meta property="og:image" content="http://example.com/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/IMG_3397.PNG">
 <meta property="article:published_time" content="2023-09-17T23:28:30.000Z">
-<meta property="article:modified_time" content="2023-09-18T23:39:54.174Z">
+<meta property="article:modified_time" content="2023-11-01T22:36:59.648Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Wireshark">
+<meta property="article:tag" content="iOS - Objective-C">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/webp">
+<meta name="twitter:image" content="http://example.com/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/IMG_3395.PNG">
   
   
-  <title>day01-iOS抓iPhone的wireshark数据包 - Hexo</title>
+  <title>day01-NSDateFormatter相关问题 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -180,7 +180,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="day01-iOS抓iPhone的wireshark数据包">
+            <span class="h2" id="subtitle" title="day01-NSDateFormatter相关问题">
               
             </span>
 
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      841 字
+      665 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      8 分钟
+      6 分钟
     </span>
   
 
@@ -239,47 +239,40 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">day01-iOS抓iPhone的wireshark数据包</h1>
+            <h1 style="display: none">day01-NSDateFormatter相关问题</h1>
             
             <div class="markdown-body">
-              <blockquote>
-<p>在iOS应用开发过程中，通过抓包调试服务接口的场景时常出现。Charles和Wireshark是我在iOS开发过程中最常用的两款软件。</p>
-</blockquote>
-<p><strong>Charles</strong>是很强大的网络请求抓包工具，常用于抓包HTTP&#x2F;HTTPS请求。而作者在做IoT项目时，智能硬件配网协议是基于TCP&#x2F;UDP或者蓝牙的，需要用<strong>Wireshark</strong>进行抓包调试。<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://www.wireshark.org">Wireshark官网</a></p>
-<h2 id="一、获取iPhone的UDID"><a href="#一、获取iPhone的UDID" class="headerlink" title="一、获取iPhone的UDID"></a>一、获取iPhone的UDID</h2><p>从<code>Xcode菜单栏 -&gt; Window -&gt; Devices and Simulators</code>可以更方便地获取准确的UDID。图示如下：</p>
-<img src="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/webp" srcset="/img/loading.gif" lazyload class="" title="img">
+              <h2 id="一、iOS设备选择12小时-NSDateFormatter-dateFromString-返回-nil-问题"><a href="#一、iOS设备选择12小时-NSDateFormatter-dateFromString-返回-nil-问题" class="headerlink" title="一、iOS设备选择12小时[NSDateFormatter dateFromString:] 返回 nil 问题"></a>一、iOS设备选择12小时[NSDateFormatter dateFromString:] 返回 nil 问题</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs objective-c">NSDateFormatter *formatter = [[NSDateFormatter alloc] init];<br>formatter.dateFormat = @&quot;yyyy-MM-dd HH:mm:ss&quot;;<br> NSString *dateStr = @&quot;2023-10-31 07:18:28&quot;;<br> NSDate *startDate = [formatter dateFromString:dateStr];<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>代码如上，在手机设置<strong>【语言与地区 -&gt; 地区：英国】+【日期与时间 -&gt; 24小时关闭】</strong>这种组合下，startDate将会是nil值。</li>
+</ul>
+<p>解决方案：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">formatter.locale</span> = [NSLocale localeWithLocaleIdentifier:@<span class="hljs-string">&quot;en_US_POSIX&quot;</span>]<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
 
 
 
-
-
-<h2 id="二、为iPhone创建虚拟网卡"><a href="#二、为iPhone创建虚拟网卡" class="headerlink" title="二、为iPhone创建虚拟网卡"></a>二、为iPhone创建虚拟网卡</h2><figure class="highlight llvm"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs llvm">$ rvictl -s decb<span class="hljs-number">66</span>caf<span class="hljs-number">7012</span>a<span class="hljs-number">7799</span><span class="hljs-keyword">c</span><span class="hljs-number">2</span><span class="hljs-keyword">c</span><span class="hljs-number">3</span>edxxxxxxxx<span class="hljs-number">7</span>f<span class="hljs-number">5</span>a<span class="hljs-number">715</span>e<br><br>Starting device decb<span class="hljs-number">66</span>caf<span class="hljs-number">7012</span>a<span class="hljs-number">7799</span><span class="hljs-keyword">c</span><span class="hljs-number">2</span><span class="hljs-keyword">c</span><span class="hljs-number">3</span>edxxxxxxxx<span class="hljs-number">7</span>f<span class="hljs-number">5</span>a<span class="hljs-number">715</span>e [SUCCEEDED] with interface rvi<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="三、启动Wireshark，找到-rvi0-进行抓包"><a href="#三、启动Wireshark，找到-rvi0-进行抓包" class="headerlink" title="三、启动Wireshark，找到 rvi0 进行抓包"></a>三、启动Wireshark，找到 rvi0 进行抓包</h2><img src="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/webp-20230918170235617" srcset="/img/loading.gif" lazyload class="" title="img">
+<ul>
+<li>因为地区原因，12小时制的情况下，每个国家的格式化时间不一致，这会导致formatter表现异常。所以我们给它固定一个美国地区即可。</li>
+</ul>
+<img src="/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/IMG_3395.PNG" srcset="/img/loading.gif" lazyload class="" title="IMG_3395">
 
 
 
+<img src="/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/IMG_3396.PNG" srcset="/img/loading.gif" lazyload class="" title="IMG_3396">
 
-
-<p>双击<code>rvi0</code>即可进入抓包界面。<br>若此时出现如下弹窗，则说明无权限访问该接口。</p>
-<img src="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/webp-20230918170259224" srcset="/img/loading.gif" lazyload class="" title="img">
-
-
-
-<p>这时，退出Wireshark，然后在终端上使用下述命令重新打开Wireshark就可以了。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ sudo <span class="hljs-regexp">/Applications/</span>Wireshark.app<span class="hljs-regexp">/Contents/</span>MacOS/Wireshark <br>Password:<br></code></pre></td></tr></table></figure>
+<h2 id="二、每个国家得到周一不一致问题，导致日期和星期无法对其的问题"><a href="#二、每个国家得到周一不一致问题，导致日期和星期无法对其的问题" class="headerlink" title="二、每个国家得到周一不一致问题，导致日期和星期无法对其的问题"></a>二、每个国家得到周一不一致问题，导致日期和星期无法对其的问题</h2><img src="/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/IMG_3397.PNG" srcset="/img/loading.gif" lazyload class="" title="IMG_3397">
 
 
 
-<h2 id="四、使用tcpdump抓包，借助wireshark分析包"><a href="#四、使用tcpdump抓包，借助wireshark分析包" class="headerlink" title="四、使用tcpdump抓包，借助wireshark分析包"></a>四、使用tcpdump抓包，借助wireshark分析包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">-i, 要监听的网卡名称，-i rvi0监听虚拟网卡。不设置的时候默认监听所有网卡流量。</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">-w，保存的路径以及文件名。</span><br>sudo tcpdump -i rvi0  -w dump.pcap<br></code></pre></td></tr></table></figure>
+<p>解决方案：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">formatter.locale</span> = [NSLocale localeWithLocaleIdentifier:@<span class="hljs-string">&quot;en_US_POSIX&quot;</span>]<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
 
 
 
-<h2 id="五、一些注意事项【坑】"><a href="#五、一些注意事项【坑】" class="headerlink" title="五、一些注意事项【坑】"></a>五、一些注意事项【坑】</h2><h4 id="①-时间戳不对的问题"><a href="#①-时间戳不对的问题" class="headerlink" title="① 时间戳不对的问题"></a>① 时间戳不对的问题</h4><p>直接用wireshark图形化界面抓取rvi0的数据，可能存在时间戳不对的问题。</p>
-<p>比如一个http请求，请求时间和响应时间耗时为0，这是不可能的。</p>
-<p><strong>解决方式：</strong> 上述<strong>方法四</strong> tcpdump抓包，先把数据抓取，然后用wireshark打开查看即可。</p>
+<ul>
+<li>因为地区原因，12小时制的情况下，每个国家的格式化时间不一致，这会导致formatter表现异常。所以我们给它固定一个美国地区即可。</li>
+</ul>
 
             </div>
             <hr>
@@ -289,7 +282,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Wireshark/">Wireshark</a>
+                      <a class="hover-with-bg" href="/categories/iOS/">iOS</a>
                     
                   </div>
                 
@@ -297,7 +290,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Wireshark/">Wireshark</a>
+                      <a class="hover-with-bg" href="/tags/iOS-Objective-C/">iOS - Objective-C</a>
                     
                   </div>
                 
@@ -314,9 +307,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day02-Wireshark%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%A3%E5%AF%86%E6%96%B9%E5%BC%8F/">
+                      <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">day02-Wireshark自定义解密方式</span>
+                        <span class="hidden-mobile">day01-iOS抓iPhone的wireshark数据包</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -324,8 +317,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/">
-                        <span class="hidden-mobile">day01-NSDateFormatter相关问题</span>
+                      <a href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day03-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99/">
+                        <span class="hidden-mobile">day03-自动化脚本代码编写</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
