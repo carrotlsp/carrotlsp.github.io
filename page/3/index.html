@@ -238,15 +238,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%863/" target="_self">
-          day07-音频数据采集3-TODO
+        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%864/" target="_self">
+          day07-音频数据采集4-TODO
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%863/" target="_self">
+        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%864/" target="_self">
           
-          day01指针关键知识点
+          
         </a>
       </p>
 
@@ -254,7 +254,54 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-11-25 09:35" pubdate>
+            <time datetime="2022-11-25 09:38" pubdate>
+              2022-11-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%863/" target="_self">
+          day07-音频数据采集3-将WebRtc接受的原始PCM和压缩数据保存到本地进行分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%863/" target="_self">
+          
+          一、 内部功能，音频相关1、rtp_send_cache 是 app 本地音频压缩文件 app 端的在 RTP 即将发送出去的的时候，调用 lds_local_record 函数进行音频数据的保存。 是 c 函数，因为 app 只会投递音频，不会投递视频，所以记录的地方比较暴力，在 RtpSenderEgress::SendPacketToNetwork 方法中直接写文件了。 在 Audacity
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-11-25 09:36" pubdate>
               2022-11-25
             </time>
           </div>
@@ -608,58 +655,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/" target="_self">
-          day02-项目引入WebRTC库、进行单步调试
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/10/08/WebRTC%E5%AE%9E%E6%88%98/day02-%E9%A1%B9%E7%9B%AE%E5%BC%95%E5%85%A5WebRTC%E5%BA%93%E3%80%81%E8%BF%9B%E8%A1%8C%E5%8D%95%E6%AD%A5%E8%B0%83%E8%AF%95/" target="_self">
-          
-          前面day01的文章已经编译生成了WebRTC.framework，如何将它引入到自己的项目中呢？ 首先创建一个全新的 WebrtcLearnDemo 的iOS项目，配置好手机证书，然后关闭项目的 bitcode 设置。  一、项目引入WebRTC库（引入法）① WebrtcLearnDemo -&gt; General -&gt; Frameworks  ② 设置Framework的searc
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-08 16:31" pubdate>
-              2022-10-08
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E5%AE%9E%E6%88%98/">WebRTC实战</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#board">8</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
