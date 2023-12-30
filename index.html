@@ -191,6 +191,100 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/12/29/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D-2/" target="_self">
+          day11-特征点检测与匹配-图像拼接
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/12/29/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D-2/" target="_self">
+          
+          11-12、图像拼接 - 概述 主要将下面两图，进行拼接成一张图，核心步骤如下 ① 读取文件并重置尺寸 ②根据特征点和计算描述子，得到单应性矩阵 ③图像变换 ④图像拼接并输出图像    11-13、图像拼接 - 重设图片尺寸123456789101112131415import cv2import numpy as np img1 &#x3D; cv2.imread(&quot;.&#x2F;images&#x2F;openc
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-29 07:28" pubdate>
+              2023-12-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OpenCV/">OpenCV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/" target="_self">
+          day11-特征点检测与匹配
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/" target="_self">
+          
+          11-1、特征点检测与匹配 OpenCV的特征检测可以做哪些事情呢？ ①图像搜索，以图搜图 ②拼图游戏 ③图像拼接，将两长切有关联的图拼接到一起   什么是角点？ 在特征中最重要的是角点 灰度梯度最大值对应的像素 两条线的交点 极值点（一阶导数最大值，但二阶导数为0）      11-2、Harris角点检测   Harris角点检测逻辑 光滑地区：无论向哪里移动，衡量系数不变 边缘地址：垂直边缘
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-12-19 07:28" pubdate>
+              2023-12-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OpenCV/">OpenCV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/12/12/OpenCV%E5%85%A5%E9%97%A8/day10-%E8%BD%A6%E8%BE%86%E6%A3%80%E6%B5%8B/" target="_self">
           day10-车辆检测
         </a>
@@ -561,105 +655,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/11/19/OpenCV%E5%85%A5%E9%97%A8/day02-Mac%E4%B8%8A%E6%90%AD%E5%BB%BAOpenCV%E7%8E%AF%E5%A2%83/" target="_self">
-          day02-Mac上搭建OpenCV环境
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/11/19/OpenCV%E5%85%A5%E9%97%A8/day02-Mac%E4%B8%8A%E6%90%AD%E5%BB%BAOpenCV%E7%8E%AF%E5%A2%83/" target="_self">
-          
-          2-1、Mac上搭建OpenCV环境12brew install python@3.9pip3 install numpy matplotlib opencv_python   问：如何验证 python3 安装是否成功呢？ 答：输入 python3 能进入 python 指令模式即为成功。 问：如何验证 numpy matplotlib opencv_python 是否安装成功呢？ 答：进入py
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-11-19 07:28" pubdate>
-              2023-11-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/OpenCV/">OpenCV</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/" target="_self">
-          day02-Excel中Right/Left/Len/Find/Mid/Substitute函数用法
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/09/19/%E6%9D%82%E8%AE%B0/day01-Excel%E4%B8%ADFind:Mid:Substitute%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/" target="_self">
-          
-          EXCEL&#x2F;WPS中文本函数LEFT、RIGHT、LEN、MID、SUBSTITUTE、FIND用法总结如下   一、Left函数用法 从左侧开始取特定长度的字符串。      二、Right函数用法 从右侧开始取特定长度的字符串。      三、Len函数用法 一个字符串的总长度      四、Mid函数用法 从一个字符串中间特定位置开始查找特定字符长度。      五、Substi
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-19 07:28" pubdate>
-              2023-09-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Excel/">Excel</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Excel/">Excel</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#board">8</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/#board">9</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

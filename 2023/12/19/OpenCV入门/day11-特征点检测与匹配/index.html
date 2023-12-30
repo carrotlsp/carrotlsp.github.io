@@ -1,0 +1,676 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="11-1、特征点检测与匹配 OpenCV的特征检测可以做哪些事情呢？ ①图像搜索，以图搜图 ②拼图游戏 ③图像拼接，将两长切有关联的图拼接到一起   什么是角点？ 在特征中最重要的是角点 灰度梯度最大值对应的像素 两条线的交点 极值点（一阶导数最大值，但二阶导数为0）      11-2、Harris角点检测   Harris角点检测逻辑 光滑地区：无论向哪里移动，衡量系数不变 边缘地址：垂直边缘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day11-特征点检测与匹配">
+<meta property="og:url" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="11-1、特征点检测与匹配 OpenCV的特征检测可以做哪些事情呢？ ①图像搜索，以图搜图 ②拼图游戏 ③图像拼接，将两长切有关联的图拼接到一起   什么是角点？ 在特征中最重要的是角点 灰度梯度最大值对应的像素 两条线的交点 极值点（一阶导数最大值，但二阶导数为0）      11-2、Harris角点检测   Harris角点检测逻辑 光滑地区：无论向哪里移动，衡量系数不变 边缘地址：垂直边缘">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219192318669.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219192643261.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219192634361.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219193720963.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219194213195.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219194226429.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219195215128.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219201221390.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219202225527.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222160836888.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222172940927.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222173531772.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222173556369.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222173614242.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222173625296.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231226172117341.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231226195320994.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231226192711012.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/map1.png">
+<meta property="og:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/map2.png">
+<meta property="article:published_time" content="2023-12-18T23:28:30.000Z">
+<meta property="article:modified_time" content="2023-12-30T02:20:35.140Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="OpenCV">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219192318669.png">
+  
+  
+  <title>day11-特征点检测与匹配 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>望穿秋水</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day11-特征点检测与匹配">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2023-12-19 07:28" pubdate>
+        December 19, 2023 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      52 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day11-特征点检测与匹配</h1>
+            
+            <div class="markdown-body">
+              <h2 id="11-1、特征点检测与匹配"><a href="#11-1、特征点检测与匹配" class="headerlink" title="11-1、特征点检测与匹配"></a>11-1、特征点检测与匹配</h2><blockquote>
+<p><strong>OpenCV的特征检测可以做哪些事情呢？</strong></p>
+<p>①图像搜索，以图搜图</p>
+<p>②拼图游戏</p>
+<p>③图像拼接，将两长切有关联的图拼接到一起</p>
+</blockquote>
+<blockquote>
+<p><strong>什么是角点？</strong></p>
+<p>在特征中最重要的是角点</p>
+<p>灰度梯度最大值对应的像素</p>
+<p>两条线的交点</p>
+<p>极值点（一阶导数最大值，但二阶导数为0）</p>
+</blockquote>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219192318669.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219192318669">
+
+
+
+<h2 id="11-2、Harris角点检测"><a href="#11-2、Harris角点检测" class="headerlink" title="11-2、Harris角点检测"></a>11-2、Harris角点检测</h2><img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219192643261.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219192643261">
+
+<blockquote>
+<p><strong>Harris角点检测逻辑</strong></p>
+<p><strong>光滑地区：</strong>无论向哪里移动，衡量系数不变</p>
+<p><strong>边缘地址：</strong>垂直边缘移动时，衡量系统变化剧烈</p>
+<p><strong>在角点处：</strong>往哪个方向移动时，衡量系统都变化剧烈</p>
+</blockquote>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219192634361.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219192634361">
+
+<figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><br>blockSize = <span class="hljs-number">2</span><br>ksize = <span class="hljs-number">3</span><br>k = <span class="hljs-number">0.04</span><br><br>img = cv2.imread(<span class="hljs-string">&#x27;./images/opencv/08/chess.png&#x27;</span>)<br>oriImg = img.copy()<br><br><span class="hljs-comment">#灰度化</span><br>gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)<br><span class="hljs-comment">#Harris</span><br>dst = cv2.cornerHarris(gray,blockSize,ksize,k)<br><span class="hljs-comment">#角点展示</span><br>img[dst&gt;<span class="hljs-number">0.01</span>*dst.<span class="hljs-built_in">max</span>()] = [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">255</span>]<br><br>cv2.imshow(<span class="hljs-string">&quot;oriImg&quot;</span>, oriImg)<br>cv2.imshow(<span class="hljs-string">&quot;img&quot;</span>, img)<br>cv2.waitKey(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>可以看到，很多角点都被检测出来了，并且画上了红点标记</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219193720963.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219193720963">
+
+
+
+<h2 id="11-3、Shi-Tomasi角点检测"><a href="#11-3、Shi-Tomasi角点检测" class="headerlink" title="11-3、Shi-Tomasi角点检测"></a>11-3、Shi-Tomasi角点检测</h2><blockquote>
+<p><strong>Shi-Tomasi 是 Harris 角点检测的改进版；也是我们更常用的一种角点检测的方式</strong></p>
+<p>Harris角点检测算的稳定性和k有关，而 k 是个经验值，不好设定最佳值</p>
+</blockquote>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219194213195.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219194213195">
+
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219194226429.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219194226429">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-comment">#图片读取</span><br>img = cv2.imread(<span class="hljs-string">&#x27;./images/opencv/08/chess.png&#x27;</span>)<br>oriImg = img.copy()<br><span class="hljs-comment">#灰度化</span><br>gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)<br><span class="hljs-comment">#Shi-Tomasi角点检测</span><br>corners = cv2.goodFeaturesToTrack(gray, <span class="hljs-number">0</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">10</span>)<br>corners = np.int0(corners)<br><br><span class="hljs-built_in">print</span>(corners[<span class="hljs-number">0</span>])<br><span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> corners:<br>  x,y = c.ravel()<br>  cv2.circle(img,(x,y),<span class="hljs-number">3</span>,(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">255</span>),-<span class="hljs-number">1</span>)<br><br>cv2.imshow(<span class="hljs-string">&quot;oriImg&quot;</span>,oriImg)<br>cv2.imshow(<span class="hljs-string">&quot;img&quot;</span>,img)<br>cv2.waitKey(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>可以看到效果和Harris角点检测基本一致，但是调用更加简单</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219195215128.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219195215128">
+
+
+
+<h2 id="11-4、SIFT关键点检测"><a href="#11-4、SIFT关键点检测" class="headerlink" title="11-4、SIFT关键点检测"></a>11-4、SIFT关键点检测</h2><blockquote>
+<p><strong>SIFT(Scale Invariant Feature Transform)：SIFT 被认为是一种稳健、尺度不变且对旋转、光照等变化具有较强鲁棒性的特征描述算法，原理较复杂。</strong></p>
+<p>Harris 主要基于局部梯度的变化来检测角点。</p>
+<p>SIFT 则更加复杂，结合了尺度空间和方向信息，生成了更具描述性的特征描述。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-comment">#图片读取</span><br>img = cv2.imread(<span class="hljs-string">&#x27;./images/opencv/08/chess.png&#x27;</span>)<br>oriImg = img.copy()<br><span class="hljs-comment">#灰度化</span><br>gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)<br><span class="hljs-comment">#初始化SIFT</span><br>sift = cv2.SIFT_create()<br><span class="hljs-comment">#进行检测</span><br>kp = sift.detect(gray,<span class="hljs-literal">None</span>)<br><span class="hljs-comment">#绘制keypoints</span><br>cv2.drawKeypoints(gray, kp, img)<br>cv2.imshow(<span class="hljs-string">&quot;img&quot;</span>, img)<br>cv2.imshow(<span class="hljs-string">&quot;oriImg&quot;</span>,oriImg)<br>cv2.waitKey(<span class="hljs-number">0</span>)	<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>可以看到SIFT检测结果更加复杂</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219201221390.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219201221390">
+
+
+
+<h2 id="11-5、计算SIFT描述子"><a href="#11-5、计算SIFT描述子" class="headerlink" title="11-5、计算SIFT描述子"></a>11-5、计算SIFT描述子</h2><blockquote>
+<p><strong>关键点：</strong>位置、大小和方向。</p>
+<p><strong>关键点描述子：</strong>记录了关键点周围对其有贡献的像素点的一组向量值，其不受仿射变换、关照变换等影响。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-comment">#图片读取</span><br>img = cv2.imread(<span class="hljs-string">&#x27;./images/opencv/08/chess.png&#x27;</span>)<br>oriImg = img.copy()<br><span class="hljs-comment">#灰度化</span><br>gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)<br><span class="hljs-comment">#初始化SIFT</span><br>sift = cv2.SIFT_create()<br><span class="hljs-comment">#进行检测、并且生成描述子</span><br>kp, des = sift.detectAndCompute(gray, <span class="hljs-literal">None</span>)<br><span class="hljs-comment">#打印描述子进行观察</span><br><span class="hljs-built_in">print</span>(des[<span class="hljs-number">0</span>])<br><span class="hljs-comment">#绘制keypoints</span><br>cv2.drawKeypoints(gray, kp, img)<br>cv2.imshow(<span class="hljs-string">&quot;oriImg&quot;</span>,oriImg)<br>cv2.imshow(<span class="hljs-string">&quot;img&quot;</span>, img)<br>cv2.waitKey(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>暂时不懂描述子拿来干啥的，后面再说吧。</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231219202225527.png" srcset="/img/loading.gif" lazyload class="" title="image-20231219202225527">
+
+
+
+<h2 id="11-6、SURF"><a href="#11-6、SURF" class="headerlink" title="11-6、SURF"></a>11-6、SURF</h2><blockquote>
+<p>SURF(Speeded-Up Robust Features)：SIFT最大的问题就是速度慢，因此才有SUFR。</p>
+</blockquote>
+<ul>
+<li>好像在我安装OpenCV版本上不支持</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><span class="hljs-comment">#初始化SURF</span><br>SURF = cv2.SURF_create()<br><span class="hljs-comment">#进行检测、并且生成描述子</span><br>kp, des = SURF.detectAndCompute(gray, <span class="hljs-literal">None</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="11-7、ORB特征检测"><a href="#11-7、ORB特征检测" class="headerlink" title="11-7、ORB特征检测"></a>11-7、ORB特征检测</h2><blockquote>
+<p>ORB最大的优点：可以做到实时检测</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-comment">#图片读取</span><br>img = cv2.imread(<span class="hljs-string">&#x27;./images/opencv/08/chess.png&#x27;</span>)<br>oriImg = img.copy()<br><span class="hljs-comment">#灰度化</span><br>gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)<br><span class="hljs-comment">#初始化 ORB</span><br>ORB = cv2.ORB_create()<br><span class="hljs-comment">#进行检测、并且生成描述子</span><br>kp, des = ORB.detectAndCompute(gray, <span class="hljs-literal">None</span>)<br><span class="hljs-comment">#打印描述子进行观察</span><br><span class="hljs-built_in">print</span>(des[<span class="hljs-number">0</span>])<br><span class="hljs-comment">#绘制keypoints</span><br>cv2.drawKeypoints(gray, kp, img)<br>cv2.imshow(<span class="hljs-string">&quot;oriImg&quot;</span>,oriImg)<br>cv2.imshow(<span class="hljs-string">&quot;img&quot;</span>, img)<br>cv2.waitKey(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>可以看到ORB检测出来的点极少</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222160836888.png" srcset="/img/loading.gif" lazyload class="" title="image-20231222160836888">
+
+
+
+<blockquote>
+<p>从检测质量来看：SIFT &gt; SURF &gt; ORB</p>
+<p>从检测速度来看：ORB &gt; SURF &gt; SIFT</p>
+</blockquote>
+<h2 id="11-8、暴力特征匹配"><a href="#11-8、暴力特征匹配" class="headerlink" title="11-8、暴力特征匹配"></a>11-8、暴力特征匹配</h2><blockquote>
+<p>**BF (Brute-Force)**，暴力特征匹配，也就是两图所有的特征拿出，循环暴力匹配。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-comment">#图片读取</span><br>img1 = cv2.imread(<span class="hljs-string">&quot;./images/opencv/特征匹配/opencv_search.png&quot;</span>)<br>img2 = cv2.imread(<span class="hljs-string">&quot;./images/opencv/特征匹配/opencv_orig.png&quot;</span>)<br><span class="hljs-comment">#灰度化</span><br>gray1 = cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)<br>gray2 = cv2.cvtColor(img2,cv2.COLOR_BGR2GRAY)<br><span class="hljs-comment">#初始化 SIFT</span><br>SIFT = cv2.SIFT_create()<br><span class="hljs-comment">#进行检测、并且生成描述子</span><br>kp1, des1 = SIFT.detectAndCompute(gray1, <span class="hljs-literal">None</span>)<br>kp2, des2 = SIFT.detectAndCompute(gray2, <span class="hljs-literal">None</span>)<br><span class="hljs-comment">#进行暴力特征匹配</span><br>bf = cv2.BFMatcher(cv2.NORM_L1)<br>match = bf.match(des1, des2)<br><span class="hljs-comment">#绘图</span><br>img3 = cv2.drawMatches(img1, kp1, img2, kp2, match, <span class="hljs-literal">None</span>)<br><br>cv2.imshow(<span class="hljs-string">&quot;img3&quot;</span>,img3)<br>cv2.waitKey(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>下图可以很好的看到匹配结果</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222172940927.png" srcset="/img/loading.gif" lazyload class="" title="image-20231222172940927">
+
+
+
+<h2 id="11-9、FLANN特征匹配"><a href="#11-9、FLANN特征匹配" class="headerlink" title="11-9、FLANN特征匹配"></a>11-9、FLANN特征匹配</h2><blockquote>
+<p><strong>FLANN优势：</strong>由于它使用的是邻近近似值匹配，所以速度非常快。</p>
+<p><strong>FLANN劣势：</strong>精度不如暴力匹配法高。</p>
+</blockquote>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222173531772.png" srcset="/img/loading.gif" lazyload class="" title="image-20231222173531772">
+
+
+
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222173556369.png" srcset="/img/loading.gif" lazyload class="" title="image-20231222173556369">
+
+
+
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222173614242.png" srcset="/img/loading.gif" lazyload class="" title="image-20231222173614242">
+
+
+
+
+
+
+
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231222173625296.png" srcset="/img/loading.gif" lazyload class="" title="image-20231222173625296">
+
+
+
+
+
+<h2 id="11-10、实战FLANN特征匹配"><a href="#11-10、实战FLANN特征匹配" class="headerlink" title="11-10、实战FLANN特征匹配"></a>11-10、实战FLANN特征匹配</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-comment">#图片读取</span><br>img1 = cv2.imread(<span class="hljs-string">&quot;./images/opencv/特征匹配/opencv_search.png&quot;</span>)<br>img2 = cv2.imread(<span class="hljs-string">&quot;./images/opencv/特征匹配/opencv_orig.png&quot;</span>)<br><span class="hljs-comment">#灰度化</span><br>gray1 = cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)<br>gray2 = cv2.cvtColor(img2,cv2.COLOR_BGR2GRAY)<br><span class="hljs-comment">#初始化 SIFT</span><br>SIFT = cv2.SIFT_create()<br><span class="hljs-comment">#进行检测、并且生成描述子</span><br>kp1, des1 = SIFT.detectAndCompute(gray1, <span class="hljs-literal">None</span>)<br>kp2, des2 = SIFT.detectAndCompute(gray2, <span class="hljs-literal">None</span>)<br><span class="hljs-comment">#创建匹配器</span><br>index_params = <span class="hljs-built_in">dict</span>(algorithm = <span class="hljs-number">1</span>, trees = <span class="hljs-number">5</span>)<br>search_params = <span class="hljs-built_in">dict</span>(checks = <span class="hljs-number">50</span>)<br>flann = cv2.FlannBasedMatcher(index_params, search_params)<br><span class="hljs-comment">#进行匹配</span><br>matches = flann.knnMatch(des1, des2, k=<span class="hljs-number">2</span>)<br><span class="hljs-comment">#准备一个空的掩膜来绘制好的匹配</span><br>mask_matches = [[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(matches))]<br><br><span class="hljs-comment">#向掩膜中添加数据</span><br><span class="hljs-keyword">for</span> i, (m,n) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(matches):<br>  <span class="hljs-keyword">if</span> m.distance &lt; <span class="hljs-number">0.7</span>*n.distance:<br>    mask_matches[i] = [<span class="hljs-number">1</span>, <span class="hljs-number">0</span>]<br><br><span class="hljs-comment">#绘图</span><br>    <br>ret = cv2.drawMatchesKnn(img1, kp1, img2, kp2, matches, <span class="hljs-literal">None</span>,<br>                         matchColor=(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>,<span class="hljs-number">0</span>),singlePointColor=(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),<br>                         matchesMask=mask_matches,flags=<span class="hljs-number">0</span>)<br>cv2.imshow(<span class="hljs-string">&#x27;result&#x27;</span>, ret)<br>cv2.waitKey()<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>最终FLANN匹配效果如下：</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231226172117341.png" srcset="/img/loading.gif" lazyload class="" title="image-20231226172117341">
+
+
+
+
+
+<h2 id="11-11、图像查找-单应性矩阵"><a href="#11-11、图像查找-单应性矩阵" class="headerlink" title="11-11、图像查找 - 单应性矩阵"></a>11-11、图像查找 - 单应性矩阵</h2><blockquote>
+<p><strong>什么是单应性？</strong></p>
+<p>一种理解：平面的单应性被定义为从一个平面到另一个平面的投影映射。</p>
+<p>另一种理解：单应性是当一张图是另一张图的一个透视畸变时，在两张图中寻找彼此的一种情况。</p>
+</blockquote>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231226195320994.png" srcset="/img/loading.gif" lazyload class="" title="image-20231226195320994">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-comment">#图片读取</span><br>img1 = cv2.imread(<span class="hljs-string">&quot;./images/opencv/特征匹配/opencv_search.png&quot;</span>)<br>img2 = cv2.imread(<span class="hljs-string">&quot;./images/opencv/特征匹配/opencv_orig.png&quot;</span>)<br><span class="hljs-comment">#灰度化</span><br>gray1 = cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)<br>gray2 = cv2.cvtColor(img2,cv2.COLOR_BGR2GRAY)<br><span class="hljs-comment">#初始化 SIFT</span><br>SIFT = cv2.SIFT_create()<br><span class="hljs-comment">#进行检测、并且生成描述子</span><br>kp1, des1 = SIFT.detectAndCompute(gray1, <span class="hljs-literal">None</span>)<br>kp2, des2 = SIFT.detectAndCompute(gray2, <span class="hljs-literal">None</span>)<br><span class="hljs-comment">#创建匹配器</span><br>index_params = <span class="hljs-built_in">dict</span>(algorithm = <span class="hljs-number">1</span>, trees = <span class="hljs-number">5</span>)<br>search_params = <span class="hljs-built_in">dict</span>(checks = <span class="hljs-number">50</span>)<br>flann = cv2.FlannBasedMatcher(index_params, search_params)<br><span class="hljs-comment">#进行匹配</span><br>matchs = flann.knnMatch(des1, des2, k=<span class="hljs-number">2</span>)<br><span class="hljs-comment">#组建一个通过了劳氏比率验证的匹配列表</span><br>good = []<br><span class="hljs-keyword">for</span> i, (m, n) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(matchs):<br>    <span class="hljs-keyword">if</span> m.distance &lt; <span class="hljs-number">0.7</span> * n.distance:<br>        good.append(m)<br><br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(good) &gt;= <span class="hljs-number">4</span>:<br>    srcPts = np.float32([kp1[m.queryIdx].pt <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> good]).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>    dstPts = np.float32([kp2[m.trainIdx].pt <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> good]).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>    <span class="hljs-comment"># 寻找单应性</span><br>    <span class="hljs-comment"># cv2.findHomography参数：</span><br>    <span class="hljs-comment"># srcPoints：源平面中点的坐标矩阵</span><br>    <span class="hljs-comment"># dstPoints：目标平面中点的坐标矩阵</span><br>    <span class="hljs-comment"># method：计算单应矩阵所使用的方法。不同的方法对应不同的参数，具体如下：RANSAC：基于RANSAC的鲁棒算法</span><br>    <span class="hljs-comment"># ransacReprojThreshold：将点对视为内点的最大允许重投影错误阈值（仅用于RANSAC和RHO方法）</span><br>    H, _ = cv2.findHomography(srcPts, dstPts, cv2.RANSAC, <span class="hljs-number">5.0</span>)<br><br>    <span class="hljs-comment"># 执行透射转换，取查询图像的矩形角点，并将其投影到场景中，从而画出边界</span><br>    h, w = img1.shape[:<span class="hljs-number">2</span>]<br>    pts = np.float32([[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, h-<span class="hljs-number">1</span>], [w-<span class="hljs-number">1</span>, h-<span class="hljs-number">1</span>], [w-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>]]).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br>    dst = cv2.perspectiveTransform(pts, H)<br><br>    cv2.polylines(img2, [np.int32(dst)], <span class="hljs-literal">True</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>))<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;the number of good is less than 4.&#x27;</span>)<br>    exit()<br><br><br>    <br>ret = cv2.drawMatchesKnn(img1, kp1, img2, kp2, [good], <span class="hljs-literal">None</span>)<br>cv2.imshow(<span class="hljs-string">&#x27;result&#x27;</span>, ret)<br>cv2.waitKey(<span class="hljs-number">0</span>)	<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>上面的题目好难理解啊</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/image-20231226192711012.png" srcset="/img/loading.gif" lazyload class="" title="image-20231226192711012">
+
+
+
+<h2 id="11-12、图像查找-概述"><a href="#11-12、图像查找-概述" class="headerlink" title="11-12、图像查找 - 概述"></a>11-12、图像查找 - 概述</h2><ul>
+<li>主要将下面两图，进行拼接成一张图，核心步骤如下</li>
+</ul>
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/map1.png" srcset="/img/loading.gif" lazyload class="" title="map1">
+
+
+
+<img src="/2023/12/19/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D/map2.png" srcset="/img/loading.gif" lazyload class="" title="map2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/OpenCV/">OpenCV</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/12/29/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D-2/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">day11-特征点检测与匹配-图像拼接</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/12/OpenCV%E5%85%A5%E9%97%A8/day10-%E8%BD%A6%E8%BE%86%E6%A3%80%E6%B5%8B/">
+                        <span class="hidden-mobile">day10-车辆检测</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
