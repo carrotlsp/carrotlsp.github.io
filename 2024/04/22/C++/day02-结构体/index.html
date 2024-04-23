@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、结构体 结构体（Structure）在C语言中是一种非常重要的数据结构，它允许你将多种不同类型的数据项（称为成员）组合成一个单一类型。 这使得结构体非常适合用来创建复杂的数据模型，结构体的使用可以大大提高程序的清晰度和易维护性。  1、常见的基本类型所占用字节数12345678char 				&#x2F;&#x2F; 1个字节uint8_t 		&#x2F;&#x2F; 1个字节short 			&#x2F;&#x2F; 2个字节int 				&#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="day02-结构体">
+<meta property="og:url" content="http://example.com/2024/04/22/C++/day02-%E7%BB%93%E6%9E%84%E4%BD%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、结构体 结构体（Structure）在C语言中是一种非常重要的数据结构，它允许你将多种不同类型的数据项（称为成员）组合成一个单一类型。 这使得结构体非常适合用来创建复杂的数据模型，结构体的使用可以大大提高程序的清晰度和易维护性。  1、常见的基本类型所占用字节数12345678char 				&#x2F;&#x2F; 1个字节uint8_t 		&#x2F;&#x2F; 1个字节short 			&#x2F;&#x2F; 2个字节int 				&#x2F;&#x2F;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-21T23:28:30.000Z">
+<meta property="article:modified_time" content="2024-04-23T22:32:57.179Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>day02-结构体 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>望穿秋水</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="day02-结构体">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2024-04-22 07:28" pubdate>
+        April 22, 2024 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      48 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">day02-结构体</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、结构体"><a href="#一、结构体" class="headerlink" title="一、结构体"></a>一、结构体</h2><blockquote>
+<p><strong>结构体（Structure）</strong>在C语言中是一种<font color="red">非常重要</font>的数据结构，它允许你将多种不同类型的数据项（称为成员）组合成一个单一类型。</p>
+<p>这使得结构体<font color="red">非常适合</font>用来创建<strong>复杂的数据模型</strong>，结构体的使用可以大大提高程序的<strong>清晰度</strong>和<strong>易维护性</strong>。</p>
+</blockquote>
+<h4 id="1、常见的基本类型所占用字节数"><a href="#1、常见的基本类型所占用字节数" class="headerlink" title="1、常见的基本类型所占用字节数"></a>1、常见的基本类型所占用字节数</h4><figure class="highlight c"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> 				<span class="hljs-comment">// 1个字节</span><br><span class="hljs-type">uint8_t</span> 		<span class="hljs-comment">// 1个字节</span><br><span class="hljs-type">short</span> 			<span class="hljs-comment">// 2个字节</span><br><span class="hljs-type">int</span> 				<span class="hljs-comment">// 4个字节</span><br><span class="hljs-type">float</span> 			<span class="hljs-comment">// 4个字节</span><br><span class="hljs-type">long</span>				<span class="hljs-comment">// 8个字节</span><br><span class="hljs-type">double</span>		  <span class="hljs-comment">// 8个字节</span><br><span class="hljs-type">long</span> <span class="hljs-type">long</span> 	<span class="hljs-comment">// 8个字节</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="2、下面结构体，占几个字节？"><a href="#2、下面结构体，占几个字节？" class="headerlink" title="2、下面结构体，占几个字节？"></a>2、下面结构体，占几个字节？</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> event;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> status;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> reserved[<span class="hljs-number">1</span>];<br>&#125; SAvEvent;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>占用 <strong>3</strong> 个字节</li>
+</ul>
+<h4 id="3、下面结构体，占几个字节？"><a href="#3、下面结构体，占几个字节？" class="headerlink" title="3、下面结构体，占几个字节？"></a>3、下面结构体，占几个字节？</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> status;<br>    <span class="hljs-type">int</span> event;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> reserved[<span class="hljs-number">1</span>];<br>&#125; SAvEvent;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>占用 <strong>12</strong> 个字节</li>
+</ul>
+<h4 id="4、下面结构体，占几个字节？"><a href="#4、下面结构体，占几个字节？" class="headerlink" title="4、下面结构体，占几个字节？"></a>4、下面结构体，占几个字节？</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    <span class="hljs-type">int</span> event;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> status;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> reserved[<span class="hljs-number">1</span>];<br>&#125; SAvEvent;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>占用 <strong>8</strong> 个字节</li>
+</ul>
+<h2 id="二、内存对齐"><a href="#二、内存对齐" class="headerlink" title="二、内存对齐"></a>二、内存对齐</h2><h4 id="1、为什么要内存对齐？"><a href="#1、为什么要内存对齐？" class="headerlink" title="1、为什么要内存对齐？"></a>1、为什么要内存对齐？</h4><blockquote>
+<p><strong>不同类型的数据访问速度最优化时，其地址往往需要满足一定的对齐要求。</strong></p>
+<p>例如，某些硬件平台上，访问4字节整数（如 <code>int</code> 类型）的地址可能需要是4的倍数。如果数据被放置在满足这些要求的地址上，CPU的数据访问速度就可以最大化。</p>
+</blockquote>
+<h4 id="2、如何进行内存对齐？"><a href="#2、如何进行内存对齐？" class="headerlink" title="2、如何进行内存对齐？"></a>2、如何进行内存对齐？</h4><ul>
+<li><strong>对齐规则：</strong>编译器将按照结构体中<font color="red">最宽基本类型成员</font>的对齐要求，为整个结构体选择一个“对齐因子”（也称为“对齐量”）。整个结构体的起始地址会按照这个对齐因子来对齐。结构体内的每个成员也会根据其类型的对齐要求，在结构体内部相对起始地址进行对齐。</li>
+<li>**填充字节（Padding）:**为了满足内存对齐的要求，编译器可能在结构体的成员之间或结构体的<font color="red">末尾拖入未使用的空间</font>（称为“填充字节”），这可以确保每个成员都在对其对齐要求的地址上开始。</li>
+</ul>
+<h4 id="3、举例说明？"><a href="#3、举例说明？" class="headerlink" title="3、举例说明？"></a>3、举例说明？</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Example</span> &#123;</span><br>    <span class="hljs-type">char</span> a;    <span class="hljs-comment">// 占用1字节</span><br>    <span class="hljs-type">int</span> b;     <span class="hljs-comment">// 占用4字节，假设需要4字节对齐</span><br>    <span class="hljs-type">char</span> c;    <span class="hljs-comment">// 占用1字节</span><br>&#125;;<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>a</code> 直接放在结构体的开始。</p>
+</li>
+<li><p>在 <code>a</code> 和 <code>b</code> 之间插入3个填充字节，以确保 <code>b</code> 的地址是4的倍数，满足 <code>int</code> 类型的对齐要求。</p>
+</li>
+<li><p><code>c</code> 紧跟在 <code>b</code> 后面，但此时结构体的总大小为9字节。为了使结构体数组中每个元素的地址都满足最严格的对齐要求（在这里是4字节对齐），在结构体的末尾还会添加3个填充字节，<strong>使得整个结构体的大小变为12字节</strong>。</p>
+</li>
+</ul>
+<h4 id="4、如何优化上面的结构体？"><a href="#4、如何优化上面的结构体？" class="headerlink" title="4、如何优化上面的结构体？"></a>4、如何优化上面的结构体？</h4><ul>
+<li>了解内存对齐可以帮助你更好地设计结构体以减少内存空间的浪费。</li>
+<li>一个常见的技巧是按照 <font color="red">从最宽到最窄</font> 的成员顺序声明结构体成员，这样可以减少填充字节的数量。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Example</span> &#123;</span><br>    <span class="hljs-type">char</span> a;    <span class="hljs-comment">// 占用1字节</span><br>    <span class="hljs-type">char</span> c;    <span class="hljs-comment">// 占用1字节</span><br>    <span class="hljs-type">int</span> b;     <span class="hljs-comment">// 占用4字节，假设需要4字节对齐</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>整个结构体的大小变为 8 字节</strong>。</li>
+</ul>
+<h4 id="5、什么柔性数组成员？"><a href="#5、什么柔性数组成员？" class="headerlink" title="5、什么柔性数组成员？"></a>5、什么柔性数组成员？</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> status;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> reserved[<span class="hljs-number">1</span>];<br>    <span class="hljs-type">int</span> event;<br>&#125; SAvEvent;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>  channel;<br>    SAvEvent stEvent[<span class="hljs-number">1</span>];<br>&#125; SMsgAVIoctrlListEventResp;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>SMsgAVIoctrlListEventResp</code>结构体中，<code>stEvent[1]</code>被定义为只有一个元素的<code>SAvEvent</code>类型数组。然而，在实际使用中，它通常意味着这个结构体将用作一个包含数量不确定的<code>SAvEvent</code>元素的容器。</li>
+</ul>
+<h2 id="三、在OC中常用的相关函数记录"><a href="#三、在OC中常用的相关函数记录" class="headerlink" title="三、在OC中常用的相关函数记录"></a>三、在OC中常用的相关函数记录</h2><h4 id="1、头部数据转换-SMsgAVIoctrlHead-结构的获取"><a href="#1、头部数据转换-SMsgAVIoctrlHead-结构的获取" class="headerlink" title="1、头部数据转换 SMsgAVIoctrlHead 结构的获取"></a>1、头部数据转换 <code>SMsgAVIoctrlHead</code> 结构的获取</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs objective-c">- (void)dataChannel:(nonnull RTCDataChannel *)dataChannel didReceiveMessageWithBuffer:(nonnull RTCDataBuffer *)buffer &#123;<br>//    DDLogMethod_KVS(@&quot;&quot;);<br>//    DDLogDebug(@&quot;%@ size=%ld&quot;,NSStringFromSelector(_cmd),buffer.data.length);<br>    SMsgAVIoctrlHead msgAVIoctrlHead;<br>    if (buffer.data.length &lt; sizeof(SMsgAVIoctrlHead)) &#123;<br>        NSLog(@&quot;buffer.data.length &lt; sizeof(SMsgAVIoctrlHead)&quot;);<br>        return;<br>    &#125;<br>    NSData *headerData = [buffer.data subdataWithRange:NSMakeRange(0, sizeof(SMsgAVIoctrlHead))];<br>    [headerData getBytes:&amp;msgAVIoctrlHead length:sizeof(SMsgAVIoctrlHead)];<br>    NSLog(@&quot;didReceiveMessageWithBuffer:%d,req:%d,action:recv&quot;,msgAVIoctrlHead.command,msgAVIoctrlHead.seq);<br>    LdsKvsRequest *request;<br>    @synchronized (self) &#123;<br>        request = self.cmdQueue[@(msgAVIoctrlHead.seq)];<br>//        [self.cmdQueue removeObjectForKey:@(msgAVIoctrlHead.seq)];<br>        if (msgAVIoctrlHead.command == IOTYPE_USER_IPCAM_HASLISTEVENT_RESP || msgAVIoctrlHead.command == IOTYPE_USER_IPCAM_LISTEVENT_RESP || msgAVIoctrlHead.command == IOTYPE_USER_IPCAM_LISTEVENT_V2_RESP) &#123;<br>            //需要拼包<br>        &#125; else &#123;<br>            [self.cmdQueue removeObjectForKey:@(msgAVIoctrlHead.seq)];<br>        &#125;<br>        <br>    &#125;<br>    if (msgAVIoctrlHead.length &lt;= 0 &amp;&amp; msgAVIoctrlHead.command != IOTYPE_CMD_AVIO_CTRL_HEARTBEAT_RESP) &#123; //如果心跳，length可能为空<br>        DDLogWarn(@&quot;[webrtc channelCommand]%@ didReceiveMessageWithBuffer unknown %@ cmd:%d&quot;,self.kvsServerMgr.localClientSenderId,buffer.data,msgAVIoctrlHead.command);<br>        return;<br>    &#125;<br>    <br>    DDLogInfo(@&quot;[webrtc channelCommand]%@ recv remote message seq:%d,controlCMD:%X&quot;,self.kvsServerMgr.localClientSenderId,msgAVIoctrlHead.seq,msgAVIoctrlHead.command);<br>    NSData *recvIOCtrlData = [buffer.data subdataWithRange:NSMakeRange(headerData.length, buffer.data.length-headerData.length)];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="2、结构体尾随数据的解析"><a href="#2、结构体尾随数据的解析" class="headerlink" title="2、结构体尾随数据的解析"></a>2、结构体尾随数据的解析</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs objective-c">        case IOTYPE_USER_IPCAM_LISTEVENT_V2_RESP: &#123;<br>            SMsgAVIoctrlListEventV2Resp resp;<br>            size_t respHeaderSize = sizeof(int)*2+sizeof(char)*4;<br>            <br>            memset(&amp;resp, 0, sizeof(SMsgAVIoctrlListEventV2Resp));<br>            memcpy(&amp;resp, recvIOCtrlData.bytes, sizeof(SMsgAVIoctrlListEventV2Resp));<br>            <br>            size_t eventV2Size = sizeof(lds_avio_event_v2_t);<br>            size_t eventV2HeaderSize = sizeof(STimeDay) + sizeof(char) * 4;<br>            lds_avio_event_v2_t eventV2;<br>            lds_avio_event_item_t eventV2Item;<br>            size_t eventV2ItemSize = sizeof(uint8_t) * 2 + sizeof(uint64_t);<br>            LdsKVSLogDebug(@&quot;[avRecvIOCtrl]resp.total ---- %d resp.count =[%d]  savSize*resp.count =[%ld], endFlag:%d&quot;,resp.total,resp.count,eventV2Size*resp.count,resp.endflag);<br>            <br>            NSMutableArray *eventV2Array = @[].mutableCopy;<br>            size_t eventV2ParseIndex = respHeaderSize; //数据解析起始点<br>            if (resp.total &gt;= 0) &#123;<br>                for (int i=0; i&lt;resp.count; i++) &#123;<br>                    // 1.事件数据解析<br>                    memset(&amp;eventV2, 0, eventV2Size);<br>                    memcpy(&amp;eventV2, recvIOCtrlData.bytes+eventV2ParseIndex, eventV2Size);<br>                    size_t currentEventV2Size = eventV2HeaderSize + eventV2ItemSize * eventV2.itemCount;<br>                    <br>                    // 2.事件里面的触发源解析<br>                    NSMutableArray *eventV2ItemArray = @[].mutableCopy;<br>                    for (int j = 0; j &lt; eventV2.itemCount; j++) &#123;<br>                        memset(&amp;eventV2Item, 0, eventV2ItemSize);<br>                        memcpy(&amp;eventV2Item, recvIOCtrlData.bytes + eventV2ParseIndex + eventV2ItemSize * j , eventV2ItemSize);<br>                        <br>                        LdsPlaybackEventItem *eventItem = [LdsPlaybackEventItem eventItemWithData:eventV2Item];<br>                        [eventV2ItemArray addObject:eventItem];<br>                    &#125;<br>                    <br>                    <br>                    PlaybackEvent *event = [PlaybackEvent eventWithEventV2:eventV2];<br>                    event.eventItemArray = [eventV2ItemArray copy];<br>                    [eventV2Array addObject:event];<br>                    <br>                    eventV2ParseIndex += currentEventV2Size;<br>                &#125;<br>            &#125;<br>            dispatch_async(dispatch_get_main_queue(), ^&#123;<br>//                [request successWithResult:array];<br>                if (!request.result) &#123;<br>                    request.result = @[].mutableCopy;<br>                &#125;<br>                NSMutableArray *resultArray = request.result;<br>                [resultArray addObjectsFromArray:eventV2Array];<br>                NSLog(@&quot;WebRTC:IOTYPE_USER_IPCAM_LISTEVENT_RESP:%@,count:%d&quot;,resultArray,resultArray.count);<br>                if (resp.endflag) &#123;<br>                    [request successWithResult:resultArray];<br>                &#125;<br>            &#125;);<br>            break;<br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>结构体尾随数组元素，对端传递来的数据，是没进行内存对齐的。比如10个字节构成Event，那么对端传递30字节，就表示3个Event。</li>
+</ul>
+<h4 id="3、对方传递来字节序，如何比较好的调试打印？"><a href="#3、对方传递来字节序，如何比较好的调试打印？" class="headerlink" title="3、对方传递来字节序，如何比较好的调试打印？"></a>3、对方传递来字节序，如何比较好的调试打印？</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">po [recvIOCtrlData subdataWithRange:NSMakeRange(<span class="hljs-number">12</span>, <span class="hljs-number">10</span>)]<br>&lt;e8070416 <span class="hljs-number">01173528</span> <span class="hljs-number">0100</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>这样就可以对比字节序和结构体去计算数据了</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/C/">C++</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/19/HomeAssistant/day04-HA%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+                        <span class="hidden-mobile">day04-HA环境搭建</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

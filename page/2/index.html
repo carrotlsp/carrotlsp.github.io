@@ -191,6 +191,288 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/11/30/OpenCV%E5%85%A5%E9%97%A8/day08-%E6%BB%A4%E6%B3%A2%E5%99%A8/" target="_self">
+          day08-滤波器
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/11/30/OpenCV%E5%85%A5%E9%97%A8/day08-%E6%BB%A4%E6%B3%A2%E5%99%A8/" target="_self">
+          
+          8-1、初识滤波器 滤波的作用：一幅图像通过滤波器得到另一幅图像。其中滤波的过程又称为卷积，滤波器又称为卷积核。 大白话解释：其实无非就是一个二维小窗口，对图像进行扫描，扫描过程中进行一个乘法操作，这个过程就是卷积。              8-2、卷积相关概念 卷积核：通常为奇数，比如3x3、 5x5、 7x7等 原因一：是因为增加padding的原因 原因二：保证锚点在中间，防止位置发生偏移
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-30 07:28" pubdate>
+              2023-11-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OpenCV/">OpenCV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/11/29/OpenCV%E5%85%A5%E9%97%A8/day07-%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E5%8F%98%E6%8D%A2/" target="_self">
+          day07-图像基本变换
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/11/29/OpenCV%E5%85%A5%E9%97%A8/day07-%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E5%8F%98%E6%8D%A2/" target="_self">
+          
+          7-1、图像的放大与缩小 cv2.resize，主要参数注意点如下 dsize 和 fx、fy   选择一种缩放方式即可，两者互斥  12345678910111213141516171819import cv2import numpy as npdog &#x3D; cv2.imread(&quot;.&#x2F;images&#x2F;lenna.png&quot;)dogx, dogy, dogChannel &#x3D; dog
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-29 07:28" pubdate>
+              2023-11-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OpenCV/">OpenCV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/11/28/OpenCV%E5%85%A5%E9%97%A8/day06-%E7%9F%A9%E9%98%B5%E7%AE%97%E6%9C%AF%E4%B8%8E%E4%BD%8D%E8%BF%90%E7%AE%97/" target="_self">
+          day06-矩阵算术与位运算
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/11/28/OpenCV%E5%85%A5%E9%97%A8/day06-%E7%9F%A9%E9%98%B5%E7%AE%97%E6%9C%AF%E4%B8%8E%E4%BD%8D%E8%BF%90%E7%AE%97/" target="_self">
+          
+          6-1、图像的加法运算1234567891011121314151617import cv2import numpy as nporgImg &#x3D; cv2.imread(&quot;.&#x2F;images&#x2F;dog.png&quot;)imgA &#x3D; np.ones(orgImg.shape, dtype&#x3D;np.uint8) * 50imgA &#x3D; cv2.add(orgImg,imgA)cv2.imshow(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-28 07:28" pubdate>
+              2023-11-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OpenCV/">OpenCV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/11/27/OpenCV%E5%85%A5%E9%97%A8/day05-%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/" target="_self">
+          day05-基本图形绘制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/11/27/OpenCV%E5%85%A5%E9%97%A8/day05-%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/" target="_self">
+          
+          5-1、绘制直线12345678910111213141516import cv2import numpy as npimg &#x3D; np.zeros(shape&#x3D;(200, 512, 3), dtype&#x3D;np.uint8)# xxx.line(img, 起始点, 结束点, 颜色, 线粗, 锯齿)# 从 (0, 0) 画一条  (200, 200)的蓝色线段cv2.line(img, (0, 0),
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-27 07:28" pubdate>
+              2023-11-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OpenCV/">OpenCV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/11/23/OpenCV%E5%85%A5%E9%97%A8/day04-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4-numpy-mat/" target="_self">
+          day04-基础知识-色彩空间-numpy-mat
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/11/23/OpenCV%E5%85%A5%E9%97%A8/day04-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4-numpy-mat/" target="_self">
+          
+          4-1、常见的色彩空间表示方法 RGB：人眼的色彩空间 BGR：OpenCV默认使用的色彩空间，因为BGR是Windows位图文件的默认颜色顺序 HSV&#x2F;HSB&#x2F;HSL：OpenCV中只用到HSV - Hue(色调、色相) Saturation(饱和度、色彩纯净度) Value(明度) YUV：常用于视频编解码中  4-2、为什么图像处理通常使用HSV色彩空间 RGB颜色空间：
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-23 07:28" pubdate>
+              2023-11-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OpenCV/">OpenCV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/11/20/OpenCV%E5%85%A5%E9%97%A8/day03-%E5%9B%BE%E5%83%8F&amp;%E8%A7%86%E9%A2%91%E7%9A%84%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%B1%95%E7%A4%BA/" target="_self">
+          day03-图像&amp;视频的加载与展示
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/11/20/OpenCV%E5%85%A5%E9%97%A8/day03-%E5%9B%BE%E5%83%8F&amp;%E8%A7%86%E9%A2%91%E7%9A%84%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%B1%95%E7%A4%BA/" target="_self">
+          
+          3-2、如何通过OpenCV创建显示窗口、读取图片、保存图片1234567891011121314151617181920import cv2#创建一个名字叫new的Windowcv2.namedWindow(&amp;#x27;new&amp;#x27;,cv2.WINDOW_AUTOSIZE)#读取一张本地的图片imgMat &#x3D; cv2.imread(&amp;#x27;.&#x2F;images&#x2F;paste.png&amp;#x27
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-20 07:28" pubdate>
+              2023-11-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/OpenCV%E5%85%A5%E9%97%A8/">OpenCV入门</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/OpenCV/">OpenCV</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/11/19/OpenCV%E5%85%A5%E9%97%A8/day02-Mac%E4%B8%8A%E6%90%AD%E5%BB%BAOpenCV%E7%8E%AF%E5%A2%83/" target="_self">
           day02-Mac上搭建OpenCV环境
         </a>
@@ -366,288 +648,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Wireshark/">Wireshark</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/" target="_self">
-          day01-iOS抓iPhone的wireshark数据包
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E6%8A%93%E5%8C%85/day01-iOS%E6%8A%93iPhone%E6%95%B0%E6%8D%AE%E5%8C%85/" target="_self">
-          
-          在iOS应用开发过程中，通过抓包调试服务接口的场景时常出现。Charles和Wireshark是我在iOS开发过程中最常用的两款软件。  Charles是很强大的网络请求抓包工具，常用于抓包HTTP&#x2F;HTTPS请求。而作者在做IoT项目时，智能硬件配网协议是基于TCP&#x2F;UDP或者蓝牙的，需要用Wireshark进行抓包调试。Wireshark官网 一、获取iPhone的UDI
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-18 07:28" pubdate>
-              2023-09-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Wireshark/">Wireshark</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Wireshark/">Wireshark</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" target="_self">
-          day01-NSDateFormatter相关问题
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/09/18/iOS/day01-NSDateFormatter%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" target="_self">
-          
-          一、iOS设备选择12小时[NSDateFormatter dateFromString:] 返回 nil 问题1234NSDateFormatter *formatter &#x3D; [[NSDateFormatter alloc] init];formatter.dateFormat &#x3D; @&quot;yyyy-MM-dd HH:mm:ss&quot;; NSString *dateStr &#x3D; @&amp;q
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-18 07:28" pubdate>
-              2023-09-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/iOS/">iOS</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/iOS-Objective-C/">iOS - Objective-C</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day03-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99/" target="_self">
-          day03-自动化脚本代码编写
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day03-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99/" target="_self">
-          
-          一、iOS真机安装WebDriverAgent图文详解
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-27 18:31" pubdate>
-              2023-07-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day02-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85/" target="_self">
-          day02-自动化脚本代码工具安装
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day02-%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85/" target="_self">
-          
-          一、安装自动化工具AirtestAirtest是网易开源的一个自动化测试工具，支持iOS、安卓、Windows、Mac 去Airtest官网下载：http:&#x2F;&#x2F;airtest.netease.com&#x2F; 二、运行方式参考官方的介绍：https:&#x2F;&#x2F;airtest.readthedocs.io&#x2F;zh_CN&#x2F;latest&#x2F;README_MORE.html 三、核心API核心API：https:&#x2F;&#x2F;air
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-27 17:31" pubdate>
-              2023-07-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day01-iOS%E7%9C%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/" target="_self">
-          day01-WebDriverAgent安装
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/07/27/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/day01-iOS%E7%9C%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/" target="_self">
-          
-          一、iOS真机安装WebDriverAgent图文详解背景在做iOS自动化测试的时候，一般都需要确保手机上已经安装有WebDriverAgent应用，这个WDA应用可以是Airtest修改版、Appium修改版也可以是Facebook原版，今天我们以Appium修改版为例来进行说明，其他版本同样适用。 安装依赖：‍ 1pip3 install -U tidevice  拉取代码： 1git clo
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-27 16:31" pubdate>
-              2023-07-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">自动化测试</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/07/02/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F5/" target="_self">
-          day12-WebRTC服务质量5-FEC
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2023/07/02/WebRTC%E6%BA%90%E7%A0%81repeat/day12-WebRTC%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F5/" target="_self">
-          
-          一、WebRTC服务质量综述
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-07-02 09:31" pubdate>
-              2023-07-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
             
           </div>
         

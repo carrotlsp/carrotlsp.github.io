@@ -191,6 +191,288 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/03/28/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%937/" target="_self">
+          day11-WebRTC网络传输7-网络传输类的创建与数据传输
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/03/28/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%937/" target="_self">
+          
+          一、网络传输类的创建与数据传输1、总纲图：ICE相关的类是如何创建的？本端的音视频数据是如何发送的，对端的音视频数据是如何接收的？   此图超级精髓  2、来看第一步，WebRTC是如何将网络传输中的这些对象创建出来的？ 一开始就是创建PeerConnection，也就是途中绿色的部分。  PeerConnection是由PeerConnectionFactory创建出来的。  在我们创建Peer
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-28 16:31" pubdate>
+              2023-03-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/03/27/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%936/" target="_self">
+          day11-WebRTC网络传输6-连通性检测
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/03/27/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%936/" target="_self">
+          
+          一、连通性检测1、连通性检测的过程？   情况①： 在应用层收到Candidate之后，就会调用AddIceCandidate这个方法，然后就按照图中左侧的调用栈，一路调用到核心层； 在P2PTransportChannel::FinishAddingRemoteCandidate 这个函数中，首先会调用CreateConnections将Connection对象创建出来；之后它会调用SortCo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-27 16:31" pubdate>
+              2023-03-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/" target="_self">
+          day11-WebRTC网络传输5-Candidate传递给应用层、Connection生成/排序/选择/裁剪、ICE提名、ICE-LITE
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/03/26/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%935/" target="_self">
+          
+          一、Candidate 交给应用层的、Connection生成过程1、WebRTC 为什么要将收集到的各种 Candidate 交给应用层？ 因为通信的双方，需要获取对方的 Candidate 才能开始尝试与对端进行连接。    2、WebRTC 中的网络连接用什么表示？它由哪两个重要部分构成？ WebRTC 中用 Connection 表示一个网络连接 Connection 由本地Port和远端
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-26 16:31" pubdate>
+              2023-03-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/03/22/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%934/" target="_self">
+          day11-WebRTC网络传输4-Turn协议、Turn连接、Turn消息机制、Turn类型的candidate
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/03/22/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%934/" target="_self">
+          
+          一、Turn原理、Turn连接1、Turn协议工作原理？ 在Turn协议中，主动发起请求的一端叫做 Client 端。 Turn Server 会为 Client 端分配 relay 3478端口，用于接受 Peer 端发送来的数据。 被动端称为 Peer 端，当它知道 Client 端的 relay 地址之后，它就可以向 relay 地址直接发送数据。 Turn Server 收到 Peer 端
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-22 16:31" pubdate>
+              2023-03-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/03/20/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%933/" target="_self">
+          day11-WebRTC网络传输3-获取本地Candidate、认识Stun、StunRequest、StunResponse
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/03/20/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%933/" target="_self">
+          
+          一、获取本地Candidate1、获取本地Candidate的过程？      二、理解Stun协议1、STUN的全称是什么？STUN存在的意义是什么？STUN的工作模式是什么？ Session Tranversal Utilities for NAT  STUN存在的目的就是进行 NAT 穿越  STUN是典型的客户端&#x2F;服务器模式。客户端发送请求、服务端进行响应。   2、 STUN消
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-20 16:31" pubdate>
+              2023-03-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/03/18/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%932/" target="_self">
+          day11-WebRTC网络传输2-PortAllocator、AllocationSequence
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2023/03/18/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%932/" target="_self">
+          
+          day01指针关键知识点1、PortAllocator 类关系图？  2、什么时候创建 BasicProtAllocator对象？ 在 CreatePeerConnection 的时候，创建 BasicPortAllocator对象。 也就是一个 PeerConnection 对应一个 BasicPortAllocator 对象。                二、认识 AllocationSeq
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-18 16:31" pubdate>
+              2023-03-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WebRTC/">WebRTC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2023/03/16/WebRTC%E6%BA%90%E7%A0%81repeat/day11-WebRTC%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%931/" target="_self">
           day11-WebRTC网络传输1-NetworkManager、初识ICE、Candidate概念
         </a>
@@ -350,288 +632,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2022-11-25 09:36" pubdate>
               2022-11-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%862/" target="_self">
-          day07-音频数据采集2-ADM创建过程、本地音频的采集&amp;&amp;加密封装&amp;&amp;传输
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%862/" target="_self">
-          
-          1、ADM在iOS上创建过程？12345678910111213141516171819202122- (instancetype)    initWithEncoderFactory:(nullable id&lt;RTC_OBJC_TYPE(RTCVideoEncoderFactory)&gt;)encoderFactory            decoderFactory:(nullabl
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-11-25 07:35" pubdate>
-              2022-11-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%861/" target="_self">
-          day07-音频数据采集1-ADM、APM、AudioState
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day07-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%861/" target="_self">
-          
-          一、认识AudioState、ADM1、AudioState是干什么的？ AudioState看名字，看起来像是对音频状态的管理机，其实并不是。 AudioState是对整个音频的接口做一层封装，用来管理音频相关的所有模块。  2、应用层要调用底层的ADM、APM、混音是比较复杂的，WebRTC为此做了什么封装？ 封装了 AudioState 对于音频来讲，不仅有ADM（Audio Device
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-11-25 07:32" pubdate>
-              2022-11-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" target="_self">
-          day06-媒体协商2-编解码器信息收集
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/11/25/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%862-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" target="_self">
-          
-          一、编解码器信息的收集1、学完本节要能回答以下问题？ AddTrack如何生成Transceiver？ payload type 从哪里来？ 每个 payload type 对应的值从哪儿来？ 使用的传输协议如何确定？  2、webRTC的入口函数是哪个？ CreatePeerConnectionFactory      3、以 CreateBuildinAudioEncoderFactory 为
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-11-25 07:31" pubdate>
-              2022-11-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/27/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%861-SDP%E8%AF%A6%E8%A7%A3/" target="_self">
-          day06-媒体协商1-SDP详解
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/10/27/WebRTC%E6%BA%90%E7%A0%81repeat/day06-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%861-SDP%E8%AF%A6%E8%A7%A3/" target="_self">
-          
-          一、SDP基础（WebRTC的核心，必须清楚每个元素的含义）1、SDP结构核心图？分为三层？ 实际上每个SDP都是嵌套的方式进行定义的 最外层是会话层、里层是媒体层、媒体层又包括音频层+视频层      2、SDP的数据格式是怎么样的？ &lt;key&gt; &#x3D; &lt;value&gt; 格式  3、m、a、c、v、s、o 分别是什么含义？ m：media，一个m表示一个媒体，可以是音频 或
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-27 16:31" pubdate>
-              2022-10-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/" target="_self">
-          day04-媒体协商
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/10/21/WebRTC%E6%BA%90%E7%A0%81repeat/day04-%E5%AA%92%E4%BD%93%E5%8D%8F%E5%95%86/" target="_self">
-          
-          1、媒体协商起了主要哪些作用？ 交换双方的音频编解码器信息、视频编解码器信息 音频主要参数：采样大小、采样率、声道数 视频主要参数：帧率、分辨率  2、媒体协商的步骤？8个步骤，必须要能手绘。 目的：找到共同支持的编解码器以及编解码器相关的参数。    3、媒体协商的时序图，这个流程必须很清楚。【手绘】 四个角色：ClientA、ClientB、Signal、Coturn      4、思考和尝试
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-21 16:31" pubdate>
-              2022-10-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/WebRTC%E6%BA%90%E7%A0%81Repeat/">WebRTC源码Repeat</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/WebRTC/">WebRTC</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day00-%E6%A8%A1%E6%9D%BF/" target="_self">
-          day0102-初识WebRTC、WebRTC整体架构
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/10/18/WebRTC%E6%BA%90%E7%A0%81repeat/day00-%E6%A8%A1%E6%9D%BF/" target="_self">
-          
-          day01指针关键知识点
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-10-18 16:31" pubdate>
-              2022-10-18
             </time>
           </div>
         

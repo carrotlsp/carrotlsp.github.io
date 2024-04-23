@@ -16,22 +16,21 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="day01指针关键知识点1、什么是地址（如何定义）？ 【定义】内存中字节的编号称为地址。  2、变量名、函数名、字符串名、数组名，它们都是地址的助记符，但是在编码过程中，这些名字的含义分别是什么？ 【变量名】在编码过程中，表示的是数据本身。 【函数名、字符串名、数组名】在编码过程中，表示的是代码块或数据块的首地址。  3、什么是指针变量？ 数据在内存中的地址也称为指针，如果一个变量存储了一份数据">
+    <meta name="description" content="1、GPT 说人话的能力是怎么来的 2、“涌现”的产生 3、prompt 的概念和意义 4、为什么现阶段我们不得不用 prompt  一、**【渐构】万字科普GPT4为何会颠覆现有工作流  _哔哩哔哩_bilibili**1、GPT的原理是什么？ GTP的实质功能是单字接龙 长文由单字接龙的自回归所生产 通过提前训练才能让它生成人们想要的回答 训练方式是让它按照回答范例来做单字接龙 这样训练是为">
 <meta property="og:type" content="article">
-<meta property="og:title" content="day01指针关键知识点">
-<meta property="og:url" content="http://example.com/2022/04/25/C%E8%AF%AD%E8%A8%80/day01/index.html">
+<meta property="og:title" content="day01-B站视频_初识GTP原理">
+<meta property="og:url" content="http://example.com/2024/03/05/ChatGPT/day01-B%E7%AB%99%E8%A7%86%E9%A2%91_%E5%88%9D%E8%AF%86GPT%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="day01指针关键知识点1、什么是地址（如何定义）？ 【定义】内存中字节的编号称为地址。  2、变量名、函数名、字符串名、数组名，它们都是地址的助记符，但是在编码过程中，这些名字的含义分别是什么？ 【变量名】在编码过程中，表示的是数据本身。 【函数名、字符串名、数组名】在编码过程中，表示的是代码块或数据块的首地址。  3、什么是指针变量？ 数据在内存中的地址也称为指针，如果一个变量存储了一份数据">
+<meta property="og:description" content="1、GPT 说人话的能力是怎么来的 2、“涌现”的产生 3、prompt 的概念和意义 4、为什么现阶段我们不得不用 prompt  一、**【渐构】万字科普GPT4为何会颠覆现有工作流  _哔哩哔哩_bilibili**1、GPT的原理是什么？ GTP的实质功能是单字接龙 长文由单字接龙的自回归所生产 通过提前训练才能让它生成人们想要的回答 训练方式是让它按照回答范例来做单字接龙 这样训练是为">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-04-24T22:31:29.000Z">
-<meta property="article:modified_time" content="2022-04-24T23:39:02.861Z">
+<meta property="article:published_time" content="2024-03-04T23:28:30.000Z">
+<meta property="article:modified_time" content="2024-03-06T22:39:05.433Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="指针">
-<meta property="article:tag" content="地址">
+<meta property="article:tag" content="ChatGTP">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>day01指针关键知识点 - Hexo</title>
+  <title>day01-B站视频_初识GTP原理 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -177,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="day01指针关键知识点">
+            <span class="h2" id="subtitle" title="day01-B站视频_初识GTP原理">
               
             </span>
 
@@ -187,8 +186,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-04-25 06:31" pubdate>
-        April 25, 2022 am
+      <time datetime="2024-03-05 07:28" pubdate>
+        March 5, 2024 am
       </time>
     </span>
   
@@ -198,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      520 字
+      1.4k 字
     </span>
   
 
@@ -207,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5 分钟
+      12 分钟
     </span>
   
 
@@ -236,32 +235,61 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">day01指针关键知识点</h1>
+            <h1 style="display: none">day01-B站视频_初识GTP原理</h1>
             
             <div class="markdown-body">
-              <h2 id="day01指针关键知识点"><a href="#day01指针关键知识点" class="headerlink" title="day01指针关键知识点"></a>day01指针关键知识点</h2><h3 id="1、什么是地址（如何定义）？"><a href="#1、什么是地址（如何定义）？" class="headerlink" title="1、什么是地址（如何定义）？"></a>1、什么是地址（如何定义）？</h3><ul>
-<li>【定义】内存中字节的编号称为地址。</li>
+              <blockquote>
+<p>1、GPT 说人话的能力是怎么来的</p>
+<p>2、“涌现”的产生</p>
+<p>3、prompt 的概念和意义</p>
+<p>4、为什么现阶段我们不得不用 prompt</p>
+</blockquote>
+<h2 id="一、-【渐构】万字科普GPT4为何会颠覆现有工作流-哔哩哔哩-bilibili"><a href="#一、-【渐构】万字科普GPT4为何会颠覆现有工作流-哔哩哔哩-bilibili" class="headerlink" title="一、**【渐构】万字科普GPT4为何会颠覆现有工作流  _哔哩哔哩_bilibili**"></a>一、**<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1MY4y1R7EN/?spm_id_from=333.337.search-card.all.click&vd_source=da75b8139ed7919da366ae88ca2ca8a4">【渐构】万字科普GPT4为何会颠覆现有工作流  _哔哩哔哩_bilibili</a>**</h2><h3 id="1、GPT的原理是什么？"><a href="#1、GPT的原理是什么？" class="headerlink" title="1、GPT的原理是什么？"></a>1、GPT的原理是什么？</h3><ul>
+<li>GTP的实质功能是<font color="red">单字接龙</font></li>
+<li>长文由<font color="red">单字接龙</font>的自回归所生产</li>
+<li>通过提前训练才能让它生成人们想要的回答</li>
+<li>训练方式是让它按照回答范例来做单字接龙</li>
+<li>这样训练是为了让它学会【能举一反三的规律】</li>
+<li>缺点是可能混淆记忆，无法直接查看和更新所学，且高度依赖学习材料</li>
 </ul>
-<h3 id="2、变量名、函数名、字符串名、数组名，它们都是地址的助记符，但是在编码过程中，这些名字的含义分别是什么？"><a href="#2、变量名、函数名、字符串名、数组名，它们都是地址的助记符，但是在编码过程中，这些名字的含义分别是什么？" class="headerlink" title="2、变量名、函数名、字符串名、数组名，它们都是地址的助记符，但是在编码过程中，这些名字的含义分别是什么？"></a>2、变量名、函数名、字符串名、数组名，它们都是<font color="red">地址的助记符</font>，但是在<font color="red">编码</font>过程中，这些名字的含义分别是什么？</h3><ul>
-<li>【变量名】在编码过程中，表示的是数据本身。</li>
-<li>【函数名、字符串名、数组名】在编码过程中，表示的是代码块或数据块的首地址。</li>
+<h3 id="2、ChatGPT的三个训练阶段"><a href="#2、ChatGPT的三个训练阶段" class="headerlink" title="2、ChatGPT的三个训练阶段"></a>2、ChatGPT的三个训练阶段</h3><ul>
+<li>“开卷有益”阶段：让chatGPT对【海量互联网文本】做单字接龙，以扩充模型的词汇量、语言知识、世界的信息与知识。使 ChatGTP从 “哑巴鹦鹉” 变成 “脑容量超级大的懂王鹦鹉”。</li>
+<li>“模板规范”阶段：让ChatGPT对【优质对话范例】做单字接龙，以规范回答的对话模式和对话内容。使ChatGPT变成”懂规矩的博学鹦鹉”。</li>
+<li>“创意引导”阶段：让ChatGPT根据【人类对它生成的答案的好坏评分】来调节模型，以引导它生成人类认可的创意回答。使ChatGPT变成”既懂规矩又会试探的博学鹦鹉”。</li>
 </ul>
-<h3 id="3、什么是指针变量？"><a href="#3、什么是指针变量？" class="headerlink" title="3、什么是指针变量？"></a>3、什么是指针变量？</h3><ul>
-<li>数据在内存中的地址也称为指针，如果一个变量存储了一份数据的指针，我们就称它问指针变量。</li>
+<h3 id="3、当”单字接龙”的数据量足够大的时候，”涌现”出什么了能力？"><a href="#3、当”单字接龙”的数据量足够大的时候，”涌现”出什么了能力？" class="headerlink" title="3、当”单字接龙”的数据量足够大的时候，”涌现”出什么了能力？"></a>3、当”单字接龙”的数据量足够大的时候，”涌现”出什么了能力？</h3><ul>
+<li><strong><font color="red">理解指令、例子、思维链的能力</font></strong></li>
+<li>【<font color="red">涌现</font>】的是未料到的能力</li>
 </ul>
-<h3 id="4、使用指针变量的时候，什么时候需带-号？什么时候不能带-号"><a href="#4、使用指针变量的时候，什么时候需带-号？什么时候不能带-号" class="headerlink" title="4、使用指针变量的时候，什么时候需带*号？什么时候不能带*号?"></a>4、使用指针变量的时候，什么时候需带<font color="red">*号</font>？什么时候不能带<font color="red">*号</font>?</h3><ul>
-<li>【需带<font color="red">*号</font>】① 在定义指针变量时，为了和普通变量区分开来，需要使用<font color="red">*号</font> ②获取指针变量所指向数据时，需要使用<font color="red">*号</font> </li>
-<li>【不能带<font color="red">*号</font>】在非定义表达式中，对指针进行赋值，改变其指向时不能使用<font color="red">*号</font> 。</li>
+<h2 id="二、小七姐：Prompt喂饭级教程总结"><a href="#二、小七姐：Prompt喂饭级教程总结" class="headerlink" title="二、小七姐：Prompt喂饭级教程总结"></a>二、小七姐：Prompt喂饭级教程总结</h2><h3 id="1、LLM是什么意思？"><a href="#1、LLM是什么意思？" class="headerlink" title="1、LLM是什么意思？"></a>1、LLM是什么意思？</h3><ul>
+<li>LLM：Large Language Model 大语言模型</li>
+<li>是一种人工智能模型，旨在理解和生成人类语言</li>
+<li>LLM的特点是<font color="red">规模庞大，包含数十亿的参数</font>，帮助它们学习语言中的复杂模式。</li>
 </ul>
-<h3 id="5、-号在定义和使用指针变量时，含义一样吗？"><a href="#5、-号在定义和使用指针变量时，含义一样吗？" class="headerlink" title="5、*号在定义和使用指针变量时，含义一样吗？"></a>5、<font color="red">*号</font>在定义和使用指针变量时，含义一样吗？</h3><ul>
-<li>【<font color="red">*号</font>定义时】*号可以用在指针变量的定义中，表明这是一个指针变量，以和普通变量区分开</li>
-<li>【<font color="red">*号</font>使用时】使用指针变量时再前面加*号，表示获取指针指向的数据，或者说表示的是指针指向的数据本身。</li>
-<li>也就是说，<strong>定义指针变量时的*号</strong>和<strong>使用指针变量时的*号</strong>意义完全不同</li>
+<h3 id="2、AGI是什么意思？"><a href="#2、AGI是什么意思？" class="headerlink" title="2、AGI是什么意思？"></a>2、AGI是什么意思？</h3><ul>
+<li>AGI：Artificial General Intelligence 通用人工智能</li>
+<li>是指一种能够像人类一样思考、学习和执行多种任务的人工智能系统</li>
+<li>我觉得这个词就是为了有别于“特定领域人工智能”而创造出来的。</li>
 </ul>
-<h3 id="6、-号总共有几种用法？"><a href="#6、-号总共有几种用法？" class="headerlink" title="6、*号总共有几种用法？"></a>6、<font color="red">*号</font>总共有几种用法？</h3><ul>
-<li>①用于乘法表达式中</li>
-<li>②用于定义指针变量</li>
-<li>③用于获取指针变量所指向的数据</li>
+<h3 id="3、ChatGPT的输入和输出都是到中文字的粒度吗？"><a href="#3、ChatGPT的输入和输出都是到中文字的粒度吗？" class="headerlink" title="3、ChatGPT的输入和输出都是到中文字的粒度吗？"></a>3、ChatGPT的输入和输出都是到中文字的粒度吗？</h3><ul>
+<li>GPT不仅仅能处理中文，它还能处理几乎世界上所有流行的自然语言。</li>
+<li>因为，我们需要引入 <font color="red">token</font> 的概念，token 是自然语言处理的最细粒度。简单点来说就是，GPT的输入是一个个的token，输出也是一个个token。</li>
+<li>我们可以简单点，把token理解成 unicode 编码。因为Unicode是万国码。</li>
+<li><strong>综上所述，GPT实际上是将我们输入的文字转换成token，然后通过GPT模型预测token，再将token转换成文字，最后再输出给我们。</strong></li>
+<li>通过token的学习，能感觉到 ChatGPT 理解文本的方式和人类并不相同，它再以自己的方式理解这个世界。</li>
+</ul>
+<h3 id="4、为什么我们给ChatGPT设定好角色后，后续不断提问，它会遗忘最早之前对它的设定？"><a href="#4、为什么我们给ChatGPT设定好角色后，后续不断提问，它会遗忘最早之前对它的设定？" class="headerlink" title="4、为什么我们给ChatGPT设定好角色后，后续不断提问，它会遗忘最早之前对它的设定？"></a>4、为什么我们给ChatGPT设定好角色后，后续不断提问，它会遗忘最早之前对它的设定？</h3><ul>
+<li>这个和ChatGPT的<font color="red">一次性输入</font>的token长度限制有关系</li>
+<li>值得注意的是这个长度不是达到上限就停止对话，而是遗忘最前面的对话，你可以理解为鱼的记忆只有7秒，第8秒的时候他会忘记第1秒的事情，第9秒的时候….</li>
+</ul>
+<h3 id="5、这些公司为什么不把token限制放高一点呢？大不了比GPT-4-API价格再高一点呗"><a href="#5、这些公司为什么不把token限制放高一点呢？大不了比GPT-4-API价格再高一点呗" class="headerlink" title="5、这些公司为什么不把token限制放高一点呢？大不了比GPT-4 API价格再高一点呗"></a>5、这些公司为什么不把token限制放高一点呢？大不了比GPT-4 API价格再高一点呗</h3><blockquote>
+<p>GPT 本质是 <strong>文字接龙</strong>，根据过往的 Token 序列推测下一个最有可能的 Token 是什么。</p>
+</blockquote>
+<ul>
+<li>其实不是 OpenAI、Google 不想，而是他们 <strong>不能</strong></li>
+<li>过往 Token 序列太长，会导致计算量过大、计算精度下降</li>
+<li>我们让 GPT 处理长流程、长文本的任务时，不能将整个流程一口气灌输给 GPT</li>
+<li>要懂怎么拆解需求、拆解流程，怎么写好提示词（Prompt）</li>
 </ul>
 
             </div>
@@ -272,7 +300,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/C%E8%AF%AD%E8%A8%80/">C语言</a>
+                      <a class="hover-with-bg" href="/categories/ChatGTP/">ChatGTP</a>
                     
                   </div>
                 
@@ -280,9 +308,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%8C%87%E9%92%88/">指针</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%9C%B0%E5%9D%80/">地址</a>
+                      <a class="hover-with-bg" href="/tags/ChatGTP/">ChatGTP</a>
                     
                   </div>
                 
@@ -299,15 +325,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/25/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+                      <a href="/2024/03/07/Bluetooth/day01-%E5%88%9D%E8%AF%86%E8%93%9D%E7%89%99/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">GitHub搭建个人博客</span>
+                        <span class="hidden-mobile">day01-初识蓝牙</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2023/12/29/OpenCV%E5%85%A5%E9%97%A8/day11-%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%8C%B9%E9%85%8D-2/">
+                        <span class="hidden-mobile">day11-特征点检测与匹配-图像拼接</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

@@ -191,6 +191,298 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/" target="_self">
+          day08-音频AAC编码理论(二)
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day08%E9%9F%B3%E9%A2%91AAC%E7%BC%96%E7%A0%81/" target="_self">
+          
+          一、音频编码理论基础1、音频有损压缩主要从哪些方面进行压缩？ 时域遮蔽、频域遮蔽    2、音频无损压缩有哪些有名的算法？ 哈夫曼算法 香农算法  3、常见的音频编码器？（例举三个） AAC：在直播系统中应用比较广泛 OPUS：是较新的音频编码器，WebRTC默认使用OPUS G.711：一般在固话中使用  4、AAC有哪三种常见规格，简单描述下？ AAC LC：(Low Complexity)
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-29 11:30" pubdate>
+              2022-05-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+              <a href="/tags/ffmpeg/">ffmpeg</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day08%E9%9F%B3%E9%A2%91%E9%87%8D%E9%87%87%E6%A0%B7/" target="_self">
+          day08-音频重采样(一)
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day08%E9%9F%B3%E9%A2%91%E9%87%8D%E9%87%87%E6%A0%B7/" target="_self">
+          
+          一、音频重采样1、什么是音频重采样？  2、什么情况下需要进行音频重采样？ 情况一：从设备采集的音频数据与编码器要求的数据不一致 情况二：播放器要求的音频数据与要播放的音频数据不一致 情况三：要方便某些运算的时候  3、简述音频重采样主要三个步骤？ 设置重采样参数，并初始化重采样上下文。  12345swr_ctx &#x3D; swr_alloc_set_opts(NULL,
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-29 10:30" pubdate>
+              2022-05-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+              <a href="/tags/ffmpeg/">ffmpeg</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day07%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86/" target="_self">
+          day07-ffmpeg集成、音频采集
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day07%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86/" target="_self">
+          
+          一、集成FFmpeg到MacApp项目1、创建一个mac的App应用，语言选择swift。  2、将ffmpeg目录下的 lib 和 include 拷贝到项目中。    3、将ffmpeg库引入项目中    4、引入ffmpeg头文件    5、加入代码测试 test.h  123456789#ifndef test_h#define test_h#include &lt;stdio.h&gt;
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-28 18:33" pubdate>
+              2022-05-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+              <a href="/tags/ffmpeg/">ffmpeg</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day06%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91ffmpeg/" target="_self">
+          day06-ffmpeg编译
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day06%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91ffmpeg/" target="_self">
+          
+          一、手动编译ffmpeg1、目标这里先提前说明一下，最后希望达到的效果：  编译出ffmpeg、ffprobe、ffplay三个命令行工具 只产生动态库，不产生静态库 将 fdk-aac、x264、x265集成到FFmpeg中  2、下载源码下载源码ffmpeg-4.3.2.tar.xz，然后解压。     3、安装依赖库 brew install yasm ffmpeg的编译过程依赖yasm 若
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-28 18:08" pubdate>
+              2022-05-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day05%E9%9F%B3%E9%A2%91%E5%9F%BA%E7%A1%80%E7%AF%87/" target="_self">
+          day05-音频基础篇
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day05%E9%9F%B3%E9%A2%91%E5%9F%BA%E7%A1%80%E7%AF%87/" target="_self">
+          
+          一、音频基础知识1、从共享端和观看端来大致分析直播流程？    2、什么是赫兹？人类听觉范围是多少？ 声音一秒振动的次数叫做赫兹，英文简称 Hz 20Hz ~ 20000Hz    3、分别解释音调、音量、音色分别由什么决定？ 音调：声音频率的高低 音量：声音振幅的大小 音色：谐波组合而成  4、音频播放的三要素是什么？ 采样率：采样频率8k、16k、32k、44.1k、48k 采样格式：一个采样
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-28 18:08" pubdate>
+              2022-05-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/" target="_self">
+          day01-入门基础篇
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/05/28/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/day01%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80%E7%AF%87/" target="_self">
+          
+          一、Mac终端命令1、如果电脑上有多个ffmpeg，如何知道当前执行的ffmpeg命令是哪个安装包下的？ 借助 which 命令  12$ which ffmpeg&#x2F;usr&#x2F;local&#x2F;ffmpeg&#x2F;bin&#x2F;ffmpeg    2、借助命令行如何知道C语言的函数，比如 malloc 函数属于哪个库？1$ man malloc        3、env 命令有什么用？ 可以查看当前mac电脑的环境变
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-28 13:04" pubdate>
+              2022-05-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%85%A5%E9%97%A8%E8%AF%BE/">音视频入门课</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>
+            
+              <a href="/tags/Mac%E5%91%BD%E4%BB%A4/">Mac命令</a>
+            
+              <a href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/04/25/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" target="_self">
           GitHub搭建个人博客
         </a>
@@ -242,13 +534,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/04/25/C%E8%AF%AD%E8%A8%80/day01/" target="_self">
+        <a href="/2022/04/25/C++/day01/" target="_self">
           day01指针关键知识点
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/04/25/C%E8%AF%AD%E8%A8%80/day01/" target="_self">
+        <a href="/2022/04/25/C++/day01/" target="_self">
           
           day01指针关键知识点1、什么是地址（如何定义）？ 【定义】内存中字节的编号称为地址。  2、变量名、函数名、字符串名、数组名，它们都是地址的助记符，但是在编码过程中，这些名字的含义分别是什么？ 【变量名】在编码过程中，表示的是数据本身。 【函数名、字符串名、数组名】在编码过程中，表示的是代码块或数据块的首地址。  3、什么是指针变量？ 数据在内存中的地址也称为指针，如果一个变量存储了一份数据
         </a>
@@ -267,7 +559,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/C%E8%AF%AD%E8%A8%80/">C语言</a>
+              <a href="/categories/C/">C++</a>
             
           </div>
         
